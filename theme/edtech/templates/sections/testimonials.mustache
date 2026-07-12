@@ -1,0 +1,34 @@
+{{! theme_edtech/sections/testimonials
+    Student testimonial cards.
+    Context: testimonials[] from theme_edtech_build_frontpage_context()
+    @template theme_edtech/sections/testimonials
+}}
+<section class="edt-section edt-section-tinted">
+    <div class="edt-container">
+
+        <div class="edt-section-head">
+            <div class="edt-kicker">{{#str}}testi_kicker, theme_edtech{{/str}}</div>
+            <h2>{{#str}}testi_title, theme_edtech{{/str}}</h2>
+        </div>
+
+        <div class="edt-testi-grid">
+            {{#testimonials}}
+            <div class="edt-testi">
+                <div class="edt-testi-quote">
+                    <i class="fa-solid fa-quote-right" aria-hidden="true"></i>
+                </div>
+                <div class="edt-stars" aria-label="5 stars">★★★★★</div>
+                <p>{{text}}</p>
+                <div class="edt-testi-who">
+                    <img src="{{avatar}}" alt="{{name}}" width="44" height="44" loading="lazy">
+                    <div>
+                        <div class="edt-testi-name">{{name}}</div>
+                        <div class="edt-testi-role">{{role}}</div>
+                    </div>
+                </div>
+            </div>
+            {{/testimonials}}
+        </div>
+
+    </div>
+</section>

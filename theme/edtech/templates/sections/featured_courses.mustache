@@ -1,0 +1,72 @@
+{{! theme_edtech/sections/featured_courses
+    Dynamically loaded from Moodle DB via theme_edtech_build_frontpage_context().
+    Each course: image, title, category, summary, enrol/view button.
+    @template theme_edtech/sections/featured_courses
+}}
+<section id="courses" class="edt-section edt-section-tinted">
+    <div class="edt-container">
+
+        <div class="edt-section-head">
+            <div class="edt-kicker">{{#str}}course_kicker, theme_edtech{{/str}}</div>
+            <h2>{{#str}}course_title, theme_edtech{{/str}}</h2>
+        </div>
+
+        <div class="edt-courses-head">
+            <a href="{{courseurl}}" class="edt-btn edt-btn-ghost">
+                {{#str}}course_viewall, theme_edtech{{/str}}
+                <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        {{#hascourses}}
+        <div class="edt-course-grid">
+            {{#courses}}
+            <article class="edt-course">
+
+                {{! Course thumbnail }}
+                <div class="edt-course-thumb"
+                     {{#image}}style="background-image:url('{{image}}');"{{/image}}
+                     {{^image}}style="background:linear-gradient(135deg,var(--olive-500),var(--olive-700));"{{/image}}>
+                    <span class="edt-course-tag">{{tag}}</span>
+                </div>
+
+                {{! Course body }}
+                <div class="edt-course-body">
+                    <div class="edt-course-cat-line">
+                        <span class="edt-course-cat">{{category}}</span>
+                        <span class="edt-stars">
+                            <i class="fa-solid fa-star" aria-hidden="true"></i> 4.8
+                        </span>
+                    </div>
+                    <h3 class="edt-course-title">
+                        <a href="{{url}}">{{title}}</a>
+                    </h3>
+                    {{#summary}}
+                    <p class="edt-course-summary">{{summary}}</p>
+                    {{/summary}}
+                </div>
+
+                {{! Course footer }}
+                <div class="edt-course-foot">
+                    <a href="{{enrolurl}}" class="edt-btn edt-btn-primary edt-btn-sm">
+                        {{#str}}course_enrol, theme_edtech{{/str}}
+                    </a>
+                    <a href="{{url}}" class="edt-course-viewlink">
+                        {{#str}}course_view, theme_edtech{{/str}}
+                        <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                </div>
+
+            </article>
+            {{/courses}}
+        </div>
+        {{/hascourses}}
+
+        {{^hascourses}}
+        <p class="text-center text-muted py-5">
+            {{#str}}nocourses, core{{/str}}
+        </p>
+        {{/hascourses}}
+
+    </div>
+</section>

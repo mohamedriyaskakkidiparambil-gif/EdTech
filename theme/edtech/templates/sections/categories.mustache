@@ -1,0 +1,63 @@
+{{! theme_edtech/sections/categories
+    Course category grid — dynamically loaded from Moodle via lib.php.
+    Falls back to placeholder when no categories exist yet.
+    @template theme_edtech/sections/categories
+}}
+<section class="edt-section edt-section-categories">
+    <div class="edt-container">
+
+        <div class="edt-section-head">
+            <div class="edt-kicker">{{#str}}cat_kicker, theme_edtech{{/str}}</div>
+            <h2>{{#str}}cat_title, theme_edtech{{/str}}</h2>
+            <p>{{#str}}cat_subtitle, theme_edtech{{/str}}</p>
+        </div>
+
+        <div class="edt-cats">
+
+            {{#categories}}
+            <a class="edt-cat" href="{{url}}">
+                <div class="edt-cat-ic">
+                    <i class="fa-solid {{icon}}" aria-hidden="true"></i>
+                </div>
+                <div class="edt-cat-name">{{name}}</div>
+                <div class="edt-cat-count">{{count}}</div>
+            </a>
+            {{/categories}}
+
+            {{^hascategories}}
+            {{! Placeholder shown before any categories are created in Moodle }}
+            <a class="edt-cat" href="{{courseurl}}">
+                <div class="edt-cat-ic"><i class="fa-solid fa-code" aria-hidden="true"></i></div>
+                <div class="edt-cat-name">Web Development</div>
+                <div class="edt-cat-count">240 Courses</div>
+            </a>
+            <a class="edt-cat" href="{{courseurl}}">
+                <div class="edt-cat-ic"><i class="fa-solid fa-chart-line" aria-hidden="true"></i></div>
+                <div class="edt-cat-name">Business</div>
+                <div class="edt-cat-count">186 Courses</div>
+            </a>
+            <a class="edt-cat" href="{{courseurl}}">
+                <div class="edt-cat-ic"><i class="fa-solid fa-palette" aria-hidden="true"></i></div>
+                <div class="edt-cat-name">Design</div>
+                <div class="edt-cat-count">152 Courses</div>
+            </a>
+            <a class="edt-cat" href="{{courseurl}}">
+                <div class="edt-cat-ic"><i class="fa-solid fa-language" aria-hidden="true"></i></div>
+                <div class="edt-cat-name">Languages</div>
+                <div class="edt-cat-count">98 Courses</div>
+            </a>
+            <a class="edt-cat" href="{{courseurl}}">
+                <div class="edt-cat-ic"><i class="fa-solid fa-camera" aria-hidden="true"></i></div>
+                <div class="edt-cat-name">Photography</div>
+                <div class="edt-cat-count">74 Courses</div>
+            </a>
+            <a class="edt-cat" href="{{courseurl}}">
+                <div class="edt-cat-ic"><i class="fa-solid fa-microchip" aria-hidden="true"></i></div>
+                <div class="edt-cat-name">AI</div>
+                <div class="edt-cat-count">63 Courses</div>
+            </a>
+            {{/hascategories}}
+
+        </div>
+    </div>
+</section>

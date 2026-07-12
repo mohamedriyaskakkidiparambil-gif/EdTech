@@ -1,0 +1,86 @@
+{{! theme_edtech/sections/hero
+    Hero banner — eyebrow, headline, subtitle, CTA buttons, stats.
+    Context: hero.* from theme_edtech_build_frontpage_context()
+    @template theme_edtech/sections/hero
+}}
+<section class="edt-hero" aria-label="{{#str}}hero_eyebrow, theme_edtech{{/str}}">
+    <div class="edt-container">
+        <div class="edt-hero-grid">
+
+            {{! Left — Copy }}
+            <div class="edt-hero-copy">
+                <span class="edt-eyebrow">
+                    <span class="dot"></span>
+                    {{hero.eyebrow}}
+                </span>
+
+                <h1 class="edt-hero-title">
+                    {{hero.title}}
+                    <span class="accent">{{hero.title_accent}}</span>
+                </h1>
+
+                <p class="edt-hero-subtitle">{{hero.subtitle}}</p>
+
+                <div class="edt-hero-cta">
+                    <a href="{{hero.cta1_url}}" class="edt-btn edt-btn-primary">
+                        <i class="fa-solid fa-rocket" aria-hidden="true"></i>
+                        {{hero.cta1_text}}
+                    </a>
+                    <a href="{{hero.cta2_url}}" class="edt-btn edt-btn-gold">
+                        <i class="fa-solid fa-circle-play" aria-hidden="true"></i>
+                        {{hero.cta2_text}}
+                    </a>
+                </div>
+
+                <div class="edt-hero-stats">
+                    {{#hero.stats}}
+                    <div class="edt-stat">
+                        <div class="edt-stat-num">{{num}}</div>
+                        <div class="edt-stat-lbl">{{lbl}}</div>
+                    </div>
+                    {{/hero.stats}}
+                </div>
+            </div>
+
+            {{! Right — Visual card }}
+            <div class="edt-hero-visual">
+                <div class="edt-hero-card">
+                    <div class="edt-hero-thumb">
+                        <div class="edt-play">
+                            <button type="button" aria-label="Play intro">
+                                <i class="fa-solid fa-play" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <h3>Introduction to Data Science &amp; Business Analytics</h3>
+                    <div class="edt-hero-meta">
+                        <span class="stars"><i class="fa-solid fa-star" aria-hidden="true"></i> 4.9</span>
+                        <span><i class="fa-regular fa-user" aria-hidden="true"></i> 12,540</span>
+                        <span><i class="fa-regular fa-clock" aria-hidden="true"></i> 12h</span>
+                    </div>
+                </div>
+
+                <div class="edt-float edt-float-1">
+                    <div class="edt-float-ico olive">
+                        <i class="fa-solid fa-certificate" aria-hidden="true"></i>
+                    </div>
+                    <div>
+                        <div class="edt-float-title">Certified Badge</div>
+                        <div class="edt-float-sub">Upon completion</div>
+                    </div>
+                </div>
+
+                <div class="edt-float edt-float-2">
+                    <div class="edt-float-ico gold">
+                        <i class="fa-solid fa-users" aria-hidden="true"></i>
+                    </div>
+                    <div>
+                        <div class="edt-float-title">+1,200 Joined</div>
+                        <div class="edt-float-sub">This week</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

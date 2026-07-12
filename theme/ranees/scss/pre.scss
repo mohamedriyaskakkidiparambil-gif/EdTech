@@ -1,0 +1,81 @@
+// theme/ranees/scss/pre.scss
+// Injected BEFORE Bootstrap — overrides Bootstrap's !default variables.
+// ─────────────────────────────────────────────────────────────────────────
+
+// ── Brand palette (from index.html) ──────────────────────────────────────
+$olive-50:  #f4f6ec;
+$olive-100: #e3ead0;
+$olive-200: #c8d6a3;
+$olive-300: #a7be73;
+$olive-400: #8aa84e;
+$olive-500: #5AB184;
+$olive-600: #57761c;
+$olive-700: #445c17;
+$olive-800: #344712;
+$olive-900: #25320d;
+
+$gold-300: #ebc94a;
+$gold-400: #BD934B;
+$gold-500: #b8941f;
+
+// ── Bootstrap semantic colour map ─────────────────────────────────────────
+$primary:   $olive-500;
+$secondary: $olive-800;
+$success:   #22c55e;
+$danger:    #ef4444;
+$warning:   $gold-400;
+$info:      #3b82f6;
+$light:     $olive-50;
+$dark:      $olive-900;
+
+// ── Typography ────────────────────────────────────────────────────────────
+// Cairo for Arabic, Poppins for Latin — matches index.html exactly
+$font-family-sans-serif: 'Cairo', 'Poppins', system-ui, -apple-system, sans-serif;
+$font-family-base:       $font-family-sans-serif;
+$font-size-base:         1rem;
+$line-height-base:       1.6;
+$headings-font-weight:   700;
+$headings-color:         $olive-900;
+
+// ── Colours ───────────────────────────────────────────────────────────────
+$body-bg:    #fbfbf6;
+$body-color: #1f2410;
+$link-color: $olive-600;
+$link-hover-color: $olive-700;
+
+// ── Border radius (14px = index.html --radius) ────────────────────────────
+$border-radius:    14px;
+$border-radius-lg: 22px;
+$border-radius-sm: 8px;
+
+// ── Border colour ─────────────────────────────────────────────────────────
+$border-color: #e6e8d8;
+
+// ── Buttons ───────────────────────────────────────────────────────────────
+$btn-border-radius:    999px;
+$btn-border-radius-lg: 999px;
+$btn-border-radius-sm: 999px;
+$btn-font-weight:      700;
+$btn-padding-x:        1.25rem;
+$btn-padding-y:        .6rem;
+
+// ── Cards ─────────────────────────────────────────────────────────────────
+$card-border-radius: 14px;
+$card-border-color:  #e6e8d8;
+$card-cap-bg:        transparent;
+
+// ── Navbar ────────────────────────────────────────────────────────────────
+$navbar-light-color:        #2d3320;
+$navbar-light-active-color: $olive-700;
+$navbar-light-hover-color:  $olive-600;
+$navbar-padding-y:          0;
+
+// ── Input / form ──────────────────────────────────────────────────────────
+$input-border-radius:    999px;
+$input-focus-border-color: $olive-400;
+$input-focus-box-shadow: 0 0 0 3px rgba($olive-500, .18);
+
+// ── Shadows ───────────────────────────────────────────────────────────────
+$box-shadow-sm: 0 2px 8px rgba(40,55,15,.06);
+$box-shadow:    0 8px 24px rgba(40,55,15,.08);
+$box-shadow-lg: 0 18px 50px rgba(40,55,15,.14);

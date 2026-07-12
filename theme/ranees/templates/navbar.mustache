@@ -1,0 +1,91 @@
+{{! Ranees EdTech — navbar.mustache
+    Adds a topbar above Moodle's navbar, styled to match index.html.
+    Moodle core functionality (primary nav, user menu, lang switcher) is preserved.
+}}
+
+{{! ── TOPBAR ── }}
+<div class="ranees-topbar d-print-none">
+    <div class="ranees-topbar-inner">
+        <div class="ranees-topbar-left">
+            <span><i class="fa-solid fa-phone"></i> &nbsp; +974 4412 3456</span>
+            <span><i class="fa-solid fa-envelope"></i> &nbsp; support@edtech.qa</span>
+        </div>
+        <div class="ranees-topbar-right">
+            <a href="#"><i class="fa-solid fa-circle-question"></i> &nbsp; {{#str}}help, core{{/str}}</a>
+            <a href="#"><i class="fa-solid fa-chalkboard-user"></i> &nbsp; Become an Instructor</a>
+            {{#langmenu}}
+                <span class="ranees-lang-pill">
+                    <i class="fa-solid fa-globe"></i>
+                    {{> theme_boost/language_menu }}
+                </span>
+            {{/langmenu}}
+        </div>
+    </div>
+</div>
+
+{{! ── MAIN NAVBAR ── }}
+<nav class="navbar fixed-top navbar-light bg-white navbar-expand" aria-label="{{#str}}sitemenubar, admin{{/str}}">
+    <div class="container-fluid">
+
+        {{! Mobile hamburger (keep Boost drawer functionality) }}
+        <button class="navbar-toggler aabtn d-block d-md-none px-1 my-1 border-0"
+                data-toggler="drawers"
+                data-action="toggle"
+                data-target="theme_boost-drawers-primary">
+            <span class="navbar-toggler-icon"></span>
+            <span class="sr-only">{{#str}}sidepanel, core{{/str}}</span>
+        </button>
+
+        {{! Brand / Logo }}
+        <a href="{{{ config.homeurl }}}" class="navbar-brand d-none d-md-flex align-items-center m-0 me-4 p-0 aabtn">
+            {{# output.should_display_navbar_logo }}
+                <img src="{{output.get_compact_logo_url}}" class="logo me-2" alt="{{sitename}}" style="height:40px;">
+            {{/ output.should_display_navbar_logo }}
+            {{^ output.should_display_navbar_logo }}
+                <div class="ranees-brand-mark me-2">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div class="ranees-brand-text">
+                    <div class="ranees-brand-name">Ranees <span>EdTech</span></div>
+                    <div class="ranees-brand-sub">Learning Platform</div>
+                </div>
+            {{/ output.should_display_navbar_logo }}
+        </a>
+
+        {{! Primary navigation (Moodle handles active states & custom menu) }}
+        {{#primarymoremenu}}
+            <div class="primary-navigation">
+                {{> core/moremenu}}
+            </div>
+        {{/primarymoremenu}}
+
+        {{#output.page_heading_menu}}
+            <ul class="navbar-nav d-none d-md-flex my-1 px-1">
+                {{{ output.page_heading_menu }}}
+            </ul>
+        {{/output.page_heading_menu}}
+
+        {{! Right side: search, notifications, user menu }}
+        <div id="usernavigation" class="navbar-nav ms-auto h-100 d-flex align-items-center">
+
+            {{#output.search_box}}
+                {{{ output.search_box }}}
+                <div class="divider border-start h-75 align-self-center mx-2"></div>
+            {{/output.search_box}}
+
+            {{{ output.navbar_plugin_output }}}
+
+            <div class="d-flex align-items-stretch usermenu-container" data-region="usermenu">
+                {{#usermenu}}
+                    {{> core/user_menu }}
+                {{/usermenu}}
+            </div>
+
+            {{{ output.edit_switch }}}
+        </div>
+
+    </div>
+</nav>
+
+{{! Keep Boost's mobile drawer }}
+{{> theme_boost/primary-drawer-mobile }}

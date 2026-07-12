@@ -1,0 +1,28 @@
+{{! theme_edtech/sections/features
+    Why Choose Us — 4 feature cards.
+    Context: features[] from theme_edtech_build_frontpage_context()
+    @template theme_edtech/sections/features
+}}
+<section class="edt-section edt-section-features">
+    <div class="edt-container">
+
+        <div class="edt-section-head">
+            <div class="edt-kicker">{{#str}}feat_kicker, theme_edtech{{/str}}</div>
+            <h2>{{#str}}feat_title, theme_edtech{{/str}}</h2>
+            <p>{{#str}}feat_subtitle, theme_edtech{{/str}}</p>
+        </div>
+
+        <div class="edt-features-grid">
+            {{#features}}
+            <div class="edt-feature {{#gold}}edt-feature-gold{{/gold}}">
+                <div class="edt-feature-ic">
+                    <i class="fa-solid {{icon}}" aria-hidden="true"></i>
+                </div>
+                <h4>{{title}}</h4>
+                <p>{{text}}</p>
+            </div>
+            {{/features}}
+        </div>
+
+    </div>
+</section>

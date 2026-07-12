@@ -1,0 +1,945 @@
+// theme/ranees/scss/post.scss
+// Injected AFTER Bootstrap + Moodle core SCSS.
+// Fonts are loaded via templates/head.mustache (not here — @import url crashes ScssPhp).
+// ─────────────────────────────────────────────────────────────────────────
+
+// ── CSS custom properties (matches index.html :root) ─────────────────────
+:root {
+  --olive-50:  #{$olive-50};
+  --olive-100: #{$olive-100};
+  --olive-200: #{$olive-200};
+  --olive-500: #{$olive-500};
+  --olive-600: #{$olive-600};
+  --olive-700: #{$olive-700};
+  --olive-800: #{$olive-800};
+  --olive-900: #{$olive-900};
+  --gold-300:  #{$gold-300};
+  --gold-400:  #{$gold-400};
+  --gold-500:  #{$gold-500};
+  --bg:        #fbfbf6;
+  --surface:   #ffffff;
+  --ink:       #1f2410;
+  --muted:     #5b6151;
+  --border:    #e6e8d8;
+  --shadow-sm: 0 2px 8px rgba(40,55,15,0.06);
+  --shadow-md: 0 8px 24px rgba(40,55,15,0.08);
+  --shadow-lg: 0 18px 50px rgba(40,55,15,0.14);
+  --radius:    14px;
+  --radius-lg: 22px;
+}
+
+// ── Global reset ─────────────────────────────────────────────────────────
+html, body {
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--olive-600);
+  &:hover { color: var(--olive-700); }
+}
+
+// ── TOPBAR ───────────────────────────────────────────────────────────────
+.ranees-topbar {
+  background: var(--olive-800);
+  color: #e8eedb;
+  font-size: 13px;
+  width: 100%;
+  z-index: 1040;
+
+  .ranees-topbar-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 7px 24px;
+    max-width: 1280px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .ranees-topbar-left,
+  .ranees-topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  a {
+    color: #e8eedb;
+    opacity: .85;
+    transition: .2s;
+    font-size: 13px;
+    text-decoration: none;
+    &:hover { opacity: 1; color: var(--gold-300); }
+  }
+
+  .ranees-lang-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,.08);
+    padding: 4px 10px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 13px;
+    color: #e8eedb;
+
+    &:hover { background: rgba(212,175,55,.18); }
+    i { font-size: 12px; }
+  }
+}
+
+// ── NAVBAR ───────────────────────────────────────────────────────────────
+.navbar {
+  background: var(--surface) !important;
+  border-bottom: 1px solid var(--border) !important;
+  box-shadow: var(--shadow-sm) !important;
+  padding: 0 !important;
+
+  // Remove Boost's dark background overrides
+  &.navbar-dark { background: var(--surface) !important; }
+}
+
+.navbar .container-fluid {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 12px 24px;
+  gap: 16px;
+}
+
+// Brand / logo
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--ink) !important;
+  font-weight: 800;
+  font-size: 20px;
+  padding: 0;
+  margin: 0;
+
+  .ranees-brand-mark {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--olive-500), var(--olive-700));
+    display: grid;
+    place-items: center;
+    color: #fff;
+    font-size: 20px;
+    box-shadow: 0 6px 14px rgba(107,142,35,.35);
+    flex-shrink: 0;
+  }
+
+  .ranees-brand-text {
+    .ranees-brand-name {
+      font-weight: 800;
+      font-size: 20px;
+      line-height: 1.1;
+      color: var(--ink);
+      span { color: var(--olive-600); }
+    }
+    .ranees-brand-sub {
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: .5px;
+      text-transform: uppercase;
+    }
+  }
+}
+
+// Primary navigation links
+.primary-navigation .nav-link,
+.primary-navigation a.nav-link {
+  padding: 10px 14px !important;
+  border-radius: 10px !important;
+  font-weight: 600 !important;
+  font-size: 15px !important;
+  color: #2d3320 !important;
+  transition: .2s !important;
+  white-space: nowrap;
+
+  &:hover, &:focus {
+    color: var(--olive-600) !important;
+    background: var(--olive-50) !important;
+  }
+
+  &.active, &[aria-current="page"] {
+    color: var(--olive-700) !important;
+    background: var(--olive-50) !important;
+  }
+}
+
+// Navbar right side — search + user menu
+#usernavigation {
+  gap: 8px;
+  align-items: center;
+}
+
+// Search box
+.navbar .searchinput,
+.navbar [data-region="search-input-wrapper"] {
+  background: var(--olive-50);
+  border: 1px solid var(--olive-100);
+  border-radius: 999px !important;
+  color: var(--muted);
+  font-size: 13px;
+  padding: 6px 14px;
+
+  input { background: transparent; color: var(--ink); }
+  i { color: var(--olive-500); }
+}
+
+// Login / Register buttons in navbar
+.logininfo a,
+.nav-link.login {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+// User menu
+.usermenu .dropdown-toggle {
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+// ── BUTTONS ──────────────────────────────────────────────────────────────
+.btn-primary {
+  background: var(--olive-500);
+  border-color: var(--olive-500);
+  color: #fff;
+  box-shadow: 0 6px 14px rgba(107,142,35,.3);
+
+  &:hover, &:focus {
+    background: var(--olive-600);
+    border-color: var(--olive-600);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(107,142,35,.4);
+  }
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 1.5px solid var(--olive-200);
+  color: var(--olive-700);
+
+  &:hover { background: var(--olive-50); color: var(--olive-800); }
+}
+
+.btn-warning {
+  background: var(--gold-400);
+  border-color: var(--gold-400);
+  color: #3a2f00;
+  box-shadow: 0 6px 14px rgba(212,175,55,.35);
+
+  &:hover {
+    background: var(--gold-300);
+    border-color: var(--gold-300);
+    transform: translateY(-1px);
+  }
+}
+
+// ── CARDS ────────────────────────────────────────────────────────────────
+.card {
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  transition: transform .25s ease, box-shadow .25s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--olive-100);
+  }
+}
+
+// ── COURSE CARDS ─────────────────────────────────────────────────────────
+.coursebox,
+.card.dashboard-card {
+  border-radius: var(--radius-lg) !important;
+  border: 1px solid var(--border) !important;
+  overflow: hidden;
+  transition: transform .25s, box-shadow .25s;
+
+  &:hover {
+    transform: translateY(-6px) !important;
+    box-shadow: var(--shadow-lg) !important;
+    border-color: var(--olive-100) !important;
+  }
+
+  .coursename a,
+  .card-title a {
+    font-weight: 700;
+    font-size: 17px;
+    color: var(--ink);
+    &:hover { color: var(--olive-600); }
+  }
+}
+
+// ── FRONTPAGE HERO ───────────────────────────────────────────────────────
+#page-site-index .ranees-hero,
+.ranees-hero {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(1200px 500px at 90% -100px, rgba(212,175,55,.18), transparent 60%),
+    radial-gradient(900px 500px at -10% 30%, rgba(107,142,35,.18), transparent 60%),
+    linear-gradient(180deg, #fbfbf6 0%, #f3f5e6 100%);
+  padding: 70px 0 90px;
+
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .ranees-hero-grid {
+    display: grid;
+    grid-template-columns: 1.05fr .95fr;
+    gap: 50px;
+    align-items: center;
+
+    @media (max-width: 992px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .ranees-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff;
+    border: 1px solid var(--olive-100);
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--olive-700);
+    box-shadow: var(--shadow-sm);
+
+    .dot {
+      width: 8px; height: 8px;
+      background: var(--gold-400);
+      border-radius: 50%;
+    }
+  }
+
+  h1 {
+    font-size: clamp(34px, 4.6vw, 56px);
+    line-height: 1.15;
+    margin: 18px 0 16px;
+    font-weight: 800;
+    letter-spacing: -.5px;
+    color: var(--ink);
+
+    .accent {
+      background: linear-gradient(120deg, var(--olive-600), var(--olive-500));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+  }
+
+  p.lead {
+    font-size: 18px;
+    color: var(--muted);
+    max-width: 560px;
+    margin-bottom: 28px;
+  }
+
+  .ranees-hero-cta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .ranees-hero-stats {
+    margin-top: 36px;
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+
+    .item {
+      .num { font-size: 28px; font-weight: 800; color: var(--olive-700); }
+      .lbl { color: var(--muted); font-size: 13px; }
+    }
+  }
+}
+
+// ── SECTIONS ─────────────────────────────────────────────────────────────
+.ranees-section {
+  padding: 80px 0;
+
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  &.ranees-section-tinted {
+    background: #f7f9eb;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  &.ranees-section-features {
+    background: linear-gradient(180deg, #fff 0%, #f6f8ec 100%);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+}
+
+.ranees-section-head {
+  text-align: center;
+  margin-bottom: 44px;
+
+  .kicker {
+    color: var(--gold-500);
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: 13px;
+  }
+
+  h2 {
+    font-size: clamp(26px, 3vw, 36px);
+    margin-top: 6px;
+    font-weight: 800;
+    color: var(--ink);
+  }
+
+  p {
+    color: var(--muted);
+    max-width: 640px;
+    margin: 10px auto 0;
+  }
+}
+
+// ── CATEGORY GRID ────────────────────────────────────────────────────────
+.ranees-cats {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 18px;
+
+  @media (max-width: 1024px) { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 600px)  { grid-template-columns: repeat(2, 1fr); }
+}
+
+.ranees-cat {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 14px;
+  text-align: center;
+  transition: .25s;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-4px);
+    border-color: var(--olive-200);
+    box-shadow: var(--shadow-md);
+
+    .ic { background: var(--gold-100, #faecb6); color: var(--gold-500); }
+  }
+
+  .ic {
+    width: 54px; height: 54px;
+    border-radius: 14px;
+    margin: 0 auto 12px;
+    display: grid;
+    place-items: center;
+    font-size: 22px;
+    background: var(--olive-50);
+    color: var(--olive-600);
+    transition: .25s;
+  }
+
+  .name { font-weight: 700; font-size: 15px; }
+  .count { font-size: 12px; color: var(--muted); margin-top: 2px; }
+}
+
+// ── FEATURES / WHY US ────────────────────────────────────────────────────
+.ranees-features-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+
+  @media (max-width: 1024px) { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 600px)  { grid-template-columns: 1fr; }
+}
+
+.ranees-feature {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  padding: 28px 22px;
+  border: 1px solid var(--border);
+  text-align: center;
+  transition: .25s;
+
+  &:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+
+  .ic {
+    width: 64px; height: 64px;
+    border-radius: 18px;
+    margin: 0 auto 16px;
+    display: grid;
+    place-items: center;
+    font-size: 24px;
+    color: #fff;
+    background: linear-gradient(135deg, var(--olive-500), var(--olive-700));
+    box-shadow: 0 8px 18px rgba(107,142,35,.25);
+  }
+
+  &:nth-child(2) .ic {
+    background: linear-gradient(135deg, var(--gold-400), var(--gold-500));
+    color: #3a2f00;
+    box-shadow: 0 8px 18px rgba(212,175,55,.3);
+  }
+
+  h4 { font-size: 18px; margin-bottom: 8px; }
+  p  { color: var(--muted); font-size: 14px; }
+}
+
+// ── CTA BAND ─────────────────────────────────────────────────────────────
+.ranees-cta-band {
+  background:
+    radial-gradient(800px 400px at 100% 0%, rgba(212,175,55,.25), transparent 60%),
+    linear-gradient(135deg, var(--olive-700), var(--olive-900));
+  color: #fff;
+  border-radius: var(--radius-lg);
+  padding: 50px;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 30px;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+
+  @media (max-width: 1024px) { grid-template-columns: 1fr; padding: 36px; }
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: auto -80px -80px auto;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212,175,55,.35), transparent 70%);
+  }
+
+  h2 { font-size: clamp(24px, 3vw, 34px); line-height: 1.25; margin-bottom: 10px; color: #fff; }
+  p  { color: rgba(255,255,255,.78); margin-bottom: 22px; }
+
+  .ranees-cta-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  .ranees-cta-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .badge-circle {
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.08);
+      border: 1.5px dashed rgba(255,255,255,.3);
+      display: grid;
+      place-items: center;
+
+      .core {
+        width: 140px; height: 140px;
+        border-radius: 50%;
+        background: var(--gold-400);
+        color: var(--olive-900);
+        display: grid;
+        place-items: center;
+        font-weight: 800;
+        text-align: center;
+        line-height: 1.2;
+        font-size: 18px;
+        box-shadow: 0 18px 40px rgba(0,0,0,.3);
+      }
+    }
+  }
+}
+
+// ── TESTIMONIALS ─────────────────────────────────────────────────────────
+.ranees-testi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+
+  @media (max-width: 1024px) { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 600px)  { grid-template-columns: 1fr; }
+}
+
+.ranees-testi {
+  background: #fff;
+  border: 1px solid var(--border);
+  padding: 26px;
+  border-radius: var(--radius-lg);
+  position: relative;
+
+  .quote {
+    position: absolute;
+    top: -14px;
+    inset-inline-start: 22px;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--gold-400);
+    color: var(--olive-900);
+    display: grid;
+    place-items: center;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .stars { color: var(--gold-400); margin-bottom: 10px; font-size: 14px; }
+  p  { color: #2d3320; font-size: 15px; margin-bottom: 18px; }
+
+  .who {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
+    .n  { font-weight: 700; font-size: 15px; }
+    .r  { font-size: 12px; color: var(--muted); }
+  }
+}
+
+// ── FOOTER ───────────────────────────────────────────────────────────────
+#page-footer {
+  background: var(--olive-900) !important;
+  color: #d6decb !important;
+  padding: 70px 0 0 !important;
+  border-top: none !important;
+
+  // Hide Boost's floating footer popover button in favour of our full footer
+  .footer-content-popover { display: none !important; }
+  [data-region="footer-container-popover"] { display: none !important; }
+  .btn-footer-popover { display: none !important; }
+
+  .ranees-footer-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .ranees-foot-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1.3fr;
+    gap: 40px;
+
+    @media (max-width: 1024px) { grid-template-columns: 1fr 1fr; }
+    @media (max-width: 600px)  { grid-template-columns: 1fr; }
+  }
+
+  h5 {
+    color: #fff !important;
+    font-size: 16px !important;
+    margin-bottom: 18px !important;
+    position: relative;
+    padding-bottom: 10px;
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset-inline-start: 0;
+      bottom: 0;
+      width: 32px; height: 3px;
+      background: var(--gold-400);
+      border-radius: 3px;
+    }
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    a {
+      color: #bdc7a9 !important;
+      font-size: 14px;
+      transition: .2s;
+      text-decoration: none;
+      &:hover { color: var(--gold-300) !important; padding-inline-start: 6px; }
+    }
+  }
+
+  .ranees-foot-about {
+    p { font-size: 14px; color: #bdc7a9; margin: 14px 0; }
+  }
+
+  .ranees-socials {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+
+    a {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.06);
+      display: grid;
+      place-items: center;
+      color: #fff !important;
+      transition: .2s;
+      text-decoration: none;
+
+      &:hover { background: var(--gold-400); color: var(--olive-900) !important; }
+    }
+  }
+
+  .ranees-newsletter {
+    margin-top: 14px;
+    display: flex;
+    gap: 8px;
+    background: rgba(255,255,255,.06);
+    border-radius: 999px;
+    padding: 5px;
+
+    input {
+      flex: 1;
+      border: 0;
+      background: transparent;
+      outline: none;
+      padding: 8px 14px;
+      color: #fff;
+      font: inherit;
+
+      &::placeholder { color: #9aa48a; }
+    }
+
+    button {
+      border: 0;
+      background: var(--gold-400);
+      color: var(--olive-900);
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+  }
+
+  .ranees-copyright {
+    margin-top: 50px;
+    padding: 20px 24px;
+    border-top: 1px solid rgba(255,255,255,.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    font-size: 13px;
+    color: #9aa48a;
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+
+    a { color: #bdc7a9 !important; text-decoration: none; }
+  }
+
+  // Moodle debug / standard footer — small and muted
+  .footer-content-debugging {
+    margin-top: 12px;
+    font-size: 12px;
+    opacity: .6;
+  }
+}
+
+// ── LOGIN PAGE ───────────────────────────────────────────────────────────
+#page-login-index {
+  background: linear-gradient(135deg, var(--olive-800) 0%, var(--olive-900) 100%);
+  min-height: 100vh;
+
+  #page-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 70vh;
+    padding: 40px 0;
+  }
+
+  .card {
+    border: none;
+    box-shadow: 0 20px 60px rgba(0,0,0,.25);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+
+    .card-header {
+      background: linear-gradient(135deg, var(--olive-500), var(--olive-700));
+      color: #fff;
+      font-weight: 700;
+      text-align: center;
+      padding: 1.25rem;
+      border: none;
+    }
+  }
+}
+
+// ── DASHBOARD / MY PAGE ──────────────────────────────────────────────────
+#page-my-index {
+  .ranees-welcome-banner {
+    background:
+      radial-gradient(900px 300px at 90% -50px, rgba(212,175,55,.2), transparent 60%),
+      linear-gradient(135deg, var(--olive-700), var(--olive-900));
+    color: #fff;
+    border-radius: var(--radius-lg);
+    padding: 36px 40px;
+    margin-bottom: 28px;
+
+    h2 { color: #fff; font-size: 26px; margin-bottom: 6px; }
+    p  { color: rgba(255,255,255,.75); margin: 0; }
+  }
+}
+
+// ── BADGES / TAGS ────────────────────────────────────────────────────────
+.badge {
+  font-weight: 700;
+  letter-spacing: .02em;
+  border-radius: 999px;
+}
+
+.badge-primary { background: var(--olive-500); }
+.badge-warning  { background: var(--gold-400); color: #3a2f00; }
+
+// ── FORM ELEMENTS ────────────────────────────────────────────────────────
+.form-control, .form-select {
+  border-radius: 999px;
+  border-color: var(--border);
+  background: var(--olive-50);
+  color: var(--ink);
+
+  &:focus {
+    border-color: var(--olive-400);
+    box-shadow: 0 0 0 3px rgba(90,177,132,.18);
+    background: #fff;
+  }
+}
+
+// ── ALERTS ───────────────────────────────────────────────────────────────
+.alert-success { border-color: var(--olive-200); background: var(--olive-50); color: var(--olive-800); }
+.alert-warning  { border-color: #f5dd7e; background: #fdf7e2; color: #7a5b0e; }
+
+// ── PAGINATION ───────────────────────────────────────────────────────────
+.page-link {
+  color: var(--olive-600);
+  border-radius: 8px;
+  &:hover { background: var(--olive-50); color: var(--olive-700); }
+}
+.page-item.active .page-link {
+  background: var(--olive-500);
+  border-color: var(--olive-500);
+}
+
+// ── PROGRESS BARS ────────────────────────────────────────────────────────
+.progress-bar { background-color: var(--olive-500); }
+
+// ── FRONT PAGE — TRUE FULL WIDTH ─────────────────────────────────────────
+// The main-inner box has: white bg, border-radius, padding, max-width 830px.
+// We strip ALL of that so sections span the full viewport like index.html.
+
+// 1. Fix our $border-radius variable bleeding into Moodle's layout box
+#page.drawers .main-inner {
+  border-radius: 0 !important;
+}
+
+// 2. Body-level limitedwidth cap override
+body.limitedwidth #page.drawers .main-inner {
+  max-width: 100% !important;
+}
+
+// 3. Front page — strip every wrapper down to raw viewport width
+#page-site-index {
+
+  // ── Hide the page header (shows "EdTech" site short name — not needed on front page)
+  #page-header {
+    display: none !important;
+  }
+
+  // ── The white card box (.main-inner) — remove completely
+  #page.drawers .main-inner {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background-color: transparent !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  // ── Page content wrapper
+  #page-content {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  // ── Region wrappers
+  #region-main-box,
+  #region-main {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  // ── Topic section wrappers (used when content is added via "Site topic" / front page description)
+  // These nest deeply: sitetopic > ul.topics > li.section > .section-item > .content > .my-3 > .summarytext > .no-overflow
+  .sitetopic,
+  .course-content,
+  ul.topics.frontpage,
+  ul.topics.frontpage > li.section,
+  ul.topics.frontpage > li.section > .section-item,
+  ul.topics.frontpage > li.section .course-section-header,
+  ul.topics.frontpage > li.section .content,
+  ul.topics.frontpage > li.section .my-3,
+  ul.topics.frontpage > li.section .summarytext,
+  ul.topics.frontpage > li.section .no-overflow {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  // Hide section headers / badges Moodle injects inside topic sections
+  .course-section-header,
+  .section_availability,
+  .sectionbadges {
+    display: none !important;
+  }
+
+  // ── HTML blocks — strip Bootstrap card wrapper
+  .block_html {
+    margin: 0 !important;
+
+    > .card {
+      border: none !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      margin: 0 !important;
+      background: transparent !important;
+
+      > .card-body { padding: 0 !important; }
+      > .card-header { display: none !important; }
+    }
+  }
+
+  // ── Hide drawers (sidebars not needed on front page)
+  .drawer-toggles { display: none !important; }
+  .drawer { display: none !important; }
+}
+
+// ── RTL SUPPORT ──────────────────────────────────────────────────────────
+html[dir="rtl"] {
+  body { font-family: 'Cairo', system-ui, sans-serif; }
+  .navbar .container-fluid { flex-direction: row-reverse; }
+  #usernavigation { margin-left: 0 !important; margin-right: auto !important; }
+}
+
+// ── RESPONSIVE ───────────────────────────────────────────────────────────
+@media (max-width: 768px) {
+  .ranees-topbar .ranees-topbar-left { display: none; }
+}

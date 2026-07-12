@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>منصة التعلم الإلكتروني | EdTech</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+<style>
+  :root{
+    --olive-50:  #f4f6ec;
+    --olive-100: #e3ead0;
+    --olive-200: #c8d6a3;
+    --olive-300: #a7be73;
+    --olive-400: #8aa84e;
+    --olive-500: #5AB184;
+    --olive-600: #57761c;
+    --olive-700: #445c17;
+    --olive-800: #344712;
+    --olive-900: #25320d;
+
+    --gold-50:  #fdf7e2;
+    --gold-100: #faecb6;
+    --gold-200: #f5dd7e;
+    --gold-300: #ebc94a;
+    --gold-400: #BD934B;
+    --gold-500: #b8941f;
+    --gold-600: #957616;
+
+    --bg:        #fbfbf6;
+    --surface:   #ffffff;
+    --ink:       #1f2410;
+    --muted:     #5b6151;
+    --border:    #e6e8d8;
+    --shadow-sm: 0 2px 8px rgba(40,55,15,0.06);
+    --shadow-md: 0 8px 24px rgba(40,55,15,0.08);
+    --shadow-lg: 0 18px 50px rgba(40,55,15,0.14);
+    --radius:    14px;
+    --radius-lg: 22px;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html, body{height:100%;}
+  body{
+    font-family:'Cairo','Poppins', system-ui, sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  html[dir="ltr"] body{ font-family:'Poppins','Cairo', system-ui, sans-serif; }
+
+  a{ color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  .container{ max-width:1280px; margin:0 auto; padding: 0 24px;}
+
+  /* ---------- TOP STRIP ---------- */
+  .topbar{
+    background: var(--olive-800);
+    color: #e8eedb;
+    font-size: 13px;
+  }
+  .topbar .container{
+    display:flex; justify-content:space-between; align-items:center;
+    padding: 8px 24px;
+  }
+  .topbar a{ color:#e8eedb; opacity:.85; transition: .2s;}
+  .topbar a:hover{ opacity:1; color: var(--gold-300);}
+  .topbar .left, .topbar .right{display:flex; align-items:center; gap: 18px; flex-wrap:wrap;}
+
+  /* Lang pill + dropdown */
+  .lang-pill{
+    display:inline-flex; align-items:center; gap:6px;
+    background: rgba(255,255,255,.08);
+    padding: 4px 10px; border-radius: 999px;
+    cursor:pointer; position:relative; user-select:none;
+  }
+  .lang-pill:hover{ background: rgba(212,175,55,.18);}
+
+  .lang-dropdown{
+    position:absolute; top:calc(100% + 10px);
+    inset-inline-end: 0;
+    background: var(--olive-800);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:12px; overflow:hidden;
+    min-width:155px; z-index:200;
+    box-shadow: 0 12px 32px rgba(0,0,0,.4);
+    display:none;
+  }
+  .lang-dropdown.open{ display:block; }
+
+  .lang-option{
+    padding:10px 16px; cursor:pointer; font-size:13px;
+    color:#e8eedb; display:flex; align-items:center; gap:10px;
+    transition:.15s;
+  }
+  .lang-option:hover{ background:rgba(212,175,55,.18); color:var(--gold-300);}
+  .lang-option.is-active{ color:var(--gold-300); font-weight:700; background:rgba(212,175,55,.1);}
+  .lang-option .check{ margin-inline-start:auto; font-size:11px; opacity:0;}
+  .lang-option.is-active .check{ opacity:1;}
+
+  /* ---------- HEADER ---------- */
+  .navbar{
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    position: sticky; top:0; z-index:50;
+    box-shadow: var(--shadow-sm);
+  }
+  .nav-wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 16px 24px; gap:24px;
+  }
+  .brand{ display:flex; align-items:center; gap:12px;}
+  .brand-mark{
+    width:44px; height:44px; border-radius:12px;
+    background: linear-gradient(135deg, var(--olive-500), var(--olive-700));
+    display:grid; place-items:center; color:#fff;
+    box-shadow: 0 6px 14px rgba(107,142,35,.35);
+    position:relative;
+  }
+  .brand-mark::after{
+    content:""; position:absolute; inset:auto -3px -3px auto;
+    width:14px; height:14px; border-radius:50%;
+    background: var(--gold-400); border: 2px solid var(--surface);
+  }
+  .brand-name{ font-weight:800; font-size: 20px; line-height:1.1;}
+  .brand-name span{ color: var(--olive-600);}
+  .brand-sub{ font-size:11px; color:var(--muted); letter-spacing:.5px; text-transform:uppercase;}
+
+  .nav-links{ display:flex; align-items:center; gap: 6px; }
+  .nav-links a{
+    padding: 10px 14px; border-radius: 10px;
+    font-weight:600; font-size:15px; color: #2d3320;
+    transition:.2s;
+  }
+  .nav-links a:hover{ color: var(--olive-600); background: var(--olive-50);}
+  .nav-links a.active{ color: var(--olive-700); background: var(--olive-50);}
+  .nav-links a.active::after{
+    content:""; display:block; height:3px; width:24px;
+    background: var(--gold-400); border-radius:3px; margin: 6px auto -2px;
+  }
+
+  .nav-actions{display:flex; align-items:center; gap:10px;}
+  .search-mini{
+    display:flex; align-items:center; gap:8px;
+    background: var(--olive-50);
+    border:1px solid var(--olive-100);
+    padding: 8px 14px; border-radius: 999px;
+    color: var(--muted); font-size:13px; min-width: 220px;
+  }
+  .search-mini i{ color: var(--olive-500);}
+  .search-mini input{
+    border:0; background:transparent; outline:none; flex:1;
+    font: inherit; color: var(--ink);
+  }
+  .icon-btn{
+    width:42px; height:42px; border-radius:50%;
+    display:grid; place-items:center;
+    background: var(--olive-50); color: var(--olive-700);
+    border:1px solid var(--olive-100);
+    cursor:pointer; position:relative; transition:.2s;
+  }
+  .icon-btn:hover{ background: var(--olive-100);}
+  .icon-btn .badge{
+    position:absolute; top:-2px; inset-inline-end:-2px;
+    background: var(--gold-400); color:#3a2f00;
+    min-width:18px; height:18px; border-radius:9px;
+    font-size:10px; font-weight:800;
+    display:grid; place-items:center; padding:0 5px;
+    border:2px solid var(--surface);
+  }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding: 10px 18px; border-radius: 999px;
+    font-weight:700; font-size:14px;
+    border:0; cursor:pointer; transition: .2s; white-space:nowrap;
+  }
+  .btn-primary{
+    background: var(--olive-500); color:#fff;
+    box-shadow: 0 6px 14px rgba(107,142,35,.3);
+  }
+  .btn-primary:hover{ background: var(--olive-600); transform: translateY(-1px);}
+  .btn-gold{
+    background: var(--gold-400); color: #3a2f00;
+    box-shadow: 0 6px 14px rgba(212,175,55,.35);
+  }
+  .btn-gold:hover{ background: var(--gold-300); transform: translateY(-1px);}
+  .btn-ghost{
+    background: transparent; color: var(--olive-700);
+    border: 1.5px solid var(--olive-200);
+  }
+  .btn-ghost:hover{ background: var(--olive-50);}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative; overflow:hidden;
+    background:
+      radial-gradient(1200px 500px at 90% -100px, rgba(212,175,55,.18), transparent 60%),
+      radial-gradient(900px 500px at -10% 30%, rgba(107,142,35,.18), transparent 60%),
+      linear-gradient(180deg, #fbfbf6 0%, #f3f5e6 100%);
+    padding: 70px 0 90px;
+  }
+  .hero-grid{
+    display:grid; grid-template-columns: 1.05fr .95fr; gap: 50px; align-items:center;
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    background: var(--surface); border:1px solid var(--olive-100);
+    padding: 6px 14px; border-radius:999px;
+    font-size:13px; font-weight:600; color: var(--olive-700);
+    box-shadow: var(--shadow-sm);
+  }
+  .eyebrow .dot{ width:8px; height:8px; background:var(--gold-400); border-radius:50%;}
+  .hero h1{
+    font-size: clamp(34px, 4.6vw, 56px); line-height: 1.15;
+    margin: 18px 0 16px; font-weight:800; letter-spacing:-.5px;
+  }
+  .hero h1 .accent{
+    background: linear-gradient(120deg, var(--olive-600), var(--olive-500));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    position:relative;
+  }
+  .hero h1 .accent::after{
+    content:""; position:absolute; left:0; right:0; bottom:6px; height:10px;
+    background: var(--gold-200); z-index:-1; border-radius:6px;
+  }
+  .hero p.lead{ font-size:18px; color: var(--muted); max-width: 560px; margin-bottom:28px;}
+  .hero-cta{ display:flex; gap:12px; flex-wrap:wrap;}
+  .hero-stats{
+    margin-top: 36px; display:flex; gap:40px; flex-wrap:wrap;
+  }
+  .hero-stats .item .num{
+    font-size: 28px; font-weight:800; color: var(--olive-700);
+  }
+  .hero-stats .item .lbl{ color: var(--muted); font-size:13px;}
+
+  /* Hero visual */
+  .hero-visual{ position:relative; }
+  .hero-card{
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    padding: 22px;
+    box-shadow: var(--shadow-lg);
+    border:1px solid var(--border);
+  }
+  .hero-thumb{
+    aspect-ratio: 16/10;
+    border-radius: 16px;
+    background:
+      linear-gradient(135deg, rgba(0,0,0,.0), rgba(0,0,0,.35)),
+      url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=900&auto=format&fit=crop') center/cover;
+    position:relative; overflow:hidden;
+  }
+  .play{
+    position:absolute; inset:0; display:grid; place-items:center;
+  }
+  .play button{
+    width:72px; height:72px; border-radius:50%;
+    background: rgba(255,255,255,.95); color: var(--olive-700);
+    border:0; font-size:22px; cursor:pointer;
+    box-shadow: 0 12px 30px rgba(0,0,0,.25);
+    transition:.2s;
+  }
+  .play button:hover{ transform: scale(1.06); color:var(--gold-500);}
+  .hero-card h3{ font-size: 18px; margin: 16px 6px 4px;}
+  .hero-card .meta{
+    display:flex; align-items:center; gap:14px; padding: 4px 6px 0;
+    color: var(--muted); font-size:13px;
+  }
+  .hero-card .meta .stars{ color: var(--gold-400);}
+  .floating{
+    position:absolute; background:var(--surface);
+    border:1px solid var(--border); border-radius: 14px;
+    box-shadow: var(--shadow-md); padding: 12px 14px;
+    display:flex; align-items:center; gap:12px;
+  }
+  .floating .ico{
+    width:38px; height:38px; border-radius:10px;
+    display:grid; place-items:center; color:#fff;
+  }
+  .float-1{ inset-inline-start:-30px; top: 30px;}
+  .float-1 .ico{ background: var(--olive-500);}
+  .float-2{ inset-inline-end:-20px; bottom: 60px;}
+  .float-2 .ico{ background: var(--gold-400); color:#3a2f00;}
+  .floating .t{ font-weight:700; font-size:14px;}
+  .floating .s{ font-size:12px; color:var(--muted);}
+
+  /* ---------- SECTION HEAD ---------- */
+  section{ padding: 80px 0;}
+  .section-head{ text-align:center; margin-bottom: 44px;}
+  .section-head .kicker{
+    color: var(--gold-500); font-weight:700; letter-spacing:1px;
+    text-transform:uppercase; font-size:13px;
+  }
+  .section-head h2{
+    font-size: clamp(26px, 3vw, 36px); margin-top: 6px; font-weight:800;
+  }
+  .section-head p{ color: var(--muted); max-width: 640px; margin: 10px auto 0;}
+
+  /* ---------- CATEGORIES ---------- */
+  .cats{
+    display:grid; grid-template-columns: repeat(6, 1fr); gap: 18px;
+  }
+  .cat{
+    background: var(--surface); border:1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px 14px; text-align:center; transition: .25s;
+    cursor:pointer;
+  }
+  .cat:hover{
+    transform: translateY(-4px);
+    border-color: var(--olive-200);
+    box-shadow: var(--shadow-md);
+  }
+  .cat .ic{
+    width:54px; height:54px; border-radius: 14px; margin:0 auto 12px;
+    display:grid; place-items:center; font-size:22px;
+    background: var(--olive-50); color: var(--olive-600);
+    transition:.25s;
+  }
+  .cat:hover .ic{ background: var(--gold-100); color: var(--gold-500);}
+  .cat .name{ font-weight:700; font-size:15px;}
+  .cat .count{ font-size:12px; color:var(--muted); margin-top:2px;}
+
+  /* ---------- COURSES ---------- */
+  .courses-head{
+    display:flex; justify-content:space-between; align-items:end;
+    margin-bottom: 28px; gap:20px; flex-wrap:wrap;
+  }
+  .course-grid{
+    display:grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  }
+  .course{
+    background: var(--surface); border:1px solid var(--border);
+    border-radius: var(--radius-lg); overflow:hidden; transition:.25s;
+    display:flex; flex-direction:column;
+  }
+  .course:hover{ transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: var(--olive-100);}
+  .course .thumb{
+    aspect-ratio: 16/10; background-size:cover; background-position:center;
+    position:relative;
+  }
+  .course .thumb .tag{
+    position:absolute; top:14px; inset-inline-start:14px;
+    background: var(--gold-400); color:#3a2f00;
+    font-size:11px; font-weight:800; text-transform:uppercase;
+    padding: 5px 10px; border-radius:999px; letter-spacing:.5px;
+  }
+  .course .thumb .save{
+    position:absolute; top:12px; inset-inline-end:12px;
+    width:34px; height:34px; border-radius:50%;
+    background: rgba(255,255,255,.95); color: var(--olive-700);
+    border:0; cursor:pointer; display:grid; place-items:center;
+  }
+  .course .body{ padding: 20px; display:flex; flex-direction:column; gap:10px; flex:1;}
+  .course .cat-line{
+    display:flex; align-items:center; justify-content:space-between;
+    color: var(--olive-600); font-size:13px; font-weight:700;
+  }
+  .course .cat-line .stars{ color: var(--gold-400);}
+  .course h3{ font-size:18px; line-height:1.35;}
+  .course h3 a:hover{ color: var(--olive-600);}
+  .course .ins{
+    display:flex; align-items:center; gap:10px; color:var(--muted);
+    font-size:13px;
+  }
+  .course .ins img{
+    width:30px; height:30px; border-radius:50%; object-fit:cover; border:2px solid var(--olive-50);
+  }
+  .course .meta{
+    display:flex; align-items:center; gap:14px; color:var(--muted); font-size:13px;
+    padding-top: 6px;
+  }
+  .course .meta i{ color: var(--olive-500); margin-inline-end:4px;}
+  .course .foot{
+    border-top: 1px dashed var(--border); padding: 14px 20px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .course .price{ font-weight:800; font-size:18px; color: var(--olive-700);}
+  .course .price .free{ color: var(--gold-500);}
+  .course .foot a{
+    font-weight:700; color:var(--olive-700); font-size:14px;
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  .course .foot a:hover{ color: var(--gold-500);}
+
+  /* ---------- WHY US (FEATURES) ---------- */
+  .features{
+    background: linear-gradient(180deg, #fff 0%, #f6f8ec 100%);
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  }
+  .features-grid{
+    display:grid; grid-template-columns: repeat(4, 1fr); gap: 22px;
+  }
+  .feature{
+    background: var(--surface); border-radius: var(--radius-lg);
+    padding: 28px 22px; border:1px solid var(--border); text-align:center;
+    transition:.25s;
+  }
+  .feature:hover{ transform: translateY(-4px); box-shadow: var(--shadow-md);}
+  .feature .ic{
+    width:64px; height:64px; border-radius: 18px; margin: 0 auto 16px;
+    display:grid; place-items:center; font-size:24px; color:#fff;
+    background: linear-gradient(135deg, var(--olive-500), var(--olive-700));
+    box-shadow: 0 8px 18px rgba(107,142,35,.25);
+    position:relative;
+  }
+  .feature:nth-child(2) .ic{ background: linear-gradient(135deg, var(--gold-400), var(--gold-500)); color:#3a2f00; box-shadow: 0 8px 18px rgba(212,175,55,.3);}
+  .feature h4{ font-size:18px; margin-bottom: 8px;}
+  .feature p{ color: var(--muted); font-size:14px;}
+
+  /* ---------- CTA BAND ---------- */
+  .cta-band{
+    background:
+      radial-gradient(800px 400px at 100% 0%, rgba(212,175,55,.25), transparent 60%),
+      linear-gradient(135deg, var(--olive-700), var(--olive-900));
+    color:#fff; border-radius: var(--radius-lg);
+    padding: 50px; display:grid; grid-template-columns: 1.5fr 1fr; gap: 30px; align-items:center;
+    position:relative; overflow:hidden;
+  }
+  .cta-band::before{
+    content:""; position:absolute; inset:auto -80px -80px auto;
+    width:300px; height:300px; border-radius:50%;
+    background: radial-gradient(circle, rgba(212,175,55,.35), transparent 70%);
+  }
+  .cta-band h2{ font-size: clamp(24px, 3vw, 34px); line-height:1.25; margin-bottom: 10px;}
+  .cta-band p{ color: rgba(255,255,255,.78); margin-bottom: 22px;}
+  .cta-band .actions{ display:flex; gap:12px; flex-wrap:wrap;}
+  .cta-band .visual{
+    display:flex; justify-content:center; align-items:center;
+  }
+  .cta-band .visual .badge-circle{
+    width: 200px; height:200px; border-radius:50%;
+    background: rgba(255,255,255,.08);
+    border: 1.5px dashed rgba(255,255,255,.3);
+    display:grid; place-items:center;
+    position:relative;
+  }
+  .cta-band .visual .badge-circle .core{
+    width:140px; height:140px; border-radius:50%;
+    background: var(--gold-400); color: var(--olive-900);
+    display:grid; place-items:center; font-weight:800;
+    text-align:center; line-height:1.2; font-size:18px;
+    box-shadow: 0 18px 40px rgba(0,0,0,.3);
+  }
+
+  /* ---------- TESTIMONIALS ---------- */
+  .testi-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 22px;}
+  .testi{
+    background: var(--surface); border:1px solid var(--border);
+    padding: 26px; border-radius: var(--radius-lg); position:relative;
+  }
+  .testi .quote{
+    position:absolute; top: -14px; inset-inline-start: 22px;
+    width: 40px; height:40px; border-radius:50%;
+    background: var(--gold-400); color: var(--olive-900);
+    display:grid; place-items:center; box-shadow: var(--shadow-sm);
+  }
+  .testi .stars{ color: var(--gold-400); margin-bottom: 10px; font-size:14px;}
+  .testi p{ color: #2d3320; font-size:15px; margin-bottom: 18px;}
+  .testi .who{ display:flex; align-items:center; gap:12px;}
+  .testi .who img{ width:44px; height:44px; border-radius:50%; object-fit:cover;}
+  .testi .who .n{ font-weight:700; font-size:15px;}
+  .testi .who .r{ font-size:12px; color:var(--muted);}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background: var(--olive-900); color: #d6decb; padding: 70px 0 0;
+  }
+  .foot-grid{
+    display:grid; grid-template-columns: 1.4fr 1fr 1fr 1.3fr; gap: 40px;
+  }
+  footer h5{
+    color:#fff; font-size:16px; margin-bottom: 18px;
+    position:relative; padding-bottom: 10px;
+  }
+  footer h5::after{
+    content:""; position:absolute; inset-inline-start:0; bottom:0;
+    width:32px; height:3px; background: var(--gold-400); border-radius:3px;
+  }
+  footer ul{ list-style:none; display:flex; flex-direction:column; gap: 10px;}
+  footer ul a{ color:#bdc7a9; font-size:14px; transition:.2s;}
+  footer ul a:hover{ color: var(--gold-300); padding-inline-start:6px;}
+  footer .about p{ font-size:14px; color:#bdc7a9; margin: 14px 0;}
+  .socials{ display:flex; gap:8px;}
+  .socials a{
+    width:36px; height:36px; border-radius:50%;
+    background: rgba(255,255,255,.06); display:grid; place-items:center;
+    color:#fff; transition:.2s;
+  }
+  .socials a:hover{ background: var(--gold-400); color: var(--olive-900);}
+  .newsletter{
+    margin-top: 14px; display:flex; gap:8px;
+    background: rgba(255,255,255,.06); border-radius: 999px; padding: 5px;
+  }
+  .newsletter input{
+    flex:1; border:0; background:transparent; outline:none;
+    padding: 8px 14px; color:#fff; font: inherit;
+  }
+  .newsletter input::placeholder{ color:#9aa48a;}
+  .newsletter button{
+    border:0; background: var(--gold-400); color: var(--olive-900);
+    padding: 8px 18px; border-radius:999px; font-weight:700; cursor:pointer;
+  }
+  .copyright{
+    margin-top: 50px; padding: 20px 0; border-top: 1px solid rgba(255,255,255,.08);
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;
+    font-size:13px; color:#9aa48a;
+  }
+  .copyright a{ color:#bdc7a9;}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 1024px){
+    .hero-grid{ grid-template-columns: 1fr; }
+    .cats{ grid-template-columns: repeat(3, 1fr); }
+    .course-grid{ grid-template-columns: repeat(2, 1fr); }
+    .features-grid{ grid-template-columns: repeat(2, 1fr); }
+    .testi-grid{ grid-template-columns: 1fr 1fr; }
+    .foot-grid{ grid-template-columns: 1fr 1fr; }
+    .cta-band{ grid-template-columns: 1fr; padding: 36px;}
+    .nav-links, .search-mini{ display:none;}
+  }
+  @media (max-width: 600px){
+    .cats{ grid-template-columns: repeat(2, 1fr); }
+    .course-grid{ grid-template-columns: 1fr; }
+    .features-grid{ grid-template-columns: 1fr; }
+    .testi-grid{ grid-template-columns: 1fr; }
+    .foot-grid{ grid-template-columns: 1fr; }
+    section{ padding: 60px 0;}
+    .hero{ padding: 50px 0 70px;}
+    .floating{ display:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="container">
+    <div class="left">
+      <span><i class="fa-solid fa-phone"></i> &nbsp; +974 4412 3456</span>
+      <span><i class="fa-solid fa-envelope"></i> &nbsp; support@edtech.qa</span>
+    </div>
+    <div class="right">
+      <a href="#" data-i18n="topbar.help"><i class="fa-solid fa-circle-question"></i> &nbsp; مساعدة</a>
+      <a href="#" data-i18n="topbar.instructor"><i class="fa-solid fa-chalkboard-user"></i> &nbsp; كن مدرباً</a>
+      <span class="lang-pill" id="langPill">
+        <i class="fa-solid fa-globe"></i>
+        <span id="langLabel">العربية</span>
+        <i class="fa-solid fa-chevron-down" style="font-size:10px;"></i>
+        <div class="lang-dropdown" id="langDropdown">
+          <div class="lang-option is-active" data-lang="ar">
+            🇶🇦 &nbsp;العربية
+            <i class="fa-solid fa-check check"></i>
+          </div>
+          <div class="lang-option" data-lang="en">
+            🇺🇸 &nbsp;English
+            <i class="fa-solid fa-check check"></i>
+          </div>
+        </div>
+      </span>
+    </div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<header class="navbar">
+  <div class="container nav-wrap">
+    <a class="brand" href="#">
+      <div class="brand-mark"><i class="fa-solid fa-graduation-cap"></i></div>
+      <div>
+        <div class="brand-name" data-i18n-html="brand.name">إد<span>تك</span></div>
+        <div class="brand-sub">EdTech</div>
+      </div>
+    </a>
+
+    <nav class="nav-links">
+      <a href="#" class="active" data-i18n="nav.home">الرئيسية</a>
+      <a href="#" data-i18n="nav.courses">الدورات</a>
+      <a href="#" data-i18n="nav.paths">المسارات</a>
+      <a href="#" data-i18n="nav.instructors">المدربون</a>
+      <a href="#" data-i18n="nav.blog">المدونة</a>
+      <a href="#" data-i18n="nav.about">من نحن</a>
+    </nav>
+
+    <div class="nav-actions">
+      <div class="search-mini">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" data-i18n-placeholder="nav.search" placeholder="ابحث عن دورة..." />
+      </div>
+      <button class="icon-btn" data-i18n-title="nav.cart" title="السلة">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span class="badge">3</span>
+      </button>
+      <a href="#" class="btn btn-ghost" data-i18n="nav.login">دخول</a>
+      <a href="#" class="btn btn-primary" data-i18n="nav.register">اشترك الآن</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <span class="eyebrow"><span class="dot"></span> <span data-i18n="hero.eyebrow">المنصة العربية الرائدة للتعلم الإلكتروني</span></span>
+      <h1 data-i18n-html="hero.h1">تعلّم بلا حدود مع <span class="accent">منصة إدتك</span> التعليمية</h1>
+      <p class="lead" data-i18n-html="hero.lead">
+        أكثر من <strong>15,000 دورة</strong> تفاعلية في مختلف المجالات،
+        قدّمها نخبة من المدربين باللغة العربية وعدة لغات أخرى. ابدأ رحلتك الآن وطوّر مهاراتك بثقة.
+      </p>
+      <div class="hero-cta">
+        <a href="#courses" class="btn btn-primary">
+          <i class="fa-solid fa-rocket"></i> <span data-i18n="hero.cta.browse">تصفّح الدورات</span>
+        </a>
+        <a href="#" class="btn btn-gold">
+          <i class="fa-solid fa-circle-play"></i> <span data-i18n="hero.cta.demo">شاهد العرض التعريفي</span>
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="item"><div class="num">15K+</div><div class="lbl" data-i18n="hero.stat.courses">دورة تدريبية</div></div>
+        <div class="item"><div class="num">800+</div><div class="lbl" data-i18n="hero.stat.instructors">مدرب معتمد</div></div>
+        <div class="item"><div class="num">120K+</div><div class="lbl" data-i18n="hero.stat.students">طالب نشط</div></div>
+        <div class="item"><div class="num">4.9★</div><div class="lbl" data-i18n="hero.stat.rating">تقييم المنصة</div></div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-card">
+        <div class="hero-thumb">
+          <div class="play"><button title="play"><i class="fa-solid fa-play"></i></button></div>
+        </div>
+        <h3 data-i18n="hero.card.title">مقدمة في علوم البيانات وتحليل الأعمال</h3>
+        <div class="meta">
+          <span class="stars"><i class="fa-solid fa-star"></i> 4.9</span>
+          <span><i class="fa-regular fa-user"></i> <span data-i18n="hero.card.students">12,540 طالب</span></span>
+          <span><i class="fa-regular fa-clock"></i> <span data-i18n="hero.card.hours">12 ساعة</span></span>
+        </div>
+      </div>
+      <div class="floating float-1">
+        <div class="ico"><i class="fa-solid fa-certificate"></i></div>
+        <div>
+          <div class="t" data-i18n="hero.float1.title">شهادة معتمدة</div>
+          <div class="s" data-i18n="hero.float1.sub">عند إتمام الدورة</div>
+        </div>
+      </div>
+      <div class="floating float-2">
+        <div class="ico"><i class="fa-solid fa-users"></i></div>
+        <div>
+          <div class="t" data-i18n="hero.float2.title">+1,200 منضم</div>
+          <div class="s" data-i18n="hero.float2.sub">هذا الأسبوع</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section>
+  <div class="container">
+    <div class="section-head">
+      <div class="kicker" data-i18n="cat.kicker">تخصصاتنا</div>
+      <h2 data-i18n="cat.h2">تصفّح حسب التصنيف</h2>
+      <p data-i18n="cat.p">اختر من بين عشرات التصنيفات التعليمية التي تناسب اهتماماتك ومسارك المهني.</p>
+    </div>
+    <div class="cats">
+      <div class="cat"><div class="ic"><i class="fa-solid fa-code"></i></div><div class="name" data-i18n="cat.web">تطوير الويب</div><div class="count" data-i18n="cat.web.count">240 دورة</div></div>
+      <div class="cat"><div class="ic"><i class="fa-solid fa-chart-line"></i></div><div class="name" data-i18n="cat.business">إدارة الأعمال</div><div class="count" data-i18n="cat.business.count">186 دورة</div></div>
+      <div class="cat"><div class="ic"><i class="fa-solid fa-palette"></i></div><div class="name" data-i18n="cat.design">التصميم الجرافيكي</div><div class="count" data-i18n="cat.design.count">152 دورة</div></div>
+      <div class="cat"><div class="ic"><i class="fa-solid fa-language"></i></div><div class="name" data-i18n="cat.lang">تعلّم اللغات</div><div class="count" data-i18n="cat.lang.count">98 دورة</div></div>
+      <div class="cat"><div class="ic"><i class="fa-solid fa-camera"></i></div><div class="name" data-i18n="cat.photo">التصوير</div><div class="count" data-i18n="cat.photo.count">74 دورة</div></div>
+      <div class="cat"><div class="ic"><i class="fa-solid fa-microchip"></i></div><div class="name" data-i18n="cat.ai">الذكاء الاصطناعي</div><div class="count" data-i18n="cat.ai.count">63 دورة</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- COURSES -->
+<section id="courses" style="background:#f7f9eb; border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+  <div class="container">
+    <div class="section-head" style="margin-bottom:30px;">
+      <div class="kicker" data-i18n="courses.kicker">الدورات المميزة</div>
+      <h2 data-i18n="courses.h2">الأكثر شعبية هذا الشهر</h2>
+    </div>
+    <div class="courses-head">
+      <a href="#" class="btn btn-ghost" data-i18n-html="courses.viewall.html">عرض الكل <i class="fa-solid fa-arrow-left"></i></a>
+    </div>
+
+    <div class="course-grid">
+      <!-- Course 1 -->
+      <article class="course">
+        <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop');">
+          <span class="tag" data-i18n="c1.tag">الأكثر مبيعاً</span>
+        </div>
+        <div class="body">
+          <div class="cat-line">
+            <span data-i18n="c1.cat">تطوير الويب</span>
+            <span class="stars"><i class="fa-solid fa-star"></i> 4.9</span>
+          </div>
+          <h3><a href="#" data-i18n="c1.title">إتقان React.js من الصفر إلى الاحتراف</a></h3>
+          <div class="ins">
+            <img src="https://i.pravatar.cc/60?img=11" alt="instructor" />
+            <span data-i18n="c1.ins">د. أحمد المنصوري</span>
+          </div>
+          <div class="meta">
+            <span><i class="fa-regular fa-clock"></i> <span data-i18n="c1.hours">24 ساعة</span></span>
+            <span><i class="fa-solid fa-list"></i> <span data-i18n="c1.lessons">86 درس</span></span>
+            <span><i class="fa-regular fa-user"></i> <span data-i18n="c1.students">8.4K</span></span>
+          </div>
+        </div>
+        <div class="foot">
+          <div class="price" data-i18n-html="c1.price.html">299 ر.ق <span style="font-weight:500;font-size:13px;color:var(--muted);text-decoration:line-through;">499</span></div>
+          <a href="#" data-i18n-html="c1.enroll.html">سجّل الآن <i class="fa-solid fa-arrow-left"></i></a>
+        </div>
+      </article>
+
+      <!-- Course 2 -->
+      <article class="course">
+        <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&auto=format&fit=crop');">
+          <span class="tag" style="background: var(--olive-500); color:#fff;" data-i18n="c2.tag">جديد</span>
+        </div>
+        <div class="body">
+          <div class="cat-line">
+            <span data-i18n="c2.cat">إدارة أعمال</span>
+            <span class="stars"><i class="fa-solid fa-star"></i> 4.8</span>
+          </div>
+          <h3><a href="#" data-i18n="c2.title">القيادة الفعّالة وإدارة فرق العمل</a></h3>
+          <div class="ins">
+            <img src="https://i.pravatar.cc/60?img=32" alt="instructor" />
+            <span data-i18n="c2.ins">أ. ليلى الغامدي</span>
+          </div>
+          <div class="meta">
+            <span><i class="fa-regular fa-clock"></i> <span data-i18n="c2.hours">14 ساعة</span></span>
+            <span><i class="fa-solid fa-list"></i> <span data-i18n="c2.lessons">42 درس</span></span>
+            <span><i class="fa-regular fa-user"></i> <span data-i18n="c2.students">3.1K</span></span>
+          </div>
+        </div>
+        <div class="foot">
+          <div class="price"><span class="free" data-i18n="c2.price">مجاني</span></div>
+          <a href="#" data-i18n-html="c2.enroll.html">سجّل الآن <i class="fa-solid fa-arrow-left"></i></a>
+        </div>
+      </article>
+
+      <!-- Course 3 -->
+      <article class="course">
+        <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1561070791-2526d30994b8?w=800&auto=format&fit=crop');">
+          <span class="tag" data-i18n="c3.tag">مميّز</span>
+        </div>
+        <div class="body">
+          <div class="cat-line">
+            <span data-i18n="c3.cat">تصميم</span>
+            <span class="stars"><i class="fa-solid fa-star"></i> 5.0</span>
+          </div>
+          <h3><a href="#" data-i18n="c3.title">تصميم واجهات المستخدم UI/UX باحترافية</a></h3>
+          <div class="ins">
+            <img src="https://i.pravatar.cc/60?img=15" alt="instructor" />
+            <span data-i18n="c3.ins">م. خالد الراشد</span>
+          </div>
+          <div class="meta">
+            <span><i class="fa-regular fa-clock"></i> <span data-i18n="c3.hours">18 ساعة</span></span>
+            <span><i class="fa-solid fa-list"></i> <span data-i18n="c3.lessons">58 درس</span></span>
+            <span><i class="fa-regular fa-user"></i> <span data-i18n="c3.students">5.7K</span></span>
+          </div>
+        </div>
+        <div class="foot">
+          <div class="price" data-i18n="c3.price">399 ر.ق</div>
+          <a href="#" data-i18n-html="c3.enroll.html">سجّل الآن <i class="fa-solid fa-arrow-left"></i></a>
+        </div>
+      </article>
+
+      <!-- Course 4 -->
+      <article class="course">
+        <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop');">
+          <span class="tag" data-i18n="c4.tag">شائع</span>
+        </div>
+        <div class="body">
+          <div class="cat-line">
+            <span data-i18n="c4.cat">علوم البيانات</span>
+            <span class="stars"><i class="fa-solid fa-star"></i> 4.7</span>
+          </div>
+          <h3><a href="#" data-i18n="c4.title">تحليل البيانات بلغة Python للمبتدئين</a></h3>
+          <div class="ins">
+            <img src="https://i.pravatar.cc/60?img=22" alt="instructor" />
+            <span data-i18n="c4.ins">د. سارة العتيبي</span>
+          </div>
+          <div class="meta">
+            <span><i class="fa-regular fa-clock"></i> <span data-i18n="c4.hours">22 ساعة</span></span>
+            <span><i class="fa-solid fa-list"></i> <span data-i18n="c4.lessons">75 درس</span></span>
+            <span><i class="fa-regular fa-user"></i> <span data-i18n="c4.students">9.2K</span></span>
+          </div>
+        </div>
+        <div class="foot">
+          <div class="price" data-i18n="c4.price">249 ر.ق</div>
+          <a href="#" data-i18n-html="c4.enroll.html">سجّل الآن <i class="fa-solid fa-arrow-left"></i></a>
+        </div>
+      </article>
+
+      <!-- Course 5 -->
+      <article class="course">
+        <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=800&auto=format&fit=crop');">
+          <span class="tag" style="background: var(--olive-500); color:#fff;" data-i18n="c5.tag">جديد</span>
+        </div>
+        <div class="body">
+          <div class="cat-line">
+            <span data-i18n="c5.cat">تسويق رقمي</span>
+            <span class="stars"><i class="fa-solid fa-star"></i> 4.8</span>
+          </div>
+          <h3><a href="#" data-i18n="c5.title">التسويق عبر وسائل التواصل الاجتماعي</a></h3>
+          <div class="ins">
+            <img src="https://i.pravatar.cc/60?img=44" alt="instructor" />
+            <span data-i18n="c5.ins">أ. عمر حسن</span>
+          </div>
+          <div class="meta">
+            <span><i class="fa-regular fa-clock"></i> <span data-i18n="c5.hours">10 ساعات</span></span>
+            <span><i class="fa-solid fa-list"></i> <span data-i18n="c5.lessons">36 درس</span></span>
+            <span><i class="fa-regular fa-user"></i> <span data-i18n="c5.students">2.4K</span></span>
+          </div>
+        </div>
+        <div class="foot">
+          <div class="price" data-i18n="c5.price">179 ر.ق</div>
+          <a href="#" data-i18n-html="c5.enroll.html">سجّل الآن <i class="fa-solid fa-arrow-left"></i></a>
+        </div>
+      </article>
+
+      <!-- Course 6 -->
+      <article class="course">
+        <div class="thumb" style="background-image:url('https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=800&auto=format&fit=crop');">
+          <span class="tag" data-i18n="c6.tag">مميّز</span>
+        </div>
+        <div class="body">
+          <div class="cat-line">
+            <span data-i18n="c6.cat">اللغة الإنجليزية</span>
+            <span class="stars"><i class="fa-solid fa-star"></i> 4.9</span>
+          </div>
+          <h3><a href="#" data-i18n="c6.title">الإنجليزية للأعمال - مستوى متقدم</a></h3>
+          <div class="ins">
+            <img src="https://i.pravatar.cc/60?img=68" alt="instructor" />
+            <span data-i18n="c6.ins">Ms. Emma Carter</span>
+          </div>
+          <div class="meta">
+            <span><i class="fa-regular fa-clock"></i> <span data-i18n="c6.hours">30 ساعة</span></span>
+            <span><i class="fa-solid fa-list"></i> <span data-i18n="c6.lessons">92 درس</span></span>
+            <span><i class="fa-regular fa-user"></i> <span data-i18n="c6.students">6.8K</span></span>
+          </div>
+        </div>
+        <div class="foot">
+          <div class="price" data-i18n="c6.price">349 ر.ق</div>
+          <a href="#" data-i18n-html="c6.enroll.html">سجّل الآن <i class="fa-solid fa-arrow-left"></i></a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="features">
+  <div class="container">
+    <div class="section-head">
+      <div class="kicker" data-i18n="feat.kicker">لماذا إدتك</div>
+      <h2 data-i18n="feat.h2">تجربة تعليمية متكاملة لا مثيل لها</h2>
+      <p data-i18n="feat.p">منصة مخصّصة بالكامل لتقدّم لك أفضل تجربة تعلّم تفاعلية باللغة العربية ولغات متعددة.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature">
+        <div class="ic"><i class="fa-solid fa-book-open-reader"></i></div>
+        <h4 data-i18n="feat.1.title">محتوى تفاعلي</h4>
+        <p data-i18n="feat.1.p">دروس مصورة، اختبارات، ومنتديات نقاش تجعل التعلّم ممتعاً وفعّالاً.</p>
+      </div>
+      <div class="feature">
+        <div class="ic"><i class="fa-solid fa-medal"></i></div>
+        <h4 data-i18n="feat.2.title">شهادات معتمدة</h4>
+        <p data-i18n="feat.2.p">احصل على شهادة عند إتمام كل دورة لإثبات مهاراتك أمام أصحاب العمل.</p>
+      </div>
+      <div class="feature">
+        <div class="ic"><i class="fa-solid fa-globe"></i></div>
+        <h4 data-i18n="feat.3.title">دعم متعدد اللغات</h4>
+        <p data-i18n="feat.3.p">تصفّح المنصة بالعربية والإنجليزية والفرنسية ولغات أخرى بسهولة وسلاسة.</p>
+      </div>
+      <div class="feature">
+        <div class="ic"><i class="fa-solid fa-headset"></i></div>
+        <h4 data-i18n="feat.4.title">دعم فني 24/7</h4>
+        <p data-i18n="feat.4.p">فريق دعم متخصّص جاهز لمساعدتك في أي وقت وعلى مدار الساعة.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section>
+  <div class="container">
+    <div class="cta-band">
+      <div>
+        <h2 data-i18n="cta.h2">هل أنت مدرّب أو خبير في مجالك؟</h2>
+        <p data-i18n="cta.p">انضم إلى مجتمع المدربين في منصتنا وابدأ بمشاركة معرفتك مع آلاف الطلاب حول العالم. أدوات إنشاء دورات سهلة، ودعم كامل لتطوير محتواك.</p>
+        <div class="actions">
+          <a href="#" class="btn btn-gold"><i class="fa-solid fa-chalkboard-user"></i> <span data-i18n="cta.btn1">ابدأ التدريس</span></a>
+          <a href="#" class="btn btn-ghost" style="color:#fff; border-color:rgba(255,255,255,.4);" data-i18n="cta.btn2">اعرف المزيد</a>
+        </div>
+      </div>
+      <div class="visual">
+        <div class="badge-circle">
+          <div class="core" data-i18n-html="cta.badge">انضم<br/>كمدرب</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section style="background:#f7f9eb; border-top:1px solid var(--border);">
+  <div class="container">
+    <div class="section-head">
+      <div class="kicker" data-i18n="testi.kicker">آراء طلابنا</div>
+      <h2 data-i18n="testi.h2">قصص نجاح من حول العالم</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi">
+        <div class="quote"><i class="fa-solid fa-quote-right"></i></div>
+        <div class="stars">★★★★★</div>
+        <p data-i18n="t1.p">«تجربة رائعة وغيّرت مساري المهني تماماً. جودة المحتوى عالية والمدرّبون على مستوى ممتاز. أنصح بها بشدة.»</p>
+        <div class="who">
+          <img src="https://i.pravatar.cc/80?img=47" alt="" />
+          <div><div class="n" data-i18n="t1.name">نورة الشهري</div><div class="r" data-i18n="t1.role">مطورة واجهات أمامية</div></div>
+        </div>
+      </div>
+      <div class="testi">
+        <div class="quote"><i class="fa-solid fa-quote-right"></i></div>
+        <div class="stars">★★★★★</div>
+        <p data-i18n="t2.p">«الدعم باللغة العربية ممتاز، والواجهة سهلة الاستخدام جداً. تعلّمت Python خلال شهرين فقط بفضل المنصة.»</p>
+        <div class="who">
+          <img src="https://i.pravatar.cc/80?img=12" alt="" />
+          <div><div class="n" data-i18n="t2.name">محمد العمري</div><div class="r" data-i18n="t2.role">محلل بيانات</div></div>
+        </div>
+      </div>
+      <div class="testi">
+        <div class="quote"><i class="fa-solid fa-quote-right"></i></div>
+        <div class="stars">★★★★★</div>
+        <p data-i18n="t3.p">«أحببت تنوّع الدورات وإمكانية الوصول إليها في أي وقت. الشهادات ساعدتني في الحصول على وظيفتي الحالية.»</p>
+        <div class="who">
+          <img src="https://i.pravatar.cc/80?img=25" alt="" />
+          <div><div class="n" data-i18n="t3.name">ريم الحارثي</div><div class="r" data-i18n="t3.role">مديرة تسويق</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div class="about">
+        <a class="brand" href="#" style="color:#fff;">
+          <div class="brand-mark"><i class="fa-solid fa-graduation-cap"></i></div>
+          <div>
+            <div class="brand-name" style="color:#fff;" data-i18n-html="brand.name.footer">إد<span style="color: var(--gold-300);">تك</span></div>
+            <div class="brand-sub" style="color:#9aa48a;">EdTech</div>
+          </div>
+        </a>
+        <p data-i18n="foot.about">منصة تعليمية شاملة تقدّم تجربة تعلّم متعددة اللغات بجودة عالية ومحتوى عربي أصيل.</p>
+        <div class="socials">
+          <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="#"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="#"><i class="fa-brands fa-youtube"></i></a>
+        </div>
+      </div>
+      <div>
+        <h5 data-i18n="foot.links.title">روابط سريعة</h5>
+        <ul>
+          <li><a href="#" data-i18n="foot.link.home">الرئيسية</a></li>
+          <li><a href="#" data-i18n="foot.link.courses">جميع الدورات</a></li>
+          <li><a href="#" data-i18n="foot.link.paths">المسارات التعليمية</a></li>
+          <li><a href="#" data-i18n="foot.link.instructors">المدربون</a></li>
+          <li><a href="#" data-i18n="foot.link.blog">المدونة</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 data-i18n="foot.support.title">الدعم</h5>
+        <ul>
+          <li><a href="#" data-i18n="foot.support.help">مركز المساعدة</a></li>
+          <li><a href="#" data-i18n="foot.support.faq">الأسئلة الشائعة</a></li>
+          <li><a href="#" data-i18n="foot.support.privacy">سياسة الخصوصية</a></li>
+          <li><a href="#" data-i18n="foot.support.terms">شروط الاستخدام</a></li>
+          <li><a href="#" data-i18n="foot.support.contact">تواصل معنا</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 data-i18n="foot.news.title">اشترك بالنشرة</h5>
+        <p style="font-size:14px; color:#bdc7a9;" data-i18n="foot.news.p">احصل على آخر الدورات والعروض مباشرة في بريدك.</p>
+        <form class="newsletter" onsubmit="event.preventDefault();">
+          <input type="email" data-i18n-placeholder="foot.news.placeholder" placeholder="بريدك الإلكتروني" />
+          <button type="submit" data-i18n="foot.news.btn">اشترك</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="copyright">
+      <div data-i18n-html="foot.copy">© 2026 منصة إدتك. جميع الحقوق محفوظة.</div>
+      <div>
+        <a href="#" data-i18n="foot.privacy">الخصوصية</a> &nbsp; · &nbsp;
+        <a href="#" data-i18n="foot.terms">الشروط</a> &nbsp; · &nbsp;
+        <a href="#" data-i18n="foot.cookies">ملفات تعريف الارتباط</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ================================================
+   TRANSLATIONS  (Arabic default + English)
+================================================ */
+const translations = {
+  ar: {
+    'page.title': 'منصة التعلم الإلكتروني | EdTech',
+    'topbar.help': 'مساعدة',
+    'topbar.instructor': 'كن مدرباً',
+    'brand.name': 'إد<span>تك</span>',
+    'brand.name.footer': 'إد<span style="color:var(--gold-300);">تك</span>',
+    'nav.home': 'الرئيسية',   'nav.courses': 'الدورات',
+    'nav.paths': 'المسارات',  'nav.instructors': 'المدربون',
+    'nav.blog': 'المدونة',    'nav.about': 'من نحن',
+    'nav.search': 'ابحث عن دورة...',
+    'nav.cart': 'السلة',      'nav.login': 'دخول',
+    'nav.register': 'اشترك الآن',
+    'hero.eyebrow': 'المنصة العربية الرائدة للتعلم الإلكتروني',
+    'hero.h1': 'تعلّم بلا حدود مع <span class="accent">منصة إدتك</span> التعليمية',
+    'hero.lead': 'أكثر من <strong>15,000 دورة</strong> تفاعلية في مختلف المجالات، قدّمها نخبة من المدربين باللغة العربية وعدة لغات أخرى. ابدأ رحلتك الآن وطوّر مهاراتك بثقة.',
+    'hero.cta.browse': 'تصفّح الدورات',
+    'hero.cta.demo': 'شاهد العرض التعريفي',
+    'hero.stat.courses': 'دورة تدريبية',
+    'hero.stat.instructors': 'مدرب معتمد',
+    'hero.stat.students': 'طالب نشط',
+    'hero.stat.rating': 'تقييم المنصة',
+    'hero.card.title': 'مقدمة في علوم البيانات وتحليل الأعمال',
+    'hero.card.students': '12,540 طالب',
+    'hero.card.hours': '12 ساعة',
+    'hero.float1.title': 'شهادة معتمدة',
+    'hero.float1.sub': 'عند إتمام الدورة',
+    'hero.float2.title': '+1,200 منضم',
+    'hero.float2.sub': 'هذا الأسبوع',
+    'cat.kicker': 'تخصصاتنا',
+    'cat.h2': 'تصفّح حسب التصنيف',
+    'cat.p': 'اختر من بين عشرات التصنيفات التعليمية التي تناسب اهتماماتك ومسارك المهني.',
+    'cat.web': 'تطوير الويب',       'cat.web.count': '240 دورة',
+    'cat.business': 'إدارة الأعمال','cat.business.count': '186 دورة',
+    'cat.design': 'التصميم الجرافيكي','cat.design.count': '152 دورة',
+    'cat.lang': 'تعلّم اللغات',     'cat.lang.count': '98 دورة',
+    'cat.photo': 'التصوير',          'cat.photo.count': '74 دورة',
+    'cat.ai': 'الذكاء الاصطناعي',   'cat.ai.count': '63 دورة',
+    'courses.kicker': 'الدورات المميزة',
+    'courses.h2': 'الأكثر شعبية هذا الشهر',
+    'filter.all': 'الكل',       'filter.programming': 'برمجة',
+    'filter.design': 'تصميم',   'filter.marketing': 'تسويق',
+    'filter.business': 'أعمال', 'filter.languages': 'لغات',
+    'courses.viewall.html': 'عرض الكل <i class="fa-solid fa-arrow-left"></i>',
+    'c1.tag': 'الأكثر مبيعاً', 'c1.cat': 'تطوير الويب',
+    'c1.title': 'إتقان React.js من الصفر إلى الاحتراف',
+    'c1.ins': 'د. أحمد المنصوري',
+    'c1.hours': '24 ساعة', 'c1.lessons': '86 درس', 'c1.students': '8.4K',
+    'c1.price.html': '299 ر.ق <span style="font-weight:500;font-size:13px;color:var(--muted);text-decoration:line-through;">499</span>',
+    'c1.enroll.html': 'سجّل الآن <i class="fa-solid fa-arrow-left"></i>',
+    'c2.tag': 'جديد', 'c2.cat': 'إدارة أعمال',
+    'c2.title': 'القيادة الفعّالة وإدارة فرق العمل',
+    'c2.ins': 'أ. ليلى الغامدي',
+    'c2.hours': '14 ساعة', 'c2.lessons': '42 درس', 'c2.students': '3.1K',
+    'c2.price': 'مجاني',
+    'c2.enroll.html': 'سجّل الآن <i class="fa-solid fa-arrow-left"></i>',
+    'c3.tag': 'مميّز', 'c3.cat': 'تصميم',
+    'c3.title': 'تصميم واجهات المستخدم UI/UX باحترافية',
+    'c3.ins': 'م. خالد الراشد',
+    'c3.hours': '18 ساعة', 'c3.lessons': '58 درس', 'c3.students': '5.7K',
+    'c3.price': '399 ر.ق',
+    'c3.enroll.html': 'سجّل الآن <i class="fa-solid fa-arrow-left"></i>',
+    'c4.tag': 'شائع', 'c4.cat': 'علوم البيانات',
+    'c4.title': 'تحليل البيانات بلغة Python للمبتدئين',
+    'c4.ins': 'د. سارة العتيبي',
+    'c4.hours': '22 ساعة', 'c4.lessons': '75 درس', 'c4.students': '9.2K',
+    'c4.price': '249 ر.ق',
+    'c4.enroll.html': 'سجّل الآن <i class="fa-solid fa-arrow-left"></i>',
+    'c5.tag': 'جديد', 'c5.cat': 'تسويق رقمي',
+    'c5.title': 'التسويق عبر وسائل التواصل الاجتماعي',
+    'c5.ins': 'أ. عمر حسن',
+    'c5.hours': '10 ساعات', 'c5.lessons': '36 درس', 'c5.students': '2.4K',
+    'c5.price': '179 ر.ق',
+    'c5.enroll.html': 'سجّل الآن <i class="fa-solid fa-arrow-left"></i>',
+    'c6.tag': 'مميّز', 'c6.cat': 'اللغة الإنجليزية',
+    'c6.title': 'الإنجليزية للأعمال - مستوى متقدم',
+    'c6.ins': 'Ms. Emma Carter',
+    'c6.hours': '30 ساعة', 'c6.lessons': '92 درس', 'c6.students': '6.8K',
+    'c6.price': '349 ر.ق',
+    'c6.enroll.html': 'سجّل الآن <i class="fa-solid fa-arrow-left"></i>',
+    'feat.kicker': 'لماذا إدتك',
+    'feat.h2': 'تجربة تعليمية متكاملة لا مثيل لها',
+    'feat.p': 'منصة مخصّصة بالكامل لتقدّم لك أفضل تجربة تعلّم تفاعلية باللغة العربية ولغات متعددة.',
+    'feat.1.title': 'محتوى تفاعلي',
+    'feat.1.p': 'دروس مصورة، اختبارات، ومنتديات نقاش تجعل التعلّم ممتعاً وفعّالاً.',
+    'feat.2.title': 'شهادات معتمدة',
+    'feat.2.p': 'احصل على شهادة عند إتمام كل دورة لإثبات مهاراتك أمام أصحاب العمل.',
+    'feat.3.title': 'دعم متعدد اللغات',
+    'feat.3.p': 'تصفّح المنصة بالعربية والإنجليزية والفرنسية ولغات أخرى بسهولة وسلاسة.',
+    'feat.4.title': 'دعم فني 24/7',
+    'feat.4.p': 'فريق دعم متخصّص جاهز لمساعدتك في أي وقت وعلى مدار الساعة.',
+    'cta.h2': 'هل أنت مدرّب أو خبير في مجالك؟',
+    'cta.p': 'انضم إلى مجتمع المدربين في منصتنا وابدأ بمشاركة معرفتك مع آلاف الطلاب حول العالم. أدوات إنشاء دورات سهلة، ودعم كامل لتطوير محتواك.',
+    'cta.btn1': 'ابدأ التدريس', 'cta.btn2': 'اعرف المزيد',
+    'cta.badge': 'انضم<br/>كمدرب',
+    'testi.kicker': 'آراء طلابنا',
+    'testi.h2': 'قصص نجاح من حول العالم',
+    't1.p': '«تجربة رائعة وغيّرت مساري المهني تماماً. جودة المحتوى عالية والمدرّبون على مستوى ممتاز. أنصح بها بشدة.»',
+    't1.name': 'نورة الشهري',    't1.role': 'مطورة واجهات أمامية',
+    't2.p': '«الدعم باللغة العربية ممتاز، والواجهة سهلة الاستخدام جداً. تعلّمت Python خلال شهرين فقط بفضل المنصة.»',
+    't2.name': 'محمد العمري',    't2.role': 'محلل بيانات',
+    't3.p': '«أحببت تنوّع الدورات وإمكانية الوصول إليها في أي وقت. الشهادات ساعدتني في الحصول على وظيفتي الحالية.»',
+    't3.name': 'ريم الحارثي',    't3.role': 'مديرة تسويق',
+    'foot.about': 'منصة تعليمية شاملة تقدّم تجربة تعلّم متعددة اللغات بجودة عالية ومحتوى عربي أصيل.',
+    'foot.links.title': 'روابط سريعة',
+    'foot.link.home': 'الرئيسية',       'foot.link.courses': 'جميع الدورات',
+    'foot.link.paths': 'المسارات التعليمية','foot.link.instructors': 'المدربون',
+    'foot.link.blog': 'المدونة',
+    'foot.support.title': 'الدعم',
+    'foot.support.help': 'مركز المساعدة', 'foot.support.faq': 'الأسئلة الشائعة',
+    'foot.support.privacy': 'سياسة الخصوصية','foot.support.terms': 'شروط الاستخدام',
+    'foot.support.contact': 'تواصل معنا',
+    'foot.news.title': 'اشترك بالنشرة',
+    'foot.news.p': 'احصل على آخر الدورات والعروض مباشرة في بريدك.',
+    'foot.news.placeholder': 'بريدك الإلكتروني',
+    'foot.news.btn': 'اشترك',
+    'foot.copy': '© 2026 منصة إدتك. جميع الحقوق محفوظة.',
+    'foot.privacy': 'الخصوصية', 'foot.terms': 'الشروط',
+    'foot.cookies': 'ملفات تعريف الارتباط',
+  },
+
+  en: {
+    'page.title': 'E-Learning Platform | EdTech',
+    'topbar.help': 'Help',
+    'topbar.instructor': 'Become an Instructor',
+    'brand.name': 'Ed<span>Tech</span>',
+    'brand.name.footer': 'Ed<span style="color:var(--gold-300);">Tech</span>',
+    'nav.home': 'Home',          'nav.courses': 'Courses',
+    'nav.paths': 'Learning Paths','nav.instructors': 'Instructors',
+    'nav.blog': 'Blog',          'nav.about': 'About Us',
+    'nav.search': 'Search for a course...',
+    'nav.cart': 'Cart',          'nav.login': 'Login',
+    'nav.register': 'Join Now',
+    'hero.eyebrow': 'Leading Arabic E-Learning Platform',
+    'hero.h1': 'Learn Without Limits with <span class="accent">EdTech Platform</span>',
+    'hero.lead': 'More than <strong>15,000 interactive courses</strong> across various fields, taught by top instructors in Arabic and multiple languages. Start your journey and build your skills with confidence.',
+    'hero.cta.browse': 'Browse Courses',
+    'hero.cta.demo': 'Watch Intro Video',
+    'hero.stat.courses': 'Courses',
+    'hero.stat.instructors': 'Certified Instructors',
+    'hero.stat.students': 'Active Students',
+    'hero.stat.rating': 'Platform Rating',
+    'hero.card.title': 'Introduction to Data Science & Business Analytics',
+    'hero.card.students': '12,540 Students',
+    'hero.card.hours': '12 Hours',
+    'hero.float1.title': 'Certified Badge',
+    'hero.float1.sub': 'Upon course completion',
+    'hero.float2.title': '+1,200 Joined',
+    'hero.float2.sub': 'This week',
+    'cat.kicker': 'Our Specializations',
+    'cat.h2': 'Browse by Category',
+    'cat.p': 'Choose from dozens of educational categories that match your interests and career path.',
+    'cat.web': 'Web Development',      'cat.web.count': '240 Courses',
+    'cat.business': 'Business Management','cat.business.count': '186 Courses',
+    'cat.design': 'Graphic Design',    'cat.design.count': '152 Courses',
+    'cat.lang': 'Language Learning',   'cat.lang.count': '98 Courses',
+    'cat.photo': 'Photography',         'cat.photo.count': '74 Courses',
+    'cat.ai': 'Artificial Intelligence','cat.ai.count': '63 Courses',
+    'courses.kicker': 'Featured Courses',
+    'courses.h2': 'Most Popular This Month',
+    'filter.all': 'All',          'filter.programming': 'Programming',
+    'filter.design': 'Design',    'filter.marketing': 'Marketing',
+    'filter.business': 'Business','filter.languages': 'Languages',
+    'courses.viewall.html': 'View All <i class="fa-solid fa-arrow-right"></i>',
+    'c1.tag': 'Best Seller',  'c1.cat': 'Web Development',
+    'c1.title': 'Mastering React.js from Zero to Pro',
+    'c1.ins': 'Dr. Ahmed Al-Mansouri',
+    'c1.hours': '24 Hours', 'c1.lessons': '86 Lessons', 'c1.students': '8.4K',
+    'c1.price.html': 'QAR 329 <span style="font-weight:500;font-size:13px;color:var(--muted);text-decoration:line-through;">QAR 549</span>',
+    'c1.enroll.html': 'Enroll Now <i class="fa-solid fa-arrow-right"></i>',
+    'c2.tag': 'New', 'c2.cat': 'Business Management',
+    'c2.title': 'Effective Leadership & Team Management',
+    'c2.ins': 'Prof. Layla Al-Ghamdi',
+    'c2.hours': '14 Hours', 'c2.lessons': '42 Lessons', 'c2.students': '3.1K',
+    'c2.price': 'Free',
+    'c2.enroll.html': 'Enroll Now <i class="fa-solid fa-arrow-right"></i>',
+    'c3.tag': 'Featured', 'c3.cat': 'Design',
+    'c3.title': 'Professional UI/UX Design Masterclass',
+    'c3.ins': 'Eng. Khalid Al-Rashid',
+    'c3.hours': '18 Hours', 'c3.lessons': '58 Lessons', 'c3.students': '5.7K',
+    'c3.price': 'QAR 439',
+    'c3.enroll.html': 'Enroll Now <i class="fa-solid fa-arrow-right"></i>',
+    'c4.tag': 'Popular', 'c4.cat': 'Data Science',
+    'c4.title': 'Data Analysis with Python for Beginners',
+    'c4.ins': 'Dr. Sara Al-Otaibi',
+    'c4.hours': '22 Hours', 'c4.lessons': '75 Lessons', 'c4.students': '9.2K',
+    'c4.price': 'QAR 279',
+    'c4.enroll.html': 'Enroll Now <i class="fa-solid fa-arrow-right"></i>',
+    'c5.tag': 'New', 'c5.cat': 'Digital Marketing',
+    'c5.title': 'Social Media Marketing Mastery',
+    'c5.ins': 'Prof. Omar Hassan',
+    'c5.hours': '10 Hours', 'c5.lessons': '36 Lessons', 'c5.students': '2.4K',
+    'c5.price': 'QAR 199',
+    'c5.enroll.html': 'Enroll Now <i class="fa-solid fa-arrow-right"></i>',
+    'c6.tag': 'Featured', 'c6.cat': 'English Language',
+    'c6.title': 'Business English – Advanced Level',
+    'c6.ins': 'Ms. Emma Carter',
+    'c6.hours': '30 Hours', 'c6.lessons': '92 Lessons', 'c6.students': '6.8K',
+    'c6.price': 'QAR 369',
+    'c6.enroll.html': 'Enroll Now <i class="fa-solid fa-arrow-right"></i>',
+    'feat.kicker': 'Why EdTech',
+    'feat.h2': 'A Complete Learning Experience Like No Other',
+    'feat.p': 'A fully customized platform offering the best interactive learning experience in Arabic and multiple languages.',
+    'feat.1.title': 'Interactive Content',
+    'feat.1.p': 'Video lessons, quizzes, and discussion forums make learning enjoyable and effective.',
+    'feat.2.title': 'Certified Credentials',
+    'feat.2.p': 'Earn a certificate upon completing each course to showcase your skills to employers.',
+    'feat.3.title': 'Multilingual Support',
+    'feat.3.p': 'Browse the platform in Arabic, English, French, and other languages with ease.',
+    'feat.4.title': '24/7 Technical Support',
+    'feat.4.p': 'A dedicated support team ready to help you anytime, around the clock.',
+    'cta.h2': 'Are You an Instructor or Expert in Your Field?',
+    'cta.p': 'Join our instructor community and start sharing your knowledge with thousands of students worldwide. Easy course creation tools and full support to develop your content.',
+    'cta.btn1': 'Start Teaching', 'cta.btn2': 'Learn More',
+    'cta.badge': 'Join as<br/>Instructor',
+    'testi.kicker': 'Student Reviews',
+    'testi.h2': 'Success Stories From Around the World',
+    't1.p': '"An amazing experience that completely transformed my career path. The content quality is top-notch and the instructors are excellent. Highly recommended."',
+    't1.name': 'Noura Al-Shahri',    't1.role': 'Frontend Developer',
+    't2.p': '"The Arabic support is outstanding and the interface is very easy to use. I learned Python in just two months thanks to this platform."',
+    't2.name': 'Mohammed Al-Omari',  't2.role': 'Data Analyst',
+    't3.p': '"I loved the variety of courses and the ability to access them anytime. The certificates helped me land my current job."',
+    't3.name': 'Reem Al-Harthi',     't3.role': 'Marketing Manager',
+    'foot.about': 'A comprehensive educational platform offering a multilingual learning experience with high quality and authentic Arabic content.',
+    'foot.links.title': 'Quick Links',
+    'foot.link.home': 'Home',          'foot.link.courses': 'All Courses',
+    'foot.link.paths': 'Learning Paths','foot.link.instructors': 'Instructors',
+    'foot.link.blog': 'Blog',
+    'foot.support.title': 'Support',
+    'foot.support.help': 'Help Center', 'foot.support.faq': 'FAQ',
+    'foot.support.privacy': 'Privacy Policy','foot.support.terms': 'Terms of Use',
+    'foot.support.contact': 'Contact Us',
+    'foot.news.title': 'Subscribe to Newsletter',
+    'foot.news.p': 'Get the latest courses and offers directly in your inbox.',
+    'foot.news.placeholder': 'Your email address',
+    'foot.news.btn': 'Subscribe',
+    'foot.copy': '© 2026 EdTech Platform. All rights reserved.',
+    'foot.privacy': 'Privacy', 'foot.terms': 'Terms',
+    'foot.cookies': 'Cookies',
+  }
+};
+
+/* ================================================
+   APPLY LANGUAGE
+================================================ */
+let currentLang = 'ar';
+
+function applyLanguage(lang) {
+  currentLang = lang;
+  const t = translations[lang];
+
+  // html attributes
+  document.documentElement.lang = lang;
+  document.documentElement.dir  = lang === 'ar' ? 'rtl' : 'ltr';
+  document.title = t['page.title'];
+
+  // plain text
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const v = t[el.getAttribute('data-i18n')];
+    if (v !== undefined) el.textContent = v;
+  });
+
+  // inner HTML (contains tags)
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const v = t[el.getAttribute('data-i18n-html')];
+    if (v !== undefined) el.innerHTML = v;
+  });
+
+  // placeholder attributes
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const v = t[el.getAttribute('data-i18n-placeholder')];
+    if (v !== undefined) el.placeholder = v;
+  });
+
+  // title attributes
+  document.querySelectorAll('[data-i18n-title]').forEach(el => {
+    const v = t[el.getAttribute('data-i18n-title')];
+    if (v !== undefined) el.title = v;
+  });
+
+  // update dropdown active state & pill label
+  document.querySelectorAll('.lang-option').forEach(opt => {
+    opt.classList.toggle('is-active', opt.dataset.lang === lang);
+  });
+  document.getElementById('langLabel').textContent = lang === 'ar' ? 'العربية' : 'English';
+}
+
+/* ================================================
+   DROPDOWN
+================================================ */
+const langPill     = document.getElementById('langPill');
+const langDropdown = document.getElementById('langDropdown');
+
+langPill.addEventListener('click', e => {
+  e.stopPropagation();
+  langDropdown.classList.toggle('open');
+});
+
+document.addEventListener('click', () => {
+  langDropdown.classList.remove('open');
+});
+
+langDropdown.addEventListener('click', e => {
+  e.stopPropagation();
+  const opt = e.target.closest('.lang-option');
+  if (!opt) return;
+  const lang = opt.dataset.lang;
+  if (lang && lang !== currentLang) applyLanguage(lang);
+  langDropdown.classList.remove('open');
+});
+
+/* init — Arabic default */
+applyLanguage('ar');
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<article class="coursebox edt-catalog-course {{classes}} {{^visible}}dimmed{{/visible}}"
+         data-courseid="{{id}}" data-type="1">
+    <a href="{{url}}" class="edt-catalog-course-image" aria-label="{{plainname}}">
+        <img src="{{image}}" alt="" loading="lazy">
+        <span class="edt-catalog-course-category">{{category}}</span>
+    </a>
+    <div class="edt-catalog-course-body">
+        <h2><a href="{{url}}">{{{name}}}</a></h2>
+        {{#summary}}<p>{{summary}}</p>{{/summary}}
+        {{#enrolmenticons}}<div class="edt-catalog-enrolment">{{{enrolmenticons}}}</div>{{/enrolmenticons}}
+    </div>
+    <div class="edt-catalog-course-footer">
+        <a href="{{url}}" class="edt-btn edt-btn-primary edt-btn-sm">
+            {{#str}}course_view, theme_edtech{{/str}}
+            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+        </a>
+    </div>
+</article>

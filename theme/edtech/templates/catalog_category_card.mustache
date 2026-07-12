@@ -1,0 +1,12 @@
+<article class="category edt-catalog-category {{^visible}}dimmed_category{{/visible}}"
+         data-categoryid="{{id}}" data-depth="{{depth}}" data-showcourses="{{showcourses}}" data-type="0">
+    <a href="{{url}}" class="edt-catalog-category-link">
+        <span class="edt-catalog-category-icon"><i class="fa-solid fa-layer-group" aria-hidden="true"></i></span>
+        <span class="edt-catalog-category-copy">
+            <strong>{{name}}</strong>
+            {{#description}}<span>{{description}}</span>{{/description}}
+        </span>
+        <span class="edt-catalog-category-count">{{count}} {{#str}}courses{{/str}}</span>
+        <i class="fa-solid fa-arrow-right edt-catalog-arrow" aria-hidden="true"></i>
+    </a>
+</article>

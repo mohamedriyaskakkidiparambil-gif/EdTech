@@ -1,0 +1,48 @@
+services:
+  db:
+    image: mariadb:10.11
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DB_NAME}
+      MYSQL_USER: ${MYSQL_DB_USER}
+      MYSQL_PASSWORD: ${MYSQL_DB_PASSWORD}
+    volumes:
+      - moodle_db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  moodle:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      MOODLE_DB_HOST: db
+      MOODLE_DB_NAME: ${MYSQL_DB_NAME}
+      MOODLE_DB_USER: ${MYSQL_DB_USER}
+      MOODLE_DB_PASSWORD: ${MYSQL_DB_PASSWORD}
+      MOODLE_ADMIN_USER: ${MOODLE_ADMIN_USER}
+      MOODLE_ADMIN_PASSWORD: ${MOODLE_ADMIN_PASSWORD}
+      MOODLE_ADMIN_EMAIL: ${MOODLE_ADMIN_EMAIL}
+      MOODLE_SITE_NAME: ${MOODLE_SITE_NAME}
+      MOODLE_SITE_SHORTNAME: ${MOODLE_SITE_SHORTNAME}
+      MOODLE_WWWROOT: ${MOODLE_WWWROOT}
+      MOODLE_SSLPROXY: ${MOODLE_SSLPROXY:-true}
+      MOODLE_REVERSEPROXY: ${MOODLE_REVERSEPROXY:-true}
+    volumes:
+      - moodledata:/var/moodledata
+      - ./theme/ranees:/var/www/html/theme/ranees
+      - ./theme/edtech:/var/www/html/theme/edtech
+    expose:
+      - "80"
+
+volumes:
+  moodle_db_data:
+  moodledata:

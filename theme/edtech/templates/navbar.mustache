@@ -1,0 +1,162 @@
+{{! @template theme_edtech/navbar }}
+
+{{! ── TOPBAR ────────────────────────────────────────────────────────── }}
+<div class="edt-topbar d-print-none">
+    <div class="edt-topbar-inner">
+        <div class="edt-topbar-left">
+            <span><i class="fa-solid fa-phone" aria-hidden="true"></i>&nbsp; {{contact_phone}}</span>
+            <span><i class="fa-solid fa-envelope" aria-hidden="true"></i>&nbsp; {{contact_email}}</span>
+        </div>
+        <div class="edt-topbar-right">
+            <a href="#"><i class="fa-solid fa-circle-question" aria-hidden="true"></i>&nbsp; Help</a>
+            <a href="#"><i class="fa-solid fa-chalkboard-user" aria-hidden="true"></i>&nbsp; Become an Instructor</a>
+
+            {{! ── Language switcher pill (styled like index.html) }}
+            {{#haslangmenu}}
+            <div class="edt-lang-pill" id="edtLangPill" role="button" tabindex="0"
+                 aria-haspopup="true" aria-expanded="false">
+                <i class="fa-solid fa-globe" aria-hidden="true"></i>
+                <span class="edt-lang-label">{{currentlang}}</span>
+                <i class="fa-solid fa-chevron-down edt-lang-caret" aria-hidden="true"></i>
+
+                <div class="edt-lang-dropdown" id="edtLangDropdown" role="menu">
+                    {{#langlist}}
+                    <a class="edt-lang-option {{#active}}is-active{{/active}}"
+                       href="{{url}}"
+                       role="menuitem"
+                       hreflang="{{code}}">
+                        <span class="edt-lang-name">{{name}}</span>
+                        {{#active}}<i class="fa-solid fa-check edt-lang-check" aria-hidden="true"></i>{{/active}}
+                    </a>
+                    {{/langlist}}
+                </div>
+            </div>
+            {{/haslangmenu}}
+
+        </div>
+    </div>
+</div>
+
+{{! ── MAIN NAVBAR ──────────────────────────────────────────────────── }}
+<header class="edt-navbar-wrap">
+<nav class="navbar edt-navbar navbar-expand-lg" role="navigation"
+     aria-label="{{#str}}sitemenubar, admin{{/str}}">
+    <div class="edt-navbar-inner">
+
+        {{! Mobile toggle }}
+        <button class="navbar-toggler edt-nav-toggle d-lg-none"
+                data-toggler="drawers" data-action="toggle"
+                data-target="theme_boost-drawers-primary"
+                aria-label="{{#str}}sidepanel, core{{/str}}">
+            <i class="fa-solid fa-bars" aria-hidden="true"></i>
+        </button>
+
+        {{! Brand }}
+        <a href="{{{ config.homeurl }}}" class="edt-brand">
+            {{#output.should_display_navbar_logo}}
+                <img src="{{output.get_compact_logo_url}}" class="edt-logo" alt="{{sitename}}">
+            {{/output.should_display_navbar_logo}}
+            {{^output.should_display_navbar_logo}}
+                <div class="edt-brand-mark">
+                    <i class="fa-solid fa-graduation-cap" aria-hidden="true"></i>
+                </div>
+                <div class="edt-brand-text">
+                    <div class="edt-brand-name">{{sitename}}</div>
+                    <div class="edt-brand-sub">Learning Platform</div>
+                </div>
+            {{/output.should_display_navbar_logo}}
+        </a>
+
+        {{! Primary nav — links vary by role }}
+        <nav class="edt-nav-links d-none d-lg-flex" aria-label="Primary navigation">
+
+            {{! Common links — visible to everyone }}
+            <a href="{{{ config.homeurl }}}"
+               class="edt-nav-link {{#nav_active_home}}active{{/nav_active_home}}"
+               {{#nav_active_home}}aria-current="page"{{/nav_active_home}}>
+                {{#str}}home, core{{/str}}
+            </a>
+            <a href="{{wwwroot}}/course/"
+               class="edt-nav-link {{#nav_active_courses}}active{{/nav_active_courses}}"
+               {{#nav_active_courses}}aria-current="page"{{/nav_active_courses}}>
+                {{#str}}courses, core{{/str}}
+            </a>
+
+            {{! Public links — shown to guests and regular users only }}
+            {{^is_admin}}
+                <a href="#" class="edt-nav-link">Learning Paths</a>
+                <a href="#" class="edt-nav-link">Instructors</a>
+                <a href="#" class="edt-nav-link">Blog</a>
+                <a href="#" class="edt-nav-link">About</a>
+            {{/is_admin}}
+
+            {{! Admin links — shown only to site administrators (gold colour) }}
+            {{#is_admin}}
+                <a href="{{wwwroot}}/admin/index.php"
+                   class="edt-nav-link edt-nav-admin {{#nav_active_admin}}active{{/nav_active_admin}}"
+                   {{#nav_active_admin}}aria-current="page"{{/nav_active_admin}}>
+                    Site Admin
+                </a>
+                <a href="{{wwwroot}}/admin/user.php"
+                   class="edt-nav-link edt-nav-admin">
+                    Users
+                </a>
+                <a href="{{wwwroot}}/course/management.php"
+                   class="edt-nav-link edt-nav-admin">
+                    Manage Courses
+                </a>
+                <a href="{{wwwroot}}/admin/reports.php"
+                   class="edt-nav-link edt-nav-admin">
+                    Reports
+                </a>
+            {{/is_admin}}
+
+        </nav>
+
+        {{! Right actions — id="usernavigation" matches Boost's structure,
+            needed by Moodle's JS for notifications and user menu init }}
+        <div id="usernavigation" class="edt-nav-actions navbar-nav ms-auto h-100 d-flex align-items-center">
+
+            {{! Search pill }}
+            <div class="edt-search-pill d-none d-lg-flex">
+                <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                <input type="text"
+                       placeholder="{{#str}}search, core{{/str}}…"
+                       aria-label="{{#str}}search, core{{/str}}">
+            </div>
+
+            {{! Moodle notifications / messages }}
+            {{{ output.navbar_plugin_output }}}
+
+            {{! Edit mode switch }}
+            {{{ output.edit_switch }}}
+
+            {{! User menu — container always in DOM (matches Boost's pattern).
+                Moodle's core/usermenu JS expects data-region="usermenu" to be
+                present unconditionally so it can attach Bootstrap dropdown events. }}
+            <div class="d-flex align-items-stretch usermenu-container" data-region="usermenu">
+                {{#usermenu}}
+                    {{> core/user_menu }}
+                {{/usermenu}}
+                {{^usermenu}}
+                    {{! Guest: show Login + Join Now buttons }}
+                    <div class="edt-guest-btns d-flex align-items-center gap-2 ps-2">
+                        <a href="{{loginurl}}" class="edt-btn edt-btn-ghost edt-btn-sm">
+                            Login
+                        </a>
+                        <a href="{{wwwroot}}/login/signup.php" class="edt-btn edt-btn-primary edt-btn-sm">
+                            Join Now
+                        </a>
+                    </div>
+                {{/usermenu}}
+            </div>
+
+        </div>
+
+    </div>
+</nav>
+</header>
+
+{{> theme_boost/primary-drawer-mobile }}
+
+

@@ -1,0 +1,93 @@
+{{! theme_edtech/sections/footer
+    Rich 4-column dark olive footer.
+    Moodle's required standard_footer_html and standard_end_of_body_html
+    are rendered inside #page-footer so Moodle scripts load correctly.
+    @template theme_edtech/sections/footer
+}}
+<footer id="page-footer" class="edt-footer d-print-none">
+    <div class="edt-container">
+        <div class="edt-foot-grid">
+
+            {{! Col 1 — Brand + About + Socials }}
+            <div class="edt-foot-about">
+                <a href="{{wwwroot}}" class="edt-foot-brand">
+                    <div class="edt-brand-mark">
+                        <i class="fa-solid fa-graduation-cap" aria-hidden="true"></i>
+                    </div>
+                    <div>
+                        <div class="edt-brand-name">{{sitename}}</div>
+                        <div class="edt-brand-sub">Learning Platform</div>
+                    </div>
+                </a>
+                <p>{{footer.about}}</p>
+                <div class="edt-socials">
+                    {{#socials}}
+                    <a href="{{url}}" aria-label="{{label}}">
+                        <i class="{{icon}}" aria-hidden="true"></i>
+                    </a>
+                    {{/socials}}
+                </div>
+            </div>
+
+            {{! Col 2 — Quick Links }}
+            <div>
+                <h5>{{#str}}footer_quicklinks, theme_edtech{{/str}}</h5>
+                <ul>
+                    <li><a href="{{wwwroot}}">{{#str}}home, core{{/str}}</a></li>
+                    <li><a href="{{footer.courseurl}}">{{#str}}courses, core{{/str}}</a></li>
+                    <li><a href="{{footer.dashurl}}">{{#str}}myhome, core{{/str}}</a></li>
+                    <li><a href="{{footer.blogurl}}">Blog</a></li>
+                </ul>
+            </div>
+
+            {{! Col 3 — Support + Moodle required links }}
+            <div>
+                <h5>{{#str}}footer_support, theme_edtech{{/str}}</h5>
+                <ul>
+                    <li><a href="#">{{#str}}help, core{{/str}}</a></li>
+                    <li><a href="{{footer.privacyurl}}">Privacy Policy</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+                {{! Required: Moodle login info, docs link, etc. }}
+                <div class="edt-foot-moodle">
+                    {{{ output.standard_footer_html }}}
+                </div>
+            </div>
+
+            {{! Col 4 — Newsletter }}
+            <div>
+                <h5>{{#str}}footer_newsletter, theme_edtech{{/str}}</h5>
+                <p class="edt-foot-news-desc">{{#str}}footer_news_desc, theme_edtech{{/str}}</p>
+                <form class="edt-newsletter" onsubmit="event.preventDefault();">
+                    <input type="email"
+                           placeholder="{{#str}}footer_news_ph, theme_edtech{{/str}}"
+                           aria-label="{{#str}}footer_newsletter, theme_edtech{{/str}}">
+                    <button type="submit">{{#str}}footer_news_btn, theme_edtech{{/str}}</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    {{! Copyright bar }}
+    <div class="edt-copyright">
+        <div class="edt-container edt-copyright-inner">
+            <div>{{footer.copyright}}</div>
+            <div>
+                <a href="{{footer.privacyurl}}">Privacy</a>
+                &nbsp;·&nbsp;
+                <a href="#">Terms</a>
+                &nbsp;·&nbsp;
+                <a href="#">Cookies</a>
+            </div>
+        </div>
+    </div>
+
+    {{! Debug output (only shows in developer mode) }}
+    <div class="footer-content-debugging footer-dark bg-dark text-light">
+        <div class="container-fluid">
+            {{{ output.debug_footer_html }}}
+        </div>
+    </div>
+
+</footer>

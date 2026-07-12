@@ -1,0 +1,32 @@
+{{! theme_edtech/sections/cta
+    Instructor CTA band — dark olive background with gold badge.
+    Context: cta.* from theme_edtech_build_frontpage_context()
+    @template theme_edtech/sections/cta
+}}
+<section class="edt-section">
+    <div class="edt-container">
+        <div class="edt-cta-band">
+
+            <div class="edt-cta-copy">
+                <h2>{{cta.title}}</h2>
+                <p>{{cta.subtitle}}</p>
+                <div class="edt-cta-actions">
+                    <a href="{{cta.btn1_url}}" class="edt-btn edt-btn-gold">
+                        <i class="fa-solid fa-chalkboard-user" aria-hidden="true"></i>
+                        {{cta.btn1}}
+                    </a>
+                    <a href="{{cta.btn2_url}}" class="edt-btn edt-btn-ghost-white">
+                        {{cta.btn2}}
+                    </a>
+                </div>
+            </div>
+
+            <div class="edt-cta-visual">
+                <div class="edt-badge-ring">
+                    <div class="edt-badge-core">{{cta.badge}}</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
