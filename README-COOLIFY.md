@@ -21,6 +21,7 @@ MOODLE_ADMIN_EMAIL=admin@example.com
 MOODLE_SITE_NAME=Ranees EdTech
 MOODLE_SITE_SHORTNAME=edtech
 MOODLE_WWWROOT=https://your-domain.com
+MOODLE_THEME=edtech
 MOODLE_SSLPROXY=true
 MOODLE_REVERSEPROXY=true
 ```
@@ -28,6 +29,7 @@ MOODLE_REVERSEPROXY=true
 ## Important notes
 
 - `MOODLE_WWWROOT` must exactly match the public HTTPS URL configured in Coolify.
+- `MOODLE_THEME=edtech` makes the deployed site use the custom EdTech theme by default.
 - The database data is persisted in `moodle_db_data`.
 - Moodle uploaded files and generated content are persisted in `moodledata`.
 - The first deployment runs Moodle installation automatically.

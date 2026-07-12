@@ -37,6 +37,7 @@ global \$CFG;
 \$CFG->directorypermissions = 0777;
 \$CFG->sslproxy = ${MOODLE_SSLPROXY:-false};
 \$CFG->reverseproxy = ${MOODLE_REVERSEPROXY:-false};
+\$CFG->theme = '${MOODLE_THEME:-edtech}';
 
 \$CFG->admin = 'admin';
 
