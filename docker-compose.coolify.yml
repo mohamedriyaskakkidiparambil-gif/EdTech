@@ -39,8 +39,6 @@ services:
       MOODLE_REVERSEPROXY: ${MOODLE_REVERSEPROXY:-true}
     volumes:
       - moodledata:/var/moodledata
-      - ./theme/ranees:/var/www/html/theme/ranees
-      - ./theme/edtech:/var/www/html/theme/edtech
     expose:
       - "80"
 
