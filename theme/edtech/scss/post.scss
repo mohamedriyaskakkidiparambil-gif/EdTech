@@ -771,6 +771,28 @@ body.limitedwidth #page.drawers .main-inner { max-width: 100% !important; }
   }
 }
 
+// ── Course settings form (admin/editor UX) ───────────────────────────────
+// The branded rounded inputs work well on public forms, but they make the
+// course summary editor feel oversized and awkward inside Moodle admin.
+.path-course.path-course-edit,
+#page-course-edit {
+  textarea.form-control,
+  .formtextarea,
+  .editor_atto_content.form-control,
+  .tox-tinymce {
+    border-radius: 8px !important;
+    background: #fff !important;
+    box-shadow: none !important;
+  }
+
+  textarea.form-control,
+  .formtextarea,
+  .editor_atto_content.form-control {
+    border: 1px solid #cfd7c2 !important;
+    padding: 12px 14px !important;
+  }
+}
+
 // ── Layout container ──────────────────────────────────────────────────────
 .edt-container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
 
