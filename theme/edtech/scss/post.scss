@@ -776,6 +776,14 @@ body.limitedwidth #page.drawers .main-inner { max-width: 100% !important; }
 // course summary editor feel oversized and awkward inside Moodle admin.
 .path-course.path-course-edit,
 #page-course-edit {
+  input.form-control,
+  select.form-select,
+  .form-autocomplete-selection,
+  .input-group > .form-control,
+  .input-group > .btn {
+    border-radius: 8px !important;
+  }
+
   textarea.form-control,
   .formtextarea,
   .editor_atto_content.form-control,
