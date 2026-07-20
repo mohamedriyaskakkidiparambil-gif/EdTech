@@ -776,6 +776,7 @@ body.limitedwidth #page.drawers .main-inner { max-width: 100% !important; }
 // course summary editor feel oversized and awkward inside Moodle admin.
 .path-course.path-course-edit,
 #page-course-edit {
+  #id_summary_editor,
   input.form-control,
   select.form-select,
   .form-autocomplete-selection,
@@ -784,6 +785,7 @@ body.limitedwidth #page.drawers .main-inner { max-width: 100% !important; }
     border-radius: 8px !important;
   }
 
+  #id_summary_editor,
   textarea.form-control,
   .formtextarea,
   .editor_atto_content.form-control,
@@ -793,6 +795,11 @@ body.limitedwidth #page.drawers .main-inner { max-width: 100% !important; }
     background: #fff !important;
     box-shadow: none !important;
     min-height: 180px;
+  }
+
+  #id_summary_editor {
+    min-height: 220px;
+    resize: vertical;
   }
 
   textarea.form-control,
