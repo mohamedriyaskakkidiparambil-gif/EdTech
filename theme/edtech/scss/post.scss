@@ -779,18 +779,34 @@ body.limitedwidth #page.drawers .main-inner { max-width: 100% !important; }
   textarea.form-control,
   .formtextarea,
   .editor_atto_content.form-control,
+  .editor_textarea textarea,
   .tox-tinymce {
     border-radius: 8px !important;
     background: #fff !important;
     box-shadow: none !important;
+    min-height: 180px;
   }
 
   textarea.form-control,
   .formtextarea,
-  .editor_atto_content.form-control {
+  .editor_atto_content.form-control,
+  .editor_textarea textarea {
     border: 1px solid #cfd7c2 !important;
     padding: 12px 14px !important;
+    line-height: 1.55 !important;
   }
+}
+
+// Textareas and rich-text editing areas should not inherit the compact
+// single-line input treatment used across public-facing controls.
+textarea.form-control,
+.editor_atto_content.form-control,
+.editor_textarea textarea {
+  border-radius: 8px !important;
+  background: #fff !important;
+  box-shadow: none !important;
+  padding: 12px 14px !important;
+  line-height: 1.55 !important;
 }
 
 // ── Layout container ──────────────────────────────────────────────────────
