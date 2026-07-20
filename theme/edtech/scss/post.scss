@@ -776,30 +776,32 @@ body.limitedwidth #page.drawers .main-inner { max-width: 100% !important; }
 // course summary editor feel oversized and awkward inside Moodle admin.
 .path-course.path-course-edit,
 #page-course-edit {
-  #id_summary_editor,
+  textarea#id_summary_editor.form-control,
   input.form-control,
   select.form-select,
   .form-autocomplete-selection,
   .input-group > .form-control,
   .input-group > .btn {
-    border-radius: 8px !important;
+    border-radius: 0 !important;
   }
 
-  #id_summary_editor,
+  textarea#id_summary_editor.form-control,
   textarea.form-control,
   .formtextarea,
   .editor_atto_content.form-control,
   .editor_textarea textarea,
   .tox-tinymce {
-    border-radius: 8px !important;
+    border-radius: 0 !important;
     background: #fff !important;
     box-shadow: none !important;
     min-height: 180px;
   }
 
-  #id_summary_editor {
+  textarea#id_summary_editor.form-control {
     min-height: 220px;
     resize: vertical;
+    -webkit-appearance: none;
+    appearance: none;
   }
 
   textarea.form-control,
@@ -817,7 +819,7 @@ body.limitedwidth #page.drawers .main-inner { max-width: 100% !important; }
 textarea.form-control,
 .editor_atto_content.form-control,
 .editor_textarea textarea {
-  border-radius: 8px !important;
+  border-radius: 0 !important;
   background: #fff !important;
   box-shadow: none !important;
   padding: 12px 14px !important;
