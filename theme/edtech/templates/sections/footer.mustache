@@ -16,7 +16,7 @@
                     </div>
                     <div>
                         <div class="edt-brand-name">{{sitename}}</div>
-                        <div class="edt-brand-sub">Learning Platform</div>
+                        <div class="edt-brand-sub">{{#str}}brand_subtitle, theme_edtech{{/str}}</div>
                     </div>
                 </a>
                 <p>{{footer.about}}</p>
@@ -36,7 +36,7 @@
                     <li><a href="{{wwwroot}}">{{#str}}home, core{{/str}}</a></li>
                     <li><a href="{{footer.courseurl}}">{{#str}}courses, core{{/str}}</a></li>
                     <li><a href="{{footer.dashurl}}">{{#str}}myhome, core{{/str}}</a></li>
-                    <li><a href="{{footer.blogurl}}">Blog</a></li>
+                    <li><a href="{{footer.blogurl}}">{{#str}}footer_blog, theme_edtech{{/str}}</a></li>
                 </ul>
             </div>
 
@@ -45,8 +45,8 @@
                 <h5>{{#str}}footer_support, theme_edtech{{/str}}</h5>
                 <ul>
                     <li><a href="#">{{#str}}help, core{{/str}}</a></li>
-                    <li><a href="{{footer.privacyurl}}">Privacy Policy</a></li>
-                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="{{footer.privacyurl}}">{{#str}}footer_privacy, theme_edtech{{/str}}</a></li>
+                    <li><a href="#">{{#str}}footer_contact, theme_edtech{{/str}}</a></li>
                 </ul>
                 {{! Required: Moodle login info, docs link, etc. }}
                 <div class="edt-foot-moodle">
@@ -74,11 +74,11 @@
         <div class="edt-container edt-copyright-inner">
             <div>{{footer.copyright}}</div>
             <div>
-                <a href="{{footer.privacyurl}}">Privacy</a>
+                <a href="{{footer.privacyurl}}">{{#str}}footer_link_privacy, theme_edtech{{/str}}</a>
                 &nbsp;·&nbsp;
-                <a href="#">Terms</a>
+                <a href="#">{{#str}}footer_link_terms, theme_edtech{{/str}}</a>
                 &nbsp;·&nbsp;
-                <a href="#">Cookies</a>
+                <a href="#">{{#str}}footer_link_cookies, theme_edtech{{/str}}</a>
             </div>
         </div>
     </div>
