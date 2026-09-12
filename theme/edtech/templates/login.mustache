@@ -19,7 +19,7 @@
             <div class="edt-login-left-header">
                 <a href="{{homeurl}}" class="edt-login-back">
                     <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
-                    Back to home
+                    {{#str}}login_back_home, theme_edtech{{/str}}
                 </a>
             </div>
 
@@ -29,15 +29,15 @@
                 </div>
                 <div>
                     <div class="edt-login-brand-name">{{sitename}}</div>
-                    <div class="edt-login-brand-sub">Learning Platform</div>
+                    <div class="edt-login-brand-sub">{{#str}}brand_subtitle, theme_edtech{{/str}}</div>
                 </div>
             </div>
 
             <h2 class="edt-login-left-title">
-                Welcome Back! 👋
+                {{#str}}login_welcome, theme_edtech{{/str}}
             </h2>
             <p class="edt-login-left-sub">
-                Continue your learning journey. Thousands of courses are waiting for you.
+                {{#str}}login_continue, theme_edtech{{/str}}
             </p>
 
             {{! Feature list }}
@@ -95,8 +95,8 @@
                     <div class="edt-login-card-logo">
                         <i class="fa-solid fa-graduation-cap" aria-hidden="true"></i>
                     </div>
-                    <h1 class="edt-login-card-title">Sign in to your account</h1>
-                    <p class="edt-login-card-sub">Enter your credentials to access your courses</p>
+                    <h1 class="edt-login-card-title">{{#str}}login_title, theme_edtech{{/str}}</h1>
+                    <p class="edt-login-card-sub">{{#str}}login_subtitle, theme_edtech{{/str}}</p>
                 </div>
 
                 {{! Moodle renders the full login form here (username, password, submit, guest, lang) }}
@@ -107,8 +107,8 @@
                 {{! Sign up link }}
                 {{#signupenabled}}
                 <div class="edt-login-signup">
-                    <span>Don't have an account?</span>
-                    <a href="{{signupurl}}">Create one now</a>
+                    <span>{{#str}}login_signup_question, theme_edtech{{/str}}</span>
+                    <a href="{{signupurl}}">{{#str}}login_signup_action, theme_edtech{{/str}}</a>
                 </div>
                 {{/signupenabled}}
 

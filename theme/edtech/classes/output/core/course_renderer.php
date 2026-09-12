@@ -20,6 +20,19 @@ class course_renderer extends \core_course_renderer {
                 : \core_course_category::get(is_object($category) ? $category->id : $category));
 
         $isroot = empty($coursecat->id);
+        if (!$isroot && !\theme_edtech_category_matches_current_language($coursecat)) {
+            return $this->render_from_template('theme_edtech/catalog_hero', [
+                'breadcrumbs' => $this->output->navbar(),
+                'title' => \get_string('catalog_title', 'theme_edtech'),
+                'description' => \get_string('catalog_subtitle', 'theme_edtech'),
+                'count' => 0,
+                'countlabel' => \get_string('courses'),
+            ]) . $this->render_from_template('theme_edtech/catalog_empty', [
+                'title' => \get_string('catalog_empty_title', 'theme_edtech'),
+                'description' => \get_string('catalog_empty_description', 'theme_edtech'),
+                'url' => (new \moodle_url('/course/index.php'))->out(false),
+            ]);
+        }
         $description = '';
         if (!$isroot) {
             $helper = new \coursecat_helper();
@@ -34,8 +47,8 @@ class course_renderer extends \core_course_renderer {
                 'theme_edtech'
             ),
             'count' => $isroot
-                ? $DB->count_records_select('course', 'id <> ? AND visible = 1', [SITEID])
-                : $coursecat->get_courses_count(),
+                ? \theme_edtech_language_course_count()
+                : \theme_edtech_category_language_course_count($coursecat->id),
             'countlabel' => get_string('courses'),
         ]);
 
@@ -55,6 +68,13 @@ class course_renderer extends \core_course_renderer {
      * Render a category as a visual navigation card while preserving Moodle's data attributes.
      */
     protected function coursecat_category(\coursecat_helper $chelper, $coursecat, $depth) {
+        if (!\theme_edtech_category_matches_current_language($coursecat)) {
+            return '';
+        }
+        if (!\theme_edtech_category_language_course_count($coursecat->id)) {
+            return '';
+        }
+
         $description = trim(strip_tags($chelper->get_category_formatted_description($coursecat)));
 
         return $this->render_from_template('theme_edtech/catalog_category_card', [
@@ -63,7 +83,7 @@ class course_renderer extends \core_course_renderer {
             'showcourses' => $chelper->get_show_courses(),
             'name' => $coursecat->get_formatted_name(),
             'description' => $description,
-            'count' => $coursecat->get_courses_count(),
+            'count' => \theme_edtech_category_language_course_count($coursecat->id),
             'url' => (new \moodle_url('/course/index.php', ['categoryid' => $coursecat->id]))->out(false),
             'visible' => !empty($coursecat->visible),
         ]);
@@ -78,6 +98,12 @@ class course_renderer extends \core_course_renderer {
         }
         if ($course instanceof \stdClass) {
             $course = new \core_course_list_element($course);
+        }
+
+        // Keep the public catalogue aligned with the selected site language.
+        // The shared helper also infers the language for untagged courses.
+        if (!\theme_edtech_course_matches_current_language($course)) {
+            return '';
         }
 
         $summary = '';

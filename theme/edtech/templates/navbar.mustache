@@ -8,8 +8,8 @@
             <span><i class="fa-solid fa-envelope" aria-hidden="true"></i>&nbsp; {{contact_email}}</span>
         </div>
         <div class="edt-topbar-right">
-            <a href="#"><i class="fa-solid fa-circle-question" aria-hidden="true"></i>&nbsp; Help</a>
-            <a href="#"><i class="fa-solid fa-chalkboard-user" aria-hidden="true"></i>&nbsp; Become an Instructor</a>
+            <a href="#"><i class="fa-solid fa-circle-question" aria-hidden="true"></i>&nbsp; {{#str}}topbar_help, theme_edtech{{/str}}</a>
+            <a href="#"><i class="fa-solid fa-chalkboard-user" aria-hidden="true"></i>&nbsp; {{#str}}topbar_become_instructor, theme_edtech{{/str}}</a>
 
             {{! ── Language switcher pill (styled like index.html) }}
             {{#haslangmenu}}
@@ -62,13 +62,13 @@
                 </div>
                 <div class="edt-brand-text">
                     <div class="edt-brand-name">{{sitename}}</div>
-                    <div class="edt-brand-sub">Learning Platform</div>
+                    <div class="edt-brand-sub">{{#str}}brand_subtitle, theme_edtech{{/str}}</div>
                 </div>
             {{/output.should_display_navbar_logo}}
         </a>
 
         {{! Primary nav — links vary by role }}
-        <nav class="edt-nav-links d-none d-lg-flex" aria-label="Primary navigation">
+        <nav class="edt-nav-links d-none d-lg-flex" aria-label="{{#str}}sitemenubar, admin{{/str}}">
 
             {{! Common links — visible to everyone }}
             <a href="{{{ config.homeurl }}}"
@@ -84,10 +84,10 @@
 
             {{! Public links — shown to guests and regular users only }}
             {{^is_admin}}
-                <a href="#" class="edt-nav-link">Learning Paths</a>
-                <a href="#" class="edt-nav-link">Instructors</a>
-                <a href="#" class="edt-nav-link">Blog</a>
-                <a href="#" class="edt-nav-link">About</a>
+                <a href="#" class="edt-nav-link">{{#str}}nav_learning_paths, theme_edtech{{/str}}</a>
+                <a href="#" class="edt-nav-link">{{#str}}nav_instructors, theme_edtech{{/str}}</a>
+                <a href="#" class="edt-nav-link">{{#str}}nav_blog, theme_edtech{{/str}}</a>
+                <a href="#" class="edt-nav-link">{{#str}}nav_about, theme_edtech{{/str}}</a>
             {{/is_admin}}
 
             {{! Admin links — shown only to site administrators (gold colour) }}
@@ -95,19 +95,19 @@
                 <a href="{{wwwroot}}/admin/index.php"
                    class="edt-nav-link edt-nav-admin {{#nav_active_admin}}active{{/nav_active_admin}}"
                    {{#nav_active_admin}}aria-current="page"{{/nav_active_admin}}>
-                    Site Admin
+                    {{#str}}nav_site_admin, theme_edtech{{/str}}
                 </a>
                 <a href="{{wwwroot}}/admin/user.php"
                    class="edt-nav-link edt-nav-admin">
-                    Users
+                    {{#str}}nav_users, theme_edtech{{/str}}
                 </a>
                 <a href="{{wwwroot}}/course/management.php"
                    class="edt-nav-link edt-nav-admin">
-                    Manage Courses
+                    {{#str}}nav_manage_courses, theme_edtech{{/str}}
                 </a>
                 <a href="{{wwwroot}}/admin/reports.php"
                    class="edt-nav-link edt-nav-admin">
-                    Reports
+                    {{#str}}nav_reports, theme_edtech{{/str}}
                 </a>
             {{/is_admin}}
 
@@ -142,10 +142,10 @@
                     {{! Guest: show Login + Join Now buttons }}
                     <div class="edt-guest-btns d-flex align-items-center gap-2 ps-2">
                         <a href="{{loginurl}}" class="edt-btn edt-btn-ghost edt-btn-sm">
-                            Login
+                            {{#str}}nav_login, theme_edtech{{/str}}
                         </a>
                         <a href="{{wwwroot}}/login/signup.php" class="edt-btn edt-btn-primary edt-btn-sm">
-                            Join Now
+                            {{#str}}nav_join_now, theme_edtech{{/str}}
                         </a>
                     </div>
                 {{/usermenu}}
@@ -158,5 +158,4 @@
 </header>
 
 {{> theme_boost/primary-drawer-mobile }}
-
 
