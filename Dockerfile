@@ -17,7 +17,6 @@ RUN apt-get update && apt-get install -y \
     unzip \
     curl \
     git \
-    cron \
     && rm -rf /var/lib/apt/lists/*
 
 # Configure and install PHP extensions
@@ -44,6 +43,7 @@ RUN { \
     echo 'upload_max_filesize = 256M'; \
     echo 'memory_limit = 512M'; \
     echo 'max_execution_time = 300'; \
+    echo 'display_errors = Off'; \
     echo 'opcache.enable = 1'; \
     echo 'opcache.memory_consumption = 128'; \
     echo 'opcache.max_accelerated_files = 10000'; \
