@@ -3,6 +3,7 @@ set -e
 
 MOODLE_CONFIG="/var/www/html/config.php"
 INSTALL_LOCK="/var/moodledata/.installed"
+MOODLE_CLI="/var/www/html/admin/cli"
 
 # Wait for database
 echo "Waiting for database..."
@@ -54,7 +55,7 @@ chown www-data:www-data "$MOODLE_CONFIG"
 # Run Moodle install only once (lock file in persistent volume)
 if [ ! -f "$INSTALL_LOCK" ]; then
     echo "Running Moodle installation..."
-    php /var/www/html/admin/cli/install_database.php \
+    php "$MOODLE_CLI/install_database.php" \
         --lang=en \
         --adminuser="${MOODLE_ADMIN_USER:-admin}" \
         --adminpass="${MOODLE_ADMIN_PASSWORD}" \
@@ -68,9 +69,16 @@ else
     echo "Moodle already installed, skipping."
 fi
 
-# Setup cron
-echo "*/1 * * * * www-data /usr/local/bin/php /var/www/html/admin/cli/cron.php >/dev/null 2>&1" > /etc/cron.d/moodle
-chmod 0644 /etc/cron.d/moodle
-cron
+# Run Moodle cron every minute in the container. Running it in a loop avoids
+# relying on a second daemon inside the Apache container and keeps failures
+# visible in the container lifecycle.
+(
+    while true; do
+        if ! /usr/local/bin/php "$MOODLE_CLI/cron.php" >/dev/null 2>&1; then
+            echo "Moodle cron failed; it will be retried in 60 seconds." >&2
+        fi
+        sleep 60
+    done
+) &
 
 exec "$@"
