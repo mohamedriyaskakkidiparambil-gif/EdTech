@@ -38,6 +38,7 @@ services:
       MOODLE_SITE_NAME: ${MOODLE_SITE_NAME}
       MOODLE_SITE_SHORTNAME: ${MOODLE_SITE_SHORTNAME}
       MOODLE_WWWROOT: ${MOODLE_WWWROOT:-http://localhost}
+      MOODLE_DISABLE_UPDATE_NOTIFICATIONS: ${MOODLE_DISABLE_UPDATE_NOTIFICATIONS:-false}
     volumes:
       - moodledata:/var/moodledata
       - ./theme/ranees:/var/www/html/theme/ranees

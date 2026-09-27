@@ -18,6 +18,11 @@ echo "Database is ready."
 # Generate config.php from environment on every start so proxy/domain changes
 # are applied cleanly during redeploys.
 echo "Creating config.php..."
+UPDATE_NOTIFICATIONS_CONFIG=""
+if [ "${MOODLE_DISABLE_UPDATE_NOTIFICATIONS:-false}" = "true" ]; then
+    UPDATE_NOTIFICATIONS_CONFIG="\$CFG->disableupdatenotifications = true;"
+fi
+
 cat > "$MOODLE_CONFIG" <<PHPEOF
 <?php
 unset(\$CFG);
@@ -38,6 +43,7 @@ global \$CFG;
 \$CFG->sslproxy = ${MOODLE_SSLPROXY:-false};
 \$CFG->reverseproxy = ${MOODLE_REVERSEPROXY:-false};
 \$CFG->theme = '${MOODLE_THEME:-edtech}';
+${UPDATE_NOTIFICATIONS_CONFIG}
 
 \$CFG->admin = 'admin';
 
