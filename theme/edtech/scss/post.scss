@@ -57,6 +57,18 @@ a { color: var(--olive-600); &:hover { color: var(--olive-700); } }
   width: 100%;
 }
 
+// On course pages the index drawer is fixed over the left side of the
+// viewport. The footer lives outside #page.drawers, so without this offset
+// its first column is hidden behind the drawer while the other columns are
+// pushed too far right.
+@media (min-width: 769px) {
+  body.path-course-view #page.drawers.show-drawer-left ~ #page-footer.edt-footer {
+    box-sizing: border-box;
+    width: calc(100% - 285px);
+    margin-inline-start: 285px;
+  }
+}
+
 // ── Drawers layout — global fixes ────────────────────────────────────────
 body.limitedwidth #page.drawers .main-inner { max-width: 100% !important; }
 
@@ -329,11 +341,26 @@ body.limitedwidth #page.drawers .main-inner { max-width: 100% !important; }
   }
 }
 
+// Course-category pages get a separate Moodle secondary navigation bar
+// ("Category" and "More") above the catalogue hero. The catalogue already
+// has its own breadcrumbs and controls, so this duplicate bar is unnecessary.
+body.pagelayout-coursecategory .secondary-navigation {
+  display: none !important;
+}
+
 // ── Branded public course catalogue ──────────────────────────────────────
 #page-course-index,
 #page-course-index-category {
   // The EdTech header is already rendered in normal flow on catalogue pages.
   #page-wrapper { padding-top: 0 !important; }
+
+  // Moodle adds horizontal padding to the drawer page shell. The catalogue
+  // hero and its supporting controls are designed as full-bleed sections, so
+  // remove that shell padding on catalogue pages.
+  #page.drawers {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
 
   // The catalogue renderer provides its own hero and title.
   #page-header { display: none !important; }
@@ -346,6 +373,11 @@ body.limitedwidth #page.drawers .main-inner { max-width: 100% !important; }
 
   #region-main {
     padding: 0 0 72px !important;
+  }
+
+  #region-main > div[role="main"] {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 
   .edt-catalog-hero {
@@ -759,15 +791,247 @@ body.limitedwidth #page.drawers .main-inner { max-width: 100% !important; }
 }
 
 // ── Course page (inside a course) ────────────────────────────────────────
+.path-enrol {
+  #page.drawers {
+    margin-top: 32px;
+  }
+
+  #topofscroll.main-inner {
+    max-width: 1120px !important;
+    margin: 0 auto 64px;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  // Moodle's default enrolment header uses a narrow 830px container. Keep
+  // the title and enrolment options in one intentional, branded panel.
+  #page-header {
+    box-sizing: border-box;
+    max-width: 100% !important;
+    width: 100%;
+    margin: 0;
+    padding: 48px 56px 44px;
+    border: 1px solid var(--olive-700);
+    border-bottom: 0;
+    border-radius: 24px 24px 0 0;
+    background:
+      radial-gradient(520px 220px at 12% 10%, rgba(212,175,55,.24), transparent 68%),
+      linear-gradient(135deg, var(--olive-800), var(--olive-900));
+    box-shadow: var(--shadow-lg);
+
+    .page-header-headings h1 {
+      margin: 0 !important;
+      color: #fff !important;
+      font-size: clamp(30px, 4vw, 46px);
+      line-height: 1.15;
+      font-weight: 800 !important;
+    }
+  }
+
+  #region-main {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0 56px 52px !important;
+    background: #fff !important;
+    border: 1px solid var(--border);
+    border-top: 0;
+    border-radius: 0 0 24px 24px;
+    box-shadow: var(--shadow-lg);
+  }
+
+  #region-main > div[role="main"] {
+    padding: 0 !important;
+  }
+
+  #region-main > div[role="main"] > .generalbox.info {
+    max-width: none;
+    margin: 0 0 28px !important;
+    padding: 0 !important;
+    background: transparent;
+  }
+
+  #region-main > div[role="main"] > .generalbox.info .edt-catalog-course {
+    display: grid;
+    grid-template-columns: 280px minmax(0, 1fr) auto;
+    align-items: stretch;
+    min-height: 210px;
+    overflow: hidden;
+    border-radius: 18px !important;
+    box-shadow: var(--shadow-sm);
+  }
+
+  #region-main > div[role="main"] > .generalbox.info .edt-catalog-course-image {
+    position: relative;
+    height: 100%;
+    min-height: 210px;
+    aspect-ratio: auto;
+  }
+
+  #region-main > div[role="main"] > .generalbox.info .edt-catalog-course-category {
+    position: absolute;
+    inset-inline-start: 14px;
+    top: 14px;
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .94);
+    color: var(--olive-800);
+    font-size: 11px;
+    font-weight: 800;
+    box-shadow: var(--shadow-sm);
+  }
+
+  #region-main > div[role="main"] > .generalbox.info .edt-catalog-enrolment {
+    display: none;
+  }
+
+  #region-main > div[role="main"] > .generalbox.info .edt-catalog-course-body {
+    align-self: center;
+    padding: 28px;
+  }
+
+  #region-main > div[role="main"] > .generalbox.info .edt-catalog-course-footer {
+    display: flex;
+    align-items: center;
+    padding: 28px;
+  }
+
+  #region-main > div[role="main"] > h2 {
+    margin: 0 0 24px;
+    padding-top: 36px;
+    color: var(--olive-900);
+    font-size: 22px;
+    font-weight: 800;
+  }
+
+  form.mform {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  form.mform #id_selfheader {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0 !important;
+    padding: 24px 28px 20px;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background: var(--bg);
+  }
+
+  #id_selfheader > .d-flex {
+    margin: 0 !important;
+  }
+
+  #id_selfheader .ftoggler {
+    width: 100%;
+    margin: 0 !important;
+  }
+
+  #id_selfheader .fheader {
+    display: none;
+  }
+
+  #id_selfheader h3 {
+    color: var(--olive-900);
+    font-size: 19px;
+    font-weight: 800;
+  }
+
+  #fitem_id_nokey {
+    display: block;
+    margin: 14px 0 0 !important;
+  }
+
+  #fitem_id_nokey > .col-md-3,
+  #fitem_id_submitbutton > .col-md-3 {
+    display: none !important;
+  }
+
+  #fitem_id_nokey > .col-md-9,
+  #fitem_id_submitbutton > .col-md-9 {
+    width: 100%;
+    max-width: 100%;
+    flex: 0 0 100%;
+    padding: 0 !important;
+  }
+
+  #fitem_id_nokey .form-control-static {
+    color: var(--muted);
+    font-size: 15px;
+  }
+
+  #fitem_id_submitbutton {
+    display: flex;
+    justify-content: center;
+    margin: 24px 0 0 !important;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  #id_submitbutton {
+    min-width: 220px;
+    padding: 13px 28px;
+    border: 0;
+    border-radius: 12px;
+    background: var(--olive-600);
+    box-shadow: 0 8px 18px rgba(63, 91, 28, .18);
+    font-weight: 800;
+    transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+
+    &:hover,
+    &:focus {
+      background: var(--olive-700);
+      box-shadow: 0 10px 22px rgba(63, 91, 28, .25);
+      transform: translateY(-1px);
+    }
+  }
+
+  @media (max-width: 768px) {
+    #page.drawers { margin-top: 20px; }
+    #topofscroll.main-inner { width: calc(100% - 24px); }
+    #page-header { padding: 36px 28px 32px; }
+    #region-main { padding: 0 28px 36px !important; }
+
+    #region-main > div[role="main"] > .generalbox.info .edt-catalog-course {
+      grid-template-columns: 1fr;
+    }
+
+    #region-main > div[role="main"] > .generalbox.info .edt-catalog-course-image {
+      min-height: 190px;
+    }
+
+    #region-main > div[role="main"] > .generalbox.info .edt-catalog-course-footer {
+      padding-top: 0;
+    }
+  }
+}
+
 .path-course-view {
+  // Keep the course navigation focused on the learning experience. These
+  // administrative links are not needed by students on the course page.
+  .secondary-navigation .moremenu {
+    li[data-key="participants"],
+    li[data-key="competencies"] {
+      display: none !important;
+    }
+  }
+
   // Style the course content area
   #page-header {
+    box-sizing: border-box;
+    max-width: 100% !important;
+    width: 100%;
     background: linear-gradient(135deg, var(--olive-50), #fff);
     border-bottom: 1px solid var(--border);
-    padding: 28px 0;
+    margin: 0 0 20px;
+    padding: 28px 16px;
 
-    .header-maxwidth { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
-    h1 { color: var(--olive-900) !important; font-weight: 800 !important; }
+    .page-header-headings h1 {
+      margin: 0 !important;
+      color: var(--olive-900) !important;
+      font-weight: 800 !important;
+    }
   }
 }
 
@@ -964,9 +1228,11 @@ textarea.form-control,
 }
 
 .edt-navbar-inner {
+  width: 100%;
   max-width: 1280px;
   margin: 0 auto;
   padding: 14px 24px;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   gap: 20px;

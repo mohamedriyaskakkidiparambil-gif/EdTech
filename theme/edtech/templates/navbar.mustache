@@ -84,9 +84,6 @@
 
             {{! Public links — shown to guests and regular users only }}
             {{^is_admin}}
-                <a href="#" class="edt-nav-link">{{#str}}nav_learning_paths, theme_edtech{{/str}}</a>
-                <a href="#" class="edt-nav-link">{{#str}}nav_instructors, theme_edtech{{/str}}</a>
-                <a href="#" class="edt-nav-link">{{#str}}nav_blog, theme_edtech{{/str}}</a>
                 <a href="#" class="edt-nav-link">{{#str}}nav_about, theme_edtech{{/str}}</a>
             {{/is_admin}}
 
@@ -144,9 +141,11 @@
                         <a href="{{loginurl}}" class="edt-btn edt-btn-ghost edt-btn-sm">
                             {{#str}}nav_login, theme_edtech{{/str}}
                         </a>
-                        <a href="{{wwwroot}}/login/signup.php" class="edt-btn edt-btn-primary edt-btn-sm">
-                            {{#str}}nav_join_now, theme_edtech{{/str}}
-                        </a>
+                        {{#signupenabled}}
+                            <a href="{{signupurl}}" class="edt-btn edt-btn-primary edt-btn-sm">
+                                {{#str}}nav_join_now, theme_edtech{{/str}}
+                            </a>
+                        {{/signupenabled}}
                     </div>
                 {{/usermenu}}
             </div>
@@ -158,4 +157,3 @@
 </header>
 
 {{> theme_boost/primary-drawer-mobile }}
-

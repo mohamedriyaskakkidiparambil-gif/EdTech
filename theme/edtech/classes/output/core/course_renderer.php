@@ -11,7 +11,7 @@ class course_renderer extends \core_course_renderer {
      * Add the branded catalogue hero while retaining Moodle's native category output.
      */
     public function course_category($category) {
-        global $DB;
+        global $PAGE;
 
         $coursecat = empty($category)
             ? \core_course_category::user_top()
@@ -33,6 +33,20 @@ class course_renderer extends \core_course_renderer {
                 'url' => (new \moodle_url('/course/index.php'))->out(false),
             ]);
         }
+        // When the selected language exposes only one usable top-level
+        // category, the category index adds an unnecessary extra click.
+        // Send visitors directly to that category's course listing while
+        // keeping the index page available whenever there are multiple
+        // categories to choose from.
+        if ($isroot && $PAGE->url->get_param('categoryid', null) === null) {
+            $singlecategoryid = \theme_edtech_single_language_category_id(current_language());
+            if ($singlecategoryid !== null) {
+                \redirect(new \moodle_url('/course/index.php', [
+                    'categoryid' => $singlecategoryid,
+                ]));
+            }
+        }
+
         $description = '';
         if (!$isroot) {
             $helper = new \coursecat_helper();

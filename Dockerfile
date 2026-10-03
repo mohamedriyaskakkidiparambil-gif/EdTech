@@ -84,6 +84,14 @@ RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 COPY scripts/seed-arabic-islamic-courses.php /usr/local/bin/seed-arabic-islamic-courses.php
 RUN chmod +x /usr/local/bin/seed-arabic-islamic-courses.php
 
+# Apply student access settings after Moodle is installed.
+COPY scripts/configure-student-access.php /usr/local/bin/configure-student-access.php
+RUN chmod +x /usr/local/bin/configure-student-access.php
+
+# One-shot demo course content seeder.
+COPY scripts/seed-course-content.php /usr/local/bin/seed-course-content.php
+RUN chmod +x /usr/local/bin/seed-course-content.php
+
 VOLUME ["/var/moodledata"]
 
 EXPOSE 80
