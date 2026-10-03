@@ -6,6 +6,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG, $SITE;
+require_once($CFG->libdir . '/authlib.php');
 
 // Required — Moodle checks output contains id="maincontent"
 $maincontent = $OUTPUT->main_content();
@@ -63,7 +64,9 @@ $templatecontext = [
     'homeurl'         => (new moodle_url('/'))->out(false),
     'forgoturl'       => (new moodle_url('/login/forgot_password.php'))->out(false),
     'signupurl'       => (new moodle_url('/login/signup.php'))->out(false),
-    'signupenabled'   => !empty($CFG->registerauth),
+    // Use Moodle's canonical check so the link is shown only when the
+    // configured self-registration authentication plugin is actually usable.
+    'signupenabled'   => signup_is_enabled(),
 ];
 
 echo $OUTPUT->render_from_template('theme_edtech/login', $templatecontext);

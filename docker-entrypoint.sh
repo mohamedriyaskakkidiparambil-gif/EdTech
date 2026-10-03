@@ -3,6 +3,7 @@ set -e
 
 MOODLE_CONFIG="/var/www/html/config.php"
 INSTALL_LOCK="/var/moodledata/.installed"
+STUDENT_ACCESS_LOCK="/var/moodledata/.student-access-configured"
 MOODLE_CLI="/var/www/html/admin/cli"
 
 # Wait for database
@@ -22,6 +23,32 @@ echo "Creating config.php..."
 UPDATE_NOTIFICATIONS_CONFIG=""
 if [ "${MOODLE_DISABLE_UPDATE_NOTIFICATIONS:-false}" = "true" ]; then
     UPDATE_NOTIFICATIONS_CONFIG="\$CFG->disableupdatenotifications = true;"
+fi
+
+# Optional SMTP configuration. Keep credentials in environment variables so
+# they never need to be committed to config.php or the repository.
+SMTP_CONFIG=""
+if [ -n "${MOODLE_SMTP_HOST:-}" ]; then
+    escape_php_single_quote() {
+        local value="$1"
+        value=${value//\\/\\\\}
+        value=${value//\'/\\\'}
+        printf '%s' "$value"
+    }
+
+    SMTP_HOST_VALUE=$(escape_php_single_quote "${MOODLE_SMTP_HOST}")
+    SMTP_PORT_VALUE=$(escape_php_single_quote "${MOODLE_SMTP_PORT:-2525}")
+    SMTP_USER_VALUE=$(escape_php_single_quote "${MOODLE_SMTP_USER:-}")
+    SMTP_PASSWORD_VALUE=$(escape_php_single_quote "${MOODLE_SMTP_PASSWORD:-}")
+    SMTP_SECURITY_VALUE=$(escape_php_single_quote "${MOODLE_SMTP_SECURITY:-tls}")
+    SMTP_FROM_VALUE=$(escape_php_single_quote "${MOODLE_EMAIL_FROM:-${MOODLE_ADMIN_EMAIL:-admin@example.com}}")
+
+    SMTP_CONFIG=$(printf '%s\n' \
+        "\$CFG->smtphosts = '${SMTP_HOST_VALUE}:${SMTP_PORT_VALUE}';" \
+        "\$CFG->smtpuser = '${SMTP_USER_VALUE}';" \
+        "\$CFG->smtppass = '${SMTP_PASSWORD_VALUE}';" \
+        "\$CFG->smtpsecure = '${SMTP_SECURITY_VALUE}';" \
+        "\$CFG->noreplyaddress = '${SMTP_FROM_VALUE}';")
 fi
 
 cat > "$MOODLE_CONFIG" <<PHPEOF
@@ -45,6 +72,7 @@ global \$CFG;
 \$CFG->reverseproxy = ${MOODLE_REVERSEPROXY:-false};
 \$CFG->theme = '${MOODLE_THEME:-edtech}';
 ${UPDATE_NOTIFICATIONS_CONFIG}
+${SMTP_CONFIG}
 
 \$CFG->admin = 'admin';
 
@@ -67,6 +95,14 @@ if [ ! -f "$INSTALL_LOCK" ]; then
     echo "Moodle installation complete."
 else
     echo "Moodle already installed, skipping."
+fi
+
+# Configure student account creation and self-enrolment once. The persistent
+# marker prevents a later administrator decision from being overwritten on
+# every container restart.
+if [ ! -f "$STUDENT_ACCESS_LOCK" ]; then
+    php /usr/local/bin/configure-student-access.php
+    touch "$STUDENT_ACCESS_LOCK"
 fi
 
 # Run Moodle cron every minute in the container. Running it in a loop avoids

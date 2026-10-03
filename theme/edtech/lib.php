@@ -48,6 +48,7 @@ function theme_edtech_get_extra_scss($theme) {
  */
 function theme_edtech_get_navbar_context($OUTPUT, $PAGE) {
     global $CFG, $SITE;
+    require_once($CFG->libdir . '/authlib.php');
 
     // Primary navigation data (usermenu, langmenu, moremenu)
     $primarymenu     = new \core\navigation\output\primary($PAGE);
@@ -58,8 +59,29 @@ function theme_edtech_get_navbar_context($OUTPUT, $PAGE) {
     $installedlangs = get_string_manager()->get_list_of_translations();
     $langlist = [];
     if (count($installedlangs) > 1) {
+        $iscoursecategorypage = $PAGE->url->get_path() === '/course/index.php'
+            && $PAGE->url->get_param('categoryid', null) !== null;
+        $iscourseviewpage = $PAGE->url->get_path() === '/course/view.php'
+            && $PAGE->url->get_param('id', null) !== null;
+        $iscourseenrolpage = $PAGE->url->get_path() === '/enrol/index.php'
+            && $PAGE->url->get_param('id', null) !== null;
         foreach ($installedlangs as $code => $name) {
             $url = new moodle_url($PAGE->url, ['lang' => $code]);
+            if (($iscourseviewpage || $iscourseenrolpage) && $code !== $currentlang) {
+                // Course detail and enrolment pages are language-specific. If
+                // the user switches language, take them to the target
+                // language's catalogue instead of keeping the same course.
+                $targetcategoryid = theme_edtech_single_language_category_id($code);
+                $url = new moodle_url('/course/index.php', ['lang' => $code]);
+                if ($targetcategoryid !== null) {
+                    $url->param('categoryid', $targetcategoryid);
+                }
+            } else if ($iscoursecategorypage) {
+                $targetcategoryid = theme_edtech_single_language_category_id($code);
+                if ($targetcategoryid !== null) {
+                    $url->param('categoryid', $targetcategoryid);
+                }
+            }
             $langlist[] = [
                 'code'   => $code,
                 'name'   => $name,
@@ -89,6 +111,8 @@ function theme_edtech_get_navbar_context($OUTPUT, $PAGE) {
         'sitename'        => format_string($SITE->fullname),
         'wwwroot'         => $CFG->wwwroot,
         'loginurl'        => (new moodle_url('/login/'))->out(false),
+        'signupurl'       => (new moodle_url('/login/signup.php'))->out(false),
+        'signupenabled'   => signup_is_enabled(),
         'loggedin'        => isloggedin() && !isguestuser(),
         'isrtl'           => right_to_left(),
         'is_admin'        => $is_admin,
@@ -175,34 +199,41 @@ function theme_edtech_contains_arabic($text) {
 }
 
 /**
- * Match content to the selected language. Arabic content must contain Arabic
- * script; non-Arabic content is treated as English for the English view.
+ * Match content to a language. Arabic content must contain Arabic script;
+ * non-Arabic content is treated as English for the English view.
  */
-function theme_edtech_text_matches_current_language($text) {
-    $is_arabic_view = theme_edtech_language_family(current_language()) === 'ar';
+function theme_edtech_text_matches_language($text, $language) {
+    $is_arabic_view = theme_edtech_language_family($language) === 'ar';
     $has_arabic = theme_edtech_contains_arabic($text);
 
     return $is_arabic_view ? $has_arabic : !$has_arabic;
 }
 
 /**
- * Returns whether a course belongs in the currently selected language view.
+ * Match content to the currently selected language.
+ */
+function theme_edtech_text_matches_current_language($text) {
+    return theme_edtech_text_matches_language($text, current_language());
+}
+
+/**
+ * Returns whether a course belongs in the requested language view.
  *
  * Moodle stores the course language in course.lang. When it is empty, infer
  * the course language from its script so manually created courses do not
  * appear in the opposite language view.
  */
-function theme_edtech_course_matches_current_language($course) {
+function theme_edtech_course_matches_language($course, $language) {
     $courselang = trim((string)($course->lang ?? ''));
 
     if ($courselang !== '') {
-        if (theme_edtech_language_family($courselang) !== theme_edtech_language_family(current_language())) {
+        if (theme_edtech_language_family($courselang) !== theme_edtech_language_family($language)) {
             return false;
         }
 
         // Do not allow an incorrectly tagged English record into the Arabic
         // view. English records may still mention Arabic terms or names.
-        if (theme_edtech_language_family(current_language()) === 'ar') {
+        if (theme_edtech_language_family($language) === 'ar') {
             $taggedcontent = implode(' ', array_filter([
                 (string)($course->fullname ?? ''),
                 (string)($course->shortname ?? ''),
@@ -220,7 +251,14 @@ function theme_edtech_course_matches_current_language($course) {
         (string)($course->summary ?? ''),
     ]));
 
-    return theme_edtech_text_matches_current_language($coursecontent);
+    return theme_edtech_text_matches_language($coursecontent, $language);
+}
+
+/**
+ * Returns whether a course belongs in the currently selected language view.
+ */
+function theme_edtech_course_matches_current_language($course) {
+    return theme_edtech_course_matches_language($course, current_language());
 }
 
 /**
@@ -232,9 +270,17 @@ function theme_edtech_category_matches_current_language($category) {
 }
 
 /**
- * Count visible courses in a category that belong in the current language.
+ * Return whether a category name belongs to a requested language.
  */
-function theme_edtech_category_language_course_count($categoryid) {
+function theme_edtech_category_matches_language($category, $language) {
+    $name = is_object($category) ? ($category->name ?? '') : $category;
+    return theme_edtech_text_matches_language($name, $language);
+}
+
+/**
+ * Count visible courses in a category that belong to a requested language.
+ */
+function theme_edtech_category_language_course_count_for_language($categoryid, $language) {
     global $DB;
 
     $courses = $DB->get_records_sql(
@@ -246,12 +292,43 @@ function theme_edtech_category_language_course_count($categoryid) {
 
     $count = 0;
     foreach ($courses as $course) {
-        if (theme_edtech_course_matches_current_language($course)) {
+        if (theme_edtech_course_matches_language($course, $language)) {
             $count++;
         }
     }
 
     return $count;
+}
+
+/**
+ * Count visible courses in a category that belong in the current language.
+ */
+function theme_edtech_category_language_course_count($categoryid) {
+    return theme_edtech_category_language_course_count_for_language($categoryid, current_language());
+}
+
+/**
+ * Return the only populated top-level category for a language, if there is
+ * exactly one. This keeps category redirects and language switching aligned.
+ */
+function theme_edtech_single_language_category_id($language) {
+    $rootcategory = \core_course_category::user_top();
+    $matchingids = [];
+
+    foreach ($rootcategory->get_children() as $category) {
+        if (!theme_edtech_category_matches_language($category, $language)) {
+            continue;
+        }
+        if (!theme_edtech_category_language_course_count_for_language($category->id, $language)) {
+            continue;
+        }
+        $matchingids[] = (int)$category->id;
+        if (count($matchingids) > 1) {
+            return null;
+        }
+    }
+
+    return $matchingids[0] ?? null;
 }
 
 /**

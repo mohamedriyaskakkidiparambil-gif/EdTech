@@ -67,10 +67,33 @@ define([], function() {
         dropdown.addEventListener('click', function(e) { e.stopPropagation(); });
     };
 
+    var initCourseCategoryFilter = function() {
+        var select = document.querySelector('select[name="jump"]');
+        if (!select) { return; }
+
+        var language = (document.documentElement.getAttribute('lang') || '').toLowerCase();
+        var isArabic = language.indexOf('ar') === 0;
+        var arabicPattern = /[\u0600-\u06ff\u0750-\u077f\u08a0-\u08ff\ufb50-\ufdff\ufe70-\ufeff]/;
+
+        Array.prototype.slice.call(select.options).forEach(function(option) {
+            if (!option.value || option.value.indexOf('/course/index.php?categoryid=') === -1) {
+                return;
+            }
+
+            // Category 1 is the unused placeholder parent category.
+            var isPlaceholder = option.value.indexOf('categoryid=1') !== -1;
+            var isArabicCategory = arabicPattern.test(option.textContent || '');
+            if (isPlaceholder || (isArabic && !isArabicCategory) || (!isArabic && isArabicCategory)) {
+                option.remove();
+            }
+        });
+    };
+
     return {
         init: function() {
             initUserMenu();
             initLangPill();
+            initCourseCategoryFilter();
         }
     };
 });

@@ -24,6 +24,12 @@ MOODLE_WWWROOT=https://your-domain.com
 MOODLE_THEME=edtech
 MOODLE_SSLPROXY=true
 MOODLE_REVERSEPROXY=true
+MOODLE_SMTP_HOST=sandbox.smtp.mailtrap.io
+MOODLE_SMTP_PORT=2525
+MOODLE_SMTP_USER=your_mailtrap_username
+MOODLE_SMTP_PASSWORD=your_mailtrap_password
+MOODLE_SMTP_SECURITY=tls
+MOODLE_EMAIL_FROM=noreply@example.com
 ```
 
 ## Important notes
@@ -31,6 +37,7 @@ MOODLE_REVERSEPROXY=true
 - `MOODLE_WWWROOT` must exactly match the public HTTPS URL configured in Coolify.
 - `MOODLE_THEME=edtech` makes the deployed site use the custom EdTech theme by default.
 - The database data is persisted in `moodle_db_data`.
+- For development email testing, use Mailtrap Sandbox SMTP credentials. Store the username and password as Coolify secrets, not in Git.
 - Moodle uploaded files and generated content are persisted in `moodledata`.
 - The first deployment runs Moodle installation automatically.
 - Later redeploys reuse the existing database and `moodledata` volume.
