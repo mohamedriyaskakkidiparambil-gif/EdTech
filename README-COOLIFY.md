@@ -40,4 +40,4 @@ MOODLE_EMAIL_FROM=noreply@example.com
 - For development email testing, use Mailtrap Sandbox SMTP credentials. Store the username and password as Coolify secrets, not in Git.
 - Moodle uploaded files and generated content are persisted in `moodledata`.
 - The first deployment runs Moodle installation automatically.
-- Later redeploys reuse the existing database and `moodledata` volume.
+- Later redeploys reuse the existing database and `moodledata` volume. The container checks for Moodle upgrades on startup and purges compiled Moodle/theme caches automatically when the EdTech theme version changes.
