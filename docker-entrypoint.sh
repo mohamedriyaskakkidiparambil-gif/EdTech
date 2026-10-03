@@ -4,6 +4,7 @@ set -e
 MOODLE_CONFIG="/var/www/html/config.php"
 INSTALL_LOCK="/var/moodledata/.installed"
 STUDENT_ACCESS_LOCK="/var/moodledata/.student-access-configured"
+THEME_CACHE_VERSION_FILE="/var/moodledata/.edtech-theme-cache-version"
 MOODLE_CLI="/var/www/html/admin/cli"
 
 # Wait for database
@@ -95,6 +96,8 @@ if [ ! -f "$INSTALL_LOCK" ]; then
     echo "Moodle installation complete."
 else
     echo "Moodle already installed, skipping."
+    echo "Checking Moodle upgrades..."
+    php "$MOODLE_CLI/upgrade.php" --non-interactive
 fi
 
 # Configure student account creation and self-enrolment once. The persistent
@@ -103,6 +106,24 @@ fi
 if [ ! -f "$STUDENT_ACCESS_LOCK" ]; then
     php /usr/local/bin/configure-student-access.php
     touch "$STUDENT_ACCESS_LOCK"
+fi
+
+# Moodle stores compiled theme CSS and other theme assets in moodledata. The
+# volume survives image redeploys, so clear those caches when the deployed
+# theme version changes. The version marker avoids purging caches on every
+# ordinary container restart.
+THEME_VERSION=$(sed -n 's/.*\$plugin->version[[:space:]]*=[[:space:]]*\([0-9][0-9]*\).*/\1/p' \
+    /var/www/html/theme/edtech/version.php | head -n 1)
+PREVIOUS_THEME_VERSION=""
+if [ -f "$THEME_CACHE_VERSION_FILE" ]; then
+    PREVIOUS_THEME_VERSION=$(cat "$THEME_CACHE_VERSION_FILE")
+fi
+
+if [ -n "$THEME_VERSION" ] && [ "$THEME_VERSION" != "$PREVIOUS_THEME_VERSION" ]; then
+    echo "Theme version changed (${PREVIOUS_THEME_VERSION:-none} -> ${THEME_VERSION}); purging Moodle caches..."
+    php "$MOODLE_CLI/purge_caches.php"
+    printf '%s\n' "$THEME_VERSION" > "$THEME_CACHE_VERSION_FILE"
+    chown www-data:www-data "$THEME_CACHE_VERSION_FILE"
 fi
 
 # Run Moodle cron every minute in the container. Running it in a loop avoids
