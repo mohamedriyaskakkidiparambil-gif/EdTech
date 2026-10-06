@@ -551,6 +551,7 @@ function lock_demo_sections(int $courseid, array $sectionsbynumber, array $quizc
 
 $createdpages = 0;
 $updatedpages = 0;
+$createdsections = 0;
 $renamedsections = 0;
 $createdvideos = 0;
 $updatedvideos = 0;
@@ -571,6 +572,26 @@ foreach ($courses as $shortname => $sectiontitles) {
     $sectionsbynumber = [];
     foreach ($sections as $sectionrecord) {
         $sectionsbynumber[(int)$sectionrecord->section] = $sectionrecord;
+    }
+
+    // Production databases may contain the course shell without the topic
+    // sections that were present in the local demo database. Create the
+    // expected section numbers before adding the curated activities.
+    $missingsectionnumbers = [];
+    foreach (array_keys($sectiontitles) as $index) {
+        $sectionnumber = $index + 1;
+        if (!isset($sectionsbynumber[$sectionnumber])) {
+            $missingsectionnumbers[] = $sectionnumber;
+        }
+    }
+    if ($missingsectionnumbers) {
+        course_create_sections_if_missing($course->id, $missingsectionnumbers);
+        $createdsections += count($missingsectionnumbers);
+        $sections = $DB->get_records('course_sections', ['course' => $course->id], 'section');
+        $sectionsbynumber = [];
+        foreach ($sections as $sectionrecord) {
+            $sectionsbynumber[(int)$sectionrecord->section] = $sectionrecord;
+        }
     }
 
     // The general section is reserved for announcements/discussions.
@@ -644,7 +665,8 @@ foreach ($courses as $shortname => $sectiontitles) {
 }
 
 purge_all_caches();
-echo "Renamed sections: {$renamedsections}; created pages: {$createdpages}; updated pages: {$updatedpages}; "
+echo "Created sections: {$createdsections}; renamed sections: {$renamedsections}; "
+    . "created pages: {$createdpages}; updated pages: {$updatedpages}; "
     . "created videos: {$createdvideos}; updated videos: {$updatedvideos}; "
     . "created PDFs: {$createdpdfs}; updated PDFs: {$updatedpdfs}; "
     . "created quizzes: {$createdquizzes}; updated quizzes: {$updatedquizzes}; "

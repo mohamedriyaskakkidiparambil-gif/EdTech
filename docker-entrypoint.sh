@@ -3,7 +3,10 @@ set -e
 
 MOODLE_CONFIG="/var/www/html/config.php"
 INSTALL_LOCK="/var/moodledata/.installed"
-STUDENT_ACCESS_LOCK="/var/moodledata/.student-access-configured"
+STUDENT_ACCESS_VERSION_FILE="/var/moodledata/.student-access-version"
+STUDENT_ACCESS_VERSION="2026100701"
+DEMO_DATA_VERSION_FILE="/var/moodledata/.edtech-demo-data-version"
+DEMO_DATA_VERSION="2026100701"
 THEME_CACHE_VERSION_FILE="/var/moodledata/.edtech-theme-cache-version"
 MOODLE_CLI="/var/www/html/admin/cli"
 
@@ -100,12 +103,32 @@ else
     php "$MOODLE_CLI/upgrade.php" --non-interactive
 fi
 
-# Configure student account creation and self-enrolment once. The persistent
-# marker prevents a later administrator decision from being overwritten on
-# every container restart.
-if [ ! -f "$STUDENT_ACCESS_LOCK" ]; then
+# Synchronise the curated demo catalogue after installation. The versioned
+# marker makes this safe across restarts while allowing future data migrations
+# to run against an existing persistent production volume.
+PREVIOUS_DEMO_DATA_VERSION=""
+if [ -f "$DEMO_DATA_VERSION_FILE" ]; then
+    PREVIOUS_DEMO_DATA_VERSION=$(cat "$DEMO_DATA_VERSION_FILE")
+fi
+if [ "$PREVIOUS_DEMO_DATA_VERSION" != "$DEMO_DATA_VERSION" ]; then
+    echo "Demo data version changed (${PREVIOUS_DEMO_DATA_VERSION:-none} -> ${DEMO_DATA_VERSION}); synchronising courses..."
+    php /usr/local/bin/seed-arabic-islamic-courses.php
+    php /usr/local/bin/seed-course-content.php
+    printf '%s\n' "$DEMO_DATA_VERSION" > "$DEMO_DATA_VERSION_FILE"
+    chown www-data:www-data "$DEMO_DATA_VERSION_FILE"
+fi
+
+# Configure student account creation and course-level self-enrolment. The
+# versioned marker allows this migration to repair existing production sites
+# that were initialized before per-course enrolment was added.
+PREVIOUS_STUDENT_ACCESS_VERSION=""
+if [ -f "$STUDENT_ACCESS_VERSION_FILE" ]; then
+    PREVIOUS_STUDENT_ACCESS_VERSION=$(cat "$STUDENT_ACCESS_VERSION_FILE")
+fi
+if [ "$PREVIOUS_STUDENT_ACCESS_VERSION" != "$STUDENT_ACCESS_VERSION" ]; then
     php /usr/local/bin/configure-student-access.php
-    touch "$STUDENT_ACCESS_LOCK"
+    printf '%s\n' "$STUDENT_ACCESS_VERSION" > "$STUDENT_ACCESS_VERSION_FILE"
+    chown www-data:www-data "$STUDENT_ACCESS_VERSION_FILE"
 fi
 
 # Moodle stores compiled theme CSS and other theme assets in moodledata. The
