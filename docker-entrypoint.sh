@@ -6,7 +6,7 @@ INSTALL_LOCK="/var/moodledata/.installed"
 STUDENT_ACCESS_VERSION_FILE="/var/moodledata/.student-access-version"
 STUDENT_ACCESS_VERSION="2026100701"
 DEMO_DATA_VERSION_FILE="/var/moodledata/.edtech-demo-data-version"
-DEMO_DATA_VERSION="2026100701"
+DEMO_DATA_VERSION="2026100702"
 THEME_CACHE_VERSION_FILE="/var/moodledata/.edtech-theme-cache-version"
 MOODLE_CLI="/var/www/html/admin/cli"
 
