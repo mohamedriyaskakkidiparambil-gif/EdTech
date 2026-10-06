@@ -27,7 +27,8 @@ instead of creating duplicates.
 
 ## Full course content
 
-The container startup also runs `seed-course-content.php` for all ten catalogue
+The container startup first ensures the five stable English technical courses
+exist, then runs `seed-course-content.php` for all ten curated catalogue
 courses. It adds or updates:
 
 - five structured Arabic lessons per Islamic course and eight structured English lessons per technical course;

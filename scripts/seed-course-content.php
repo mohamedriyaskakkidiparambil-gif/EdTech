@@ -122,6 +122,14 @@ foreach ($curriculum as $shortname => $lessons) {
     $courses[$shortname] = array_column($lessons, 'title');
 }
 
+// Older production imports used these short names. Reuse those records when
+// present so their learner enrolments and history are preserved while the
+// curated content is upgraded in place.
+$coursealiases = [
+    'TECH-JS' => ['web-js-bootcamp'],
+    'TECH-AI' => ['ai-practical'],
+];
+
 // Public introductory videos for every demo course. They are embedded in the
 // first lesson page and also include a direct watch link for restricted
 // networks or learners who prefer the YouTube player.
@@ -649,6 +657,15 @@ $lockedsections = 0;
 
 foreach ($courses as $shortname => $sectiontitles) {
     $course = $DB->get_record('course', ['shortname' => $shortname], '*', IGNORE_MISSING);
+    if (!$course) {
+        foreach ($coursealiases[$shortname] ?? [] as $alias) {
+            $course = $DB->get_record('course', ['shortname' => $alias], '*', IGNORE_MISSING);
+            if ($course) {
+                echo "Using legacy course {$alias} for {$shortname}\n";
+                break;
+            }
+        }
+    }
     if (!$course) {
         echo "Skipped missing course: {$shortname}\n";
         continue;
