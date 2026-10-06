@@ -6,7 +6,7 @@ INSTALL_LOCK="/var/moodledata/.installed"
 STUDENT_ACCESS_VERSION_FILE="/var/moodledata/.student-access-version"
 STUDENT_ACCESS_VERSION="2026100701"
 DEMO_DATA_VERSION_FILE="/var/moodledata/.edtech-demo-data-version"
-DEMO_DATA_VERSION="2026100702"
+DEMO_DATA_VERSION="2026100704"
 THEME_CACHE_VERSION_FILE="/var/moodledata/.edtech-theme-cache-version"
 MOODLE_CLI="/var/www/html/admin/cli"
 
@@ -112,6 +112,7 @@ if [ -f "$DEMO_DATA_VERSION_FILE" ]; then
 fi
 if [ "$PREVIOUS_DEMO_DATA_VERSION" != "$DEMO_DATA_VERSION" ]; then
     echo "Demo data version changed (${PREVIOUS_DEMO_DATA_VERSION:-none} -> ${DEMO_DATA_VERSION}); synchronising courses..."
+    php /usr/local/bin/seed-english-technical-courses.php
     php /usr/local/bin/seed-arabic-islamic-courses.php
     php /usr/local/bin/seed-course-content.php
     printf '%s\n' "$DEMO_DATA_VERSION" > "$DEMO_DATA_VERSION_FILE"

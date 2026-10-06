@@ -81,6 +81,9 @@ COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 # Copy one-shot data seeders used after the Moodle site is installed.
+COPY scripts/seed-english-technical-courses.php /usr/local/bin/seed-english-technical-courses.php
+RUN chmod +x /usr/local/bin/seed-english-technical-courses.php
+
 COPY scripts/seed-arabic-islamic-courses.php /usr/local/bin/seed-arabic-islamic-courses.php
 RUN chmod +x /usr/local/bin/seed-arabic-islamic-courses.php
 

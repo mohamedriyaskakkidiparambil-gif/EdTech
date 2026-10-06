@@ -41,4 +41,4 @@ MOODLE_EMAIL_FROM=noreply@example.com
 - Moodle uploaded files and generated content are persisted in `moodledata`.
 - The first deployment runs Moodle installation automatically.
 - Later redeploys reuse the existing database and `moodledata` volume. The container checks for Moodle upgrades on startup and purges compiled Moodle/theme caches automatically when the EdTech theme version changes.
-- The container also runs a versioned, idempotent demo-data sync for the stable course short names. It creates missing Arabic courses and sections, adds the local lesson pages, quizzes, PDF guides, video embeds, section unlock rules, and Self enrolment instances without deleting unrelated courses or users.
+- The container also runs a versioned, idempotent demo-data sync for the stable course short names. It creates missing English technical and Arabic Islamic courses, reuses known legacy JavaScript/AI course records when present, adds the local lesson pages, quizzes, PDF guides, video embeds, section unlock rules, and Self enrolment instances without deleting unrelated courses or users.
