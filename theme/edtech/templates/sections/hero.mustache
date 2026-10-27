@@ -1,86 +1,95 @@
 {{! theme_edtech/sections/hero
-    Hero banner — eyebrow, headline, subtitle, CTA buttons, stats.
-    Context: hero.* from theme_edtech_build_frontpage_context()
+    Reference-style full-bleed homepage hero carousel.
+    Context: hero.slides from theme_edtech_get_frontpage_slides()
     @template theme_edtech/sections/hero
 }}
-<section class="edt-hero" aria-label="{{#str}}hero_eyebrow, theme_edtech{{/str}}">
-    <div class="edt-container">
-        <div class="edt-hero-grid">
+<section id="edt-home-slider" class="edt-hero edt-hero-slider" aria-label="{{#str}}slider_settings_heading, theme_edtech{{/str}}">
+    <div class="edt-slider" data-edt-slider data-interval="6000">
+        <div class="edt-slider-viewport">
+            {{#hero.slides}}
+            <article id="{{id}}"
+                     class="edt-slider-slide{{#isactive}} is-active{{/isactive}}"
+                     data-edt-slide
+                     data-slide-index="{{index}}"
+                     data-status-label="{{status_label}}"
+                     role="group"
+                     aria-roledescription="slide"
+                     aria-label="{{status_label}}"
+                     {{#isactive}}aria-hidden="false"{{/isactive}}{{^isactive}}aria-hidden="true"{{/isactive}}>
+                <div class="edt-container edt-hero-grid">
 
-            {{! Left — Copy }}
-            <div class="edt-hero-copy">
-                <span class="edt-eyebrow">
-                    <span class="dot"></span>
-                    {{hero.eyebrow}}
-                </span>
+                    {{! Copy — right side in Arabic/RTL, left side in English/LTR }}
+                    <div class="edt-hero-copy">
+                        <span class="edt-eyebrow">
+                            <span class="dot"></span>
+                            {{eyebrow}}
+                        </span>
 
-                <h1 class="edt-hero-title">
-                    {{hero.title}}
-                    <span class="accent">{{hero.title_accent}}</span>
-                </h1>
+                        <div class="edt-hero-quote" aria-hidden="true">“</div>
+                        <h1 class="edt-hero-title">
+                            {{title}}
+                            <span class="accent">{{title_accent}}</span>
+                        </h1>
 
-                <p class="edt-hero-subtitle">{{hero.subtitle}}</p>
+                        <p class="edt-hero-subtitle">{{subtitle}}</p>
 
-                <div class="edt-hero-cta">
-                    <a href="{{hero.cta1_url}}" class="edt-btn edt-btn-primary">
-                        <i class="fa-solid fa-rocket" aria-hidden="true"></i>
-                        {{hero.cta1_text}}
-                    </a>
-                    <a href="{{hero.cta2_url}}" class="edt-btn edt-btn-gold">
-                        <i class="fa-solid fa-circle-play" aria-hidden="true"></i>
-                        {{hero.cta2_text}}
-                    </a>
-                </div>
-
-                <div class="edt-hero-stats">
-                    {{#hero.stats}}
-                    <div class="edt-stat">
-                        <div class="edt-stat-num">{{num}}</div>
-                        <div class="edt-stat-lbl">{{lbl}}</div>
-                    </div>
-                    {{/hero.stats}}
-                </div>
-            </div>
-
-            {{! Right — Visual card }}
-            <div class="edt-hero-visual">
-                <div class="edt-hero-card">
-                    <div class="edt-hero-thumb">
-                        <div class="edt-play">
-                            <button type="button" aria-label="{{#str}}hero_play_intro, theme_edtech{{/str}}">
-                                <i class="fa-solid fa-play" aria-hidden="true"></i>
-                            </button>
+                        <div class="edt-hero-cta">
+                            <a href="{{cta1_url}}" class="edt-btn edt-btn-primary">
+                                {{cta1_text}}
+                                {{#isrtl}}<i class="fa-solid fa-arrow-left" aria-hidden="true"></i>{{/isrtl}}
+                                {{^isrtl}}<i class="fa-solid fa-arrow-right" aria-hidden="true"></i>{{/isrtl}}
+                            </a>
+                            {{#cta2_text}}
+                            <a href="{{cta2_url}}" class="edt-btn edt-btn-hero-secondary">
+                                {{cta2_text}}
+                            </a>
+                            {{/cta2_text}}
                         </div>
                     </div>
-                    <h3>{{#str}}hero_card_title, theme_edtech{{/str}}</h3>
-                    <div class="edt-hero-meta">
-                        <span class="stars"><i class="fa-solid fa-star" aria-hidden="true"></i> 4.9</span>
-                        <span><i class="fa-regular fa-user" aria-hidden="true"></i> 12,540</span>
-                        <span><i class="fa-regular fa-clock" aria-hidden="true"></i> 12h</span>
-                    </div>
-                </div>
 
-                <div class="edt-float edt-float-1">
-                    <div class="edt-float-ico olive">
-                        <i class="fa-solid fa-certificate" aria-hidden="true"></i>
-                    </div>
-                    <div>
-                        <div class="edt-float-title">{{#str}}hero_badge, theme_edtech{{/str}}</div>
-                        <div class="edt-float-sub">{{#str}}hero_completion, theme_edtech{{/str}}</div>
+                    {{! Visual — uploaded Moodle image or the existing fallback image }}
+                    <div class="edt-hero-visual">
+                        <div class="edt-hero-media">
+                            <div class="edt-hero-media-ring edt-hero-media-ring-outer"></div>
+                            <div class="edt-hero-media-ring edt-hero-media-ring-inner"></div>
+                            <div class="edt-hero-media-image"{{#image}} style="background-image: url('{{image}}');"{{/image}}>
+                                <span class="sr-only">{{card_title}}</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </article>
+            {{/hero.slides}}
+        </div>
 
-                <div class="edt-float edt-float-2">
-                    <div class="edt-float-ico gold">
-                        <i class="fa-solid fa-users" aria-hidden="true"></i>
-                    </div>
-                    <div>
-                        <div class="edt-float-title">{{#str}}hero_joined, theme_edtech{{/str}}</div>
-                        <div class="edt-float-sub">{{#str}}hero_this_week, theme_edtech{{/str}}</div>
-                    </div>
-                </div>
+        <div class="edt-slider-controls">
+            <div class="edt-slider-arrows">
+                <button type="button" class="edt-slider-arrow edt-slider-prev" data-edt-slider-prev aria-label="{{#str}}slider_previous, theme_edtech{{/str}}">
+                    <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+                </button>
+                <button type="button" class="edt-slider-arrow edt-slider-next" data-edt-slider-next aria-label="{{#str}}slider_next, theme_edtech{{/str}}">
+                    <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+                </button>
             </div>
 
+            <div class="edt-slider-dots" data-edt-slider-dots role="tablist" aria-label="{{#str}}slider_settings_heading, theme_edtech{{/str}}">
+                {{#hero.slides}}
+                <button type="button"
+                        class="edt-slider-dot{{#isactive}} is-active{{/isactive}}"
+                        data-edt-slider-dot
+                        data-slide-index="{{index}}"
+                        role="tab"
+                        aria-controls="{{id}}"
+                        aria-label="{{indicator_label}}"
+                        aria-selected="{{#isactive}}true{{/isactive}}{{^isactive}}false{{/isactive}}">
+                    <span aria-hidden="true"></span>
+                </button>
+                {{/hero.slides}}
+            </div>
+        </div>
+
+        <div class="sr-only" data-edt-slider-status aria-live="polite">
+            {{#hero.slides}}{{#isactive}}{{status_label}}{{/isactive}}{{/hero.slides}}
         </div>
     </div>
 </section>

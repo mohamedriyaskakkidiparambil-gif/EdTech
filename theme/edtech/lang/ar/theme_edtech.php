@@ -57,16 +57,56 @@ $string['hero_joined'] = '+1,200 مشترك';
 $string['hero_this_week'] = 'هذا الأسبوع';
 $string['rating_stars'] = '5 نجوم';
 
+// إعدادات وأدوات شريط الشرائح في الصفحة الرئيسية.
+$string['slider_settings_heading'] = 'شريط الشرائح الرئيسي للصفحة الرئيسية';
+$string['slider_settings_description'] = 'قم بإعداد ما يصل إلى ثلاث شرائح رئيسية. تتم إدارة النصوص باللغة العربية والإنجليزية بشكل مستقل، ويتم رفع الصور عبر مودل.';
+$string['slider_slot'] = 'الشريحة {$a}';
+$string['slider_enabled'] = 'تفعيل الشريحة';
+$string['slider_image'] = 'صورة الشريحة';
+$string['slider_image_description'] = 'صورة اختيارية بصيغة JPG أو PNG أو WebP. سيتم استخدام الصورة الحالية عند عدم رفع صورة.';
+$string['slider_eyebrow'] = 'النص التمهيدي';
+$string['slider_title'] = 'العنوان';
+$string['slider_accent'] = 'النص المميز';
+$string['slider_subtitle'] = 'الوصف';
+$string['slider_cta1'] = 'نص الزر الأساسي';
+$string['slider_cta2'] = 'نص الزر الثانوي';
+$string['slider_cta1_url'] = 'رابط الزر الأساسي';
+$string['slider_cta2_url'] = 'رابط الزر الثانوي';
+$string['slider_previous'] = 'الشريحة السابقة';
+$string['slider_next'] = 'الشريحة التالية';
+$string['slider_pause'] = 'إيقاف عرض الشرائح مؤقتاً';
+$string['slider_play'] = 'تشغيل عرض الشرائح';
+$string['slider_indicator'] = 'الانتقال إلى الشريحة {$a}';
+$string['slider_status'] = 'الشريحة {$a->current} من {$a->total}';
+$string['slider_default_2_eyebrow'] = 'تعلم عملي لكل هدف';
+$string['slider_default_2_title'] = 'طوّر مهاراتك';
+$string['slider_default_2_accent'] = 'التي تقودك إلى الأمام';
+$string['slider_default_2_subtitle'] = 'تعلّم من مدربين خبراء من خلال دورات عملية تساعدك على بناء الثقة وتنمية مسيرتك المهنية.';
+$string['slider_default_2_cta1'] = 'استكشف الدورات';
+$string['slider_default_2_cta2'] = 'تعرّف على المدربين';
+$string['slider_default_3_eyebrow'] = 'تعلّم باللغة التي تناسبك';
+$string['slider_default_3_title'] = 'تطوّر مع';
+$string['slider_default_3_accent'] = 'التعلم العربي والعالمي';
+$string['slider_default_3_subtitle'] = 'استكشف مسارات تعليمية تقنية وإبداعية ومهنية باللغة العربية وبأكثر من لغة في مكان واحد.';
+$string['slider_default_3_cta1'] = 'ابدأ التعلم';
+$string['slider_default_3_cta2'] = 'تصفح المسارات التعليمية';
+
 // الإحصائيات.
 $string['stat_courses'] = 'الدورات';
 $string['stat_instructors'] = 'مدربون معتمدون';
 $string['stat_students'] = 'طلاب نشطون';
 $string['stat_rating'] = 'تقييم المنصة';
 
-// التصنيفات والدورات.
+// الدورات المضافة حديثاً وفهرس الدورات.
 $string['cat_kicker'] = 'تخصصاتنا';
 $string['cat_title'] = 'تصفح حسب التصنيف';
 $string['cat_subtitle'] = 'اختر من بين عشرات التصنيفات التعليمية التي تناسب اهتماماتك ومسارك المهني.';
+$string['recent_kicker'] = 'جديد في إدتك';
+$string['recent_title'] = 'الدورات المضافة حديثاً';
+$string['recent_subtitle'] = 'ابدأ التعلم مع أحدث الدورات المضافة إلى منصتنا.';
+$string['recent_more'] = 'المزيد من الدورات';
+$string['recent_badge'] = 'مضاف حديثاً';
+$string['recent_course_meta'] = 'دورة';
 $string['course_kicker'] = 'الدورات المميزة';
 $string['course_title'] = 'الأكثر شعبية هذا الشهر';
 $string['course_viewall'] = 'عرض الكل';
@@ -98,6 +138,19 @@ $string['feat_multilang_title'] = 'دعم متعدد اللغات';
 $string['feat_multilang_text'] = 'تصفح المنصة بالعربية والإنجليزية والفرنسية ولغات أخرى بسهولة.';
 $string['feat_support_title'] = 'دعم على مدار الساعة';
 $string['feat_support_text'] = 'فريق دعم متخصص جاهز لمساعدتك في أي وقت وعلى مدار الساعة.';
+
+// من نحن.
+$string['about_kicker'] = 'من نحن';
+$string['about_title'] = 'تعلّم بهدف وتطوّر بثقة';
+$string['about_subtitle'] = 'إدتك منصة تعليمية صُممت لتجعل التعلم النوعي متاحاً للجميع.';
+$string['about_body'] = 'نجمع بين الدورات العملية والمدربين الموثوقين والتعلم متعدد اللغات في مساحة تعليمية ترحب بالجميع. هدفنا أن نساعد كل متعلم على بناء مهارات مفيدة واكتشاف إمكاناته ومواصلة التقدم بثقة.';
+$string['about_more'] = 'اعرف المزيد';
+$string['about_vision_title'] = 'رؤيتنا';
+$string['about_vision_text'] = 'أن نكون وجهة تعليمية موثوقة تساعد الجميع على تطوير مهاراتهم وصناعة مستقبل أفضل.';
+$string['about_mission_title'] = 'رسالتنا';
+$string['about_mission_text'] = 'تقديم تعلم عملي وشامل وعالي الجودة يصنع قيمة مستدامة لكل طالب.';
+$string['about_method_title'] = 'منهجيتنا التعليمية';
+$string['about_method_text'] = 'نجمع بين الشرح الواضح والتطبيق العملي والتعلم المرن متعدد اللغات لدعم التقدم الحقيقي.';
 
 // دعوة المدربين.
 $string['cta_title'] = 'هل أنت مدرب أو خبير في مجالك؟';

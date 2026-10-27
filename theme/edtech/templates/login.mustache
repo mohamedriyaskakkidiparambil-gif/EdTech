@@ -18,7 +18,8 @@
             {{! Back to home + Logo }}
             <div class="edt-login-left-header">
                 <a href="{{homeurl}}" class="edt-login-back">
-                    <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+                    {{#isrtl}}<i class="fa-solid fa-arrow-right" aria-hidden="true"></i>{{/isrtl}}
+                    {{^isrtl}}<i class="fa-solid fa-arrow-left" aria-hidden="true"></i>{{/isrtl}}
                     {{#str}}login_back_home, theme_edtech{{/str}}
                 </a>
             </div>

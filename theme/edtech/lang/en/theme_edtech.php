@@ -57,16 +57,56 @@ $string['hero_joined'] = '+1,200 Joined';
 $string['hero_this_week'] = 'This week';
 $string['rating_stars'] = '5 stars';
 
+// Homepage hero slider settings and controls.
+$string['slider_settings_heading'] = 'Homepage Hero Slider';
+$string['slider_settings_description'] = 'Configure up to three homepage hero slides. Copy is managed independently for English and Arabic; images are uploaded through Moodle.';
+$string['slider_slot'] = 'Slide {$a}';
+$string['slider_enabled'] = 'Enable slide';
+$string['slider_image'] = 'Slide image';
+$string['slider_image_description'] = 'Optional JPG, PNG, or WebP image. The existing hero visual is used when no image is uploaded.';
+$string['slider_eyebrow'] = 'Eyebrow';
+$string['slider_title'] = 'Title';
+$string['slider_accent'] = 'Accent text';
+$string['slider_subtitle'] = 'Subtitle';
+$string['slider_cta1'] = 'Primary button text';
+$string['slider_cta2'] = 'Secondary button text';
+$string['slider_cta1_url'] = 'Primary button URL';
+$string['slider_cta2_url'] = 'Secondary button URL';
+$string['slider_previous'] = 'Previous slide';
+$string['slider_next'] = 'Next slide';
+$string['slider_pause'] = 'Pause slideshow';
+$string['slider_play'] = 'Play slideshow';
+$string['slider_indicator'] = 'Go to slide {$a}';
+$string['slider_status'] = 'Slide {$a->current} of {$a->total}';
+$string['slider_default_2_eyebrow'] = 'Practical learning for every goal';
+$string['slider_default_2_title'] = 'Build skills';
+$string['slider_default_2_accent'] = 'that move you forward';
+$string['slider_default_2_subtitle'] = 'Learn from expert instructors with practical courses designed to help you build confidence and grow your career.';
+$string['slider_default_2_cta1'] = 'Explore courses';
+$string['slider_default_2_cta2'] = 'Meet our instructors';
+$string['slider_default_3_eyebrow'] = 'Learn in the language that works for you';
+$string['slider_default_3_title'] = 'Grow with';
+$string['slider_default_3_accent'] = 'Arabic and global learning';
+$string['slider_default_3_subtitle'] = 'Explore technical, creative, and professional learning paths in Arabic and multiple languages, all in one place.';
+$string['slider_default_3_cta1'] = 'Start learning';
+$string['slider_default_3_cta2'] = 'Browse learning paths';
+
 // Statistics.
 $string['stat_courses'] = 'Courses';
 $string['stat_instructors'] = 'Certified Instructors';
 $string['stat_students'] = 'Active Students';
 $string['stat_rating'] = 'Platform Rating';
 
-// Categories and courses.
+// Recent courses and course catalog.
 $string['cat_kicker'] = 'Our Specializations';
 $string['cat_title'] = 'Browse by Category';
 $string['cat_subtitle'] = 'Choose from dozens of educational categories that match your interests and career path.';
+$string['recent_kicker'] = 'New on EdTech';
+$string['recent_title'] = 'Recent Courses';
+$string['recent_subtitle'] = 'Start learning with the newest courses added to our platform.';
+$string['recent_more'] = 'More courses';
+$string['recent_badge'] = 'Recently added';
+$string['recent_course_meta'] = 'Course';
 $string['course_kicker'] = 'Featured Courses';
 $string['course_title'] = 'Most Popular This Month';
 $string['course_viewall'] = 'View All';
@@ -98,6 +138,19 @@ $string['feat_multilang_title'] = 'Multilingual Support';
 $string['feat_multilang_text'] = 'Browse the platform in Arabic, English, French, and other languages with ease.';
 $string['feat_support_title'] = '24/7 Support';
 $string['feat_support_text'] = 'A dedicated support team ready to help you anytime, around the clock.';
+
+// About Us.
+$string['about_kicker'] = 'About Us';
+$string['about_title'] = 'Learning With Purpose, Growing With Confidence';
+$string['about_subtitle'] = 'EdTech is a learning platform built to make meaningful education accessible to everyone.';
+$string['about_body'] = 'We bring practical courses, trusted instructors, and multilingual learning together in one welcoming space. Our goal is to help every learner build useful skills, discover new possibilities, and keep moving forward.';
+$string['about_more'] = 'Learn more';
+$string['about_vision_title'] = 'Our Vision';
+$string['about_vision_text'] = 'To be a trusted learning destination where people can develop skills and shape a better future.';
+$string['about_mission_title'] = 'Our Mission';
+$string['about_mission_text'] = 'To deliver practical, inclusive, and high-quality learning that creates lasting value for every student.';
+$string['about_method_title'] = 'Our Learning Approach';
+$string['about_method_text'] = 'We combine clear instruction, practical application, and flexible multilingual learning to support real progress.';
 
 // CTA band.
 $string['cta_title'] = 'Are You an Instructor or Expert in Your Field?';

@@ -362,6 +362,171 @@ function theme_edtech_language_course_count($categoryid = null) {
 }
 
 /**
+ * Returns a configured theme value, or false when no value has been saved.
+ * Keeping the distinction between false and an empty string lets the slider
+ * fall back from an empty Arabic field to its English equivalent.
+ */
+function theme_edtech_get_slider_setting($name) {
+    $value = get_config('theme_edtech', $name);
+    return $value === false ? false : trim((string)$value);
+}
+
+/**
+ * Returns the uploaded image URL for one homepage slider slot.
+ */
+function theme_edtech_get_slider_image_url($slot) {
+    $fs = get_file_storage();
+    $context = context_system::instance();
+    $files = $fs->get_area_files(
+        $context->id,
+        'theme_edtech',
+        'slideimage' . $slot,
+        0,
+        'itemid, filepath, filename',
+        false
+    );
+
+    foreach ($files as $file) {
+        return moodle_url::make_pluginfile_url(
+            $context->id,
+            'theme_edtech',
+            'slideimage' . $slot,
+            0,
+            $file->get_filepath(),
+            $file->get_filename()
+        )->out(false);
+    }
+
+    return '';
+}
+
+/**
+ * Returns the built-in bilingual defaults for a slider slot.
+ */
+function theme_edtech_get_slider_defaults($slot, $lang) {
+    $defaultkeys = [
+        1 => [
+            'eyebrow' => 'hero_eyebrow',
+            'title'   => 'hero_title',
+            'accent'  => 'hero_title_accent',
+            'subtitle'=> 'hero_subtitle',
+            'cta1'    => 'hero_cta1',
+            'cta2'    => 'hero_cta2',
+        ],
+        2 => [
+            'eyebrow' => 'slider_default_2_eyebrow',
+            'title'   => 'slider_default_2_title',
+            'accent'  => 'slider_default_2_accent',
+            'subtitle'=> 'slider_default_2_subtitle',
+            'cta1'    => 'slider_default_2_cta1',
+            'cta2'    => 'slider_default_2_cta2',
+        ],
+        3 => [
+            'eyebrow' => 'slider_default_3_eyebrow',
+            'title'   => 'slider_default_3_title',
+            'accent'  => 'slider_default_3_accent',
+            'subtitle'=> 'slider_default_3_subtitle',
+            'cta1'    => 'slider_default_3_cta1',
+            'cta2'    => 'slider_default_3_cta2',
+        ],
+    ];
+
+    $keys = $defaultkeys[$slot];
+    return [
+        'eyebrow'  => get_string($keys['eyebrow'], 'theme_edtech', null, $lang),
+        'title'    => get_string($keys['title'], 'theme_edtech', null, $lang),
+        'accent'   => get_string($keys['accent'], 'theme_edtech', null, $lang),
+        'subtitle' => get_string($keys['subtitle'], 'theme_edtech', null, $lang),
+        'cta1'     => get_string($keys['cta1'], 'theme_edtech', null, $lang),
+        'cta2'     => get_string($keys['cta2'], 'theme_edtech', null, $lang),
+        'cta1_url' => '/course/',
+        'cta2_url' => '#',
+    ];
+}
+
+/**
+ * Builds the three configurable homepage hero slides.
+ */
+function theme_edtech_get_frontpage_slides($stats) {
+    $currentlang = current_language();
+    $languageorder = $currentlang === 'ar' ? ['ar', 'en'] : ['en', 'ar'];
+    $fields = ['eyebrow', 'title', 'accent', 'subtitle', 'cta1', 'cta2', 'cta1_url', 'cta2_url'];
+    $slides = [];
+    $enabledslots = [];
+
+    for ($slot = 1; $slot <= 3; $slot++) {
+        $enabled = theme_edtech_get_slider_setting("slider_{$slot}_enabled");
+        if ($enabled !== false && !$enabled) {
+            continue;
+        }
+        $enabledslots[] = $slot;
+    }
+
+    // Never leave the homepage without a hero. If an administrator disables
+    // every slot, keep the original hero as a single-slide fallback.
+    if (empty($enabledslots)) {
+        $enabledslots = [1];
+    }
+
+    foreach ($enabledslots as $slot) {
+        $defaults = [
+            'en' => theme_edtech_get_slider_defaults($slot, 'en'),
+            'ar' => theme_edtech_get_slider_defaults($slot, 'ar'),
+        ];
+        $copy = [];
+
+        foreach ($fields as $field) {
+            foreach ($languageorder as $lang) {
+                $value = theme_edtech_get_slider_setting("slider_{$slot}_{$field}_{$lang}");
+                if ($value !== false && $value !== '') {
+                    $copy[$field] = $value;
+                    break;
+                }
+            }
+            if (!isset($copy[$field])) {
+                $copy[$field] = $defaults[$languageorder[0]][$field];
+            }
+        }
+
+        $slides[] = [
+            'id'            => 'home-slide-' . $slot,
+            'slot'           => $slot,
+            'image'          => theme_edtech_get_slider_image_url($slot),
+            'eyebrow'        => $copy['eyebrow'],
+            'title'          => $copy['title'],
+            'title_accent'   => $copy['accent'],
+            'subtitle'       => $copy['subtitle'],
+            'cta1_text'      => $copy['cta1'],
+            'cta1_url'       => $copy['cta1_url'],
+            'cta2_text'      => $copy['cta2'],
+            'cta2_url'       => $copy['cta2_url'],
+            'stats'          => $stats,
+            'card_title'     => get_string('hero_card_title', 'theme_edtech'),
+            'play_label'     => get_string('hero_play_intro', 'theme_edtech'),
+            'badge_title'    => get_string('hero_badge', 'theme_edtech'),
+            'badge_sub'      => get_string('hero_completion', 'theme_edtech'),
+            'joined_title'   => get_string('hero_joined', 'theme_edtech'),
+            'joined_sub'     => get_string('hero_this_week', 'theme_edtech'),
+        ];
+    }
+
+    $total = count($slides);
+    foreach ($slides as $index => &$slide) {
+        $slide['index'] = $index;
+        $slide['isactive'] = $index === 0;
+        $slide['slide_number'] = $index + 1;
+        $slide['status_label'] = get_string('slider_status', 'theme_edtech', [
+            'current' => $index + 1,
+            'total'   => $total,
+        ]) . ': ' . strip_tags($slide['title'] . ' ' . $slide['title_accent']);
+        $slide['indicator_label'] = get_string('slider_indicator', 'theme_edtech', $index + 1);
+    }
+    unset($slide);
+
+    return $slides;
+}
+
+/**
  * Builds the complete context array for theme_edtech/frontpage.
  * Called from layout/frontpage.php.
  *
@@ -478,6 +643,9 @@ function theme_edtech_build_frontpage_context($OUTPUT, $PAGE) {
         // Silently fail — courses are non-critical
     }
 
+    // ── Recent courses (the three newest courses for the current language) ──
+    $recentcourses = array_slice($courses, 0, 3);
+
     // ── Features (Why Choose Us) ──────────────────────────────────────────
     $features = [
         ['icon' => 'fa-book-open-reader', 'title' => get_string('feat_interactive_title', 'theme_edtech'), 'text' => get_string('feat_interactive_text', 'theme_edtech'), 'gold' => false],
@@ -493,6 +661,8 @@ function theme_edtech_build_frontpage_context($OUTPUT, $PAGE) {
         ['text' => get_string('testi3_text', 'theme_edtech'), 'name' => get_string('testi3_name', 'theme_edtech'), 'role' => get_string('testi3_role', 'theme_edtech'), 'avatar' => 'https://i.pravatar.cc/80?img=25'],
     ];
 
+    $slides = theme_edtech_get_frontpage_slides($stats);
+
     // ── Assemble full context ─────────────────────────────────────────────
     // One call — navbar + footer defined once in lib.php, used everywhere.
     return array_merge(theme_edtech_get_shared_context($OUTPUT, $PAGE, $CFG), [
@@ -503,34 +673,45 @@ function theme_edtech_build_frontpage_context($OUTPUT, $PAGE) {
 
         // Hero
         'hero' => [
-            'eyebrow'      => get_string('hero_eyebrow', 'theme_edtech'),
-            'title'        => get_string('hero_title', 'theme_edtech'),
-            'title_accent' => get_string('hero_title_accent', 'theme_edtech'),
-            'subtitle'     => get_string('hero_subtitle', 'theme_edtech'),
-            'cta1_text'    => get_string('hero_cta1', 'theme_edtech'),
-            'cta1_url'     => (new moodle_url('/course/'))->out(false),
-            'cta2_text'    => get_string('hero_cta2', 'theme_edtech'),
-            'cta2_url'     => '#',
-            'stats'        => $stats,
+            'slides'     => $slides,
+            'has_slides' => !empty($slides),
         ],
 
         // Frontpage sections
-        'categories'    => $categories,
-        'hascategories' => !empty($categories),
-        'courses'       => $courses,
-        'hascourses'    => !empty($courses),
+        'categories'       => $categories,
+        'hascategories'    => !empty($categories),
+        'courses'          => $courses,
+        'hascourses'       => !empty($courses),
+        'recentcourses'    => $recentcourses,
+        'hasrecentcourses' => !empty($recentcourses),
         'features'      => $features,
         'testimonials'  => $testimonials,
 
-        // CTA band
-        'cta' => [
-            'title'    => get_string('cta_title', 'theme_edtech'),
-            'subtitle' => get_string('cta_subtitle', 'theme_edtech'),
-            'btn1'     => get_string('cta_btn1', 'theme_edtech'),
-            'btn1_url' => '#',
-            'btn2'     => get_string('cta_btn2', 'theme_edtech'),
-            'btn2_url' => '#',
-            'badge'    => get_string('cta_badge', 'theme_edtech'),
+        // About Us section
+        'about' => [
+            'kicker'   => get_string('about_kicker', 'theme_edtech'),
+            'title'    => get_string('about_title', 'theme_edtech'),
+            'subtitle' => get_string('about_subtitle', 'theme_edtech'),
+            'body'     => get_string('about_body', 'theme_edtech'),
+            'more'     => get_string('about_more', 'theme_edtech'),
+            'more_url' => '#about-us',
+            'cards'    => [
+                [
+                    'icon'  => 'fa-eye',
+                    'title' => get_string('about_vision_title', 'theme_edtech'),
+                    'text'  => get_string('about_vision_text', 'theme_edtech'),
+                ],
+                [
+                    'icon'  => 'fa-heart',
+                    'title' => get_string('about_mission_title', 'theme_edtech'),
+                    'text'  => get_string('about_mission_text', 'theme_edtech'),
+                ],
+                [
+                    'icon'  => 'fa-compass',
+                    'title' => get_string('about_method_title', 'theme_edtech'),
+                    'text'  => get_string('about_method_text', 'theme_edtech'),
+                ],
+            ],
         ],
     ]);
 }

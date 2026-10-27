@@ -94,6 +94,7 @@ class course_renderer extends \core_course_renderer {
         return $this->render_from_template('theme_edtech/catalog_category_card', [
             'id' => $coursecat->id,
             'depth' => $depth,
+            'isrtl' => right_to_left(),
             'showcourses' => $chelper->get_show_courses(),
             'name' => $coursecat->get_formatted_name(),
             'description' => $description,
@@ -138,6 +139,7 @@ class course_renderer extends \core_course_renderer {
         return $this->render_from_template('theme_edtech/catalog_course_card', [
             'id' => $course->id,
             'classes' => trim($additionalclasses),
+            'isrtl' => right_to_left(),
             'name' => $chelper->get_course_formatted_name($course),
             'plainname' => format_string($course->fullname),
             'summary' => $summary,
