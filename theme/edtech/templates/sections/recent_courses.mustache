@@ -1,0 +1,64 @@
+{{! theme_edtech/sections/recent_courses
+    Three newest visible courses for the current language.
+    Styled after the sample site's academic-program section while keeping
+    EdTech's existing brand palette and course data.
+    @template theme_edtech/sections/recent_courses
+}}
+<section id="recent-courses" class="edt-section edt-section-recent">
+    <div class="edt-container">
+
+        <div class="edt-section-head edt-recent-head">
+            <div class="edt-kicker">
+                <i class="fa-solid fa-star" aria-hidden="true"></i>
+                {{#str}}recent_kicker, theme_edtech{{/str}}
+                <i class="fa-solid fa-star" aria-hidden="true"></i>
+            </div>
+            <h2>{{#str}}recent_title, theme_edtech{{/str}}</h2>
+            <p>{{#str}}recent_subtitle, theme_edtech{{/str}}</p>
+        </div>
+
+        {{#hasrecentcourses}}
+        <div class="edt-recent-course-grid">
+            {{#recentcourses}}
+            <article class="edt-recent-course">
+                <a class="edt-recent-course-image"
+                   href="{{url}}"
+                   aria-label="{{title}}"
+                   {{#image}}style="background-image: linear-gradient(135deg, rgba(37,50,13,.04), rgba(37,50,13,.36)), url('{{image}}');"{{/image}}
+                   {{^image}}style="background: linear-gradient(135deg, var(--olive-500), var(--olive-700));"{{/image}}>
+                    <span class="edt-recent-course-badge">{{#str}}recent_badge, theme_edtech{{/str}}</span>
+                </a>
+
+                <div class="edt-recent-course-body">
+                    {{#category}}<div class="edt-recent-course-category">{{category}}</div>{{/category}}
+                    <h3><a href="{{url}}">{{title}}</a></h3>
+                    {{#summary}}<p>{{summary}}</p>{{/summary}}
+                    <div class="edt-recent-course-meta">
+                        <i class="fa-solid fa-book-open" aria-hidden="true"></i>
+                        {{#str}}recent_course_meta, theme_edtech{{/str}}
+                    </div>
+                    <a href="{{url}}" class="edt-btn edt-btn-recent">
+                        {{#str}}course_view, theme_edtech{{/str}}
+                        {{#isrtl}}<i class="fa-solid fa-arrow-left" aria-hidden="true"></i>{{/isrtl}}
+                        {{^isrtl}}<i class="fa-solid fa-arrow-right" aria-hidden="true"></i>{{/isrtl}}
+                    </a>
+                </div>
+            </article>
+            {{/recentcourses}}
+        </div>
+
+        <div class="edt-recent-courses-action">
+            <a href="{{courseurl}}" class="edt-btn edt-btn-ghost">
+                {{#str}}recent_more, theme_edtech{{/str}}
+                {{#isrtl}}<i class="fa-solid fa-arrow-left" aria-hidden="true"></i>{{/isrtl}}
+                {{^isrtl}}<i class="fa-solid fa-arrow-right" aria-hidden="true"></i>{{/isrtl}}
+            </a>
+        </div>
+        {{/hasrecentcourses}}
+
+        {{^hasrecentcourses}}
+        <p class="text-center text-muted py-5">{{#str}}nocourses, core{{/str}}</p>
+        {{/hasrecentcourses}}
+
+    </div>
+</section>

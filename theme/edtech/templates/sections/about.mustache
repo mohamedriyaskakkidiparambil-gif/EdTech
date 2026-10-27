@@ -1,0 +1,40 @@
+{{! theme_edtech/sections/about
+    About Us section inspired by the reference site's two-column introduction.
+    Context: about.* from theme_edtech_build_frontpage_context()
+    @template theme_edtech/sections/about
+}}
+<section id="about-us" class="edt-section edt-section-about">
+    <div class="edt-container">
+        <div class="edt-about-grid">
+            <div class="edt-about-copy">
+                <div class="edt-kicker edt-about-kicker">
+                    <i class="fa-solid fa-star" aria-hidden="true"></i>
+                    {{about.kicker}}
+                    <i class="fa-solid fa-star" aria-hidden="true"></i>
+                </div>
+                <h2>{{about.title}}</h2>
+                <p class="edt-about-lead">{{about.subtitle}}</p>
+                <p>{{about.body}}</p>
+                <a href="{{about.more_url}}" class="edt-btn edt-btn-secondary edt-about-more">
+                    {{about.more}}
+                    {{#isrtl}}<i class="fa-solid fa-arrow-left" aria-hidden="true"></i>{{/isrtl}}
+                    {{^isrtl}}<i class="fa-solid fa-arrow-right" aria-hidden="true"></i>{{/isrtl}}
+                </a>
+            </div>
+
+            <div class="edt-about-values">
+                {{#about.cards}}
+                <article class="edt-about-value">
+                    <div class="edt-about-value-icon" aria-hidden="true">
+                        <i class="fa-solid {{icon}}"></i>
+                    </div>
+                    <div>
+                        <h3>{{title}}</h3>
+                        <p>{{text}}</p>
+                    </div>
+                </article>
+                {{/about.cards}}
+            </div>
+        </div>
+    </div>
+</section>

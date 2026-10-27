@@ -18,11 +18,12 @@ defined('MOODLE_INTERNAL') || die();
 // It triggers the page rendering pipeline (blocks, notifications, etc.).
 // Moodle requires the main-content placeholder to be present in the rendered
 // layout. The template keeps it hidden because the custom front page owns the
-// visible content and already has its own featured-courses section.
+// visible content.
 $maincontent = $OUTPUT->main_content();
 
 $context = theme_edtech_build_frontpage_context($OUTPUT, $PAGE);
 $context['maincontent'] = $maincontent;
 
 $PAGE->requires->js_call_amd('theme_edtech/navbar', 'init');
+$PAGE->requires->js_call_amd('theme_edtech/hero', 'init');
 echo $OUTPUT->render_from_template('theme_edtech/frontpage', $context);

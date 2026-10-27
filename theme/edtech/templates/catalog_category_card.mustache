@@ -7,6 +7,7 @@
             {{#description}}<span>{{description}}</span>{{/description}}
         </span>
         <span class="edt-catalog-category-count">{{count}} {{#str}}courses{{/str}}</span>
-        <i class="fa-solid fa-arrow-right edt-catalog-arrow" aria-hidden="true"></i>
+        {{#isrtl}}<i class="fa-solid fa-arrow-left edt-catalog-arrow" aria-hidden="true"></i>{{/isrtl}}
+        {{^isrtl}}<i class="fa-solid fa-arrow-right edt-catalog-arrow" aria-hidden="true"></i>{{/isrtl}}
     </a>
 </article>

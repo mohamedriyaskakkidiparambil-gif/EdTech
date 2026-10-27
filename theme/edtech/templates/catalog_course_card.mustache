@@ -12,7 +12,8 @@
     <div class="edt-catalog-course-footer">
         <a href="{{url}}" class="edt-btn edt-btn-primary edt-btn-sm">
             {{#str}}course_view, theme_edtech{{/str}}
-            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+            {{#isrtl}}<i class="fa-solid fa-arrow-left" aria-hidden="true"></i>{{/isrtl}}
+            {{^isrtl}}<i class="fa-solid fa-arrow-right" aria-hidden="true"></i>{{/isrtl}}
         </a>
     </div>
 </article>
