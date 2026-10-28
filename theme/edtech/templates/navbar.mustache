@@ -81,6 +81,12 @@
                {{#nav_active_courses}}aria-current="page"{{/nav_active_courses}}>
                 {{#str}}courses, core{{/str}}
             </a>
+            <a href="{{wwwroot}}/course/" class="edt-nav-link">
+                {{#str}}nav_certifications, theme_edtech{{/str}}
+            </a>
+            <a href="{{wwwroot}}/course/" class="edt-nav-link">
+                {{#str}}nav_diploma_courses, theme_edtech{{/str}}
+            </a>
 
             {{! Public links — shown to guests and regular users only }}
             {{^is_admin}}
