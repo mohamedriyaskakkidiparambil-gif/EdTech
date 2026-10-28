@@ -4,7 +4,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'theme_edtech';
-$plugin->version   = 2026101813;
+$plugin->version   = 2026101814;
 $plugin->requires  = 2023042400;   // Moodle 4.2+
 $plugin->maturity  = MATURITY_STABLE;
 $plugin->release   = '1.0.0';

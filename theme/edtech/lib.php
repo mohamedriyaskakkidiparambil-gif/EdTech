@@ -117,6 +117,10 @@ function theme_edtech_get_navbar_context($OUTPUT, $PAGE) {
         'isrtl'           => right_to_left(),
         'is_admin'        => $is_admin,
 
+        // Native Moodle category pages used by the classification links.
+        'certificationsurl' => theme_edtech_classification_category_url('certifications'),
+        'diplomacoursesurl' => theme_edtech_classification_category_url('diploma-courses'),
+
         // Primary nav
         'primarymoremenu' => $primarymenudata['moremenu'] ?? false,
         'usermenu'        => $primarymenudata['user']     ?? false,
@@ -139,6 +143,27 @@ function theme_edtech_get_navbar_context($OUTPUT, $PAGE) {
         'contact_phone'   => get_config('theme_edtech', 'contact_phone') ?: '+974 4412 3456',
         'contact_email'   => get_config('theme_edtech', 'contact_email') ?: 'support@edtech.qa',
     ];
+}
+
+/**
+ * Resolve a language-specific classification category into a Moodle URL.
+ */
+function theme_edtech_classification_category_url($classification) {
+    global $DB;
+
+    $language = current_language() === 'ar' ? 'ar' : 'en';
+    $category = $DB->get_record(
+        'course_categories',
+        ['idnumber' => $classification . '-' . $language],
+        'id',
+        IGNORE_MISSING
+    );
+
+    if (!$category) {
+        return (new moodle_url('/course/'))->out(false);
+    }
+
+    return (new moodle_url('/course/index.php', ['categoryid' => $category->id]))->out(false);
 }
 
 /**

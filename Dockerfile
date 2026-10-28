@@ -95,6 +95,10 @@ RUN chmod +x /usr/local/bin/configure-student-access.php
 COPY scripts/seed-course-content.php /usr/local/bin/seed-course-content.php
 RUN chmod +x /usr/local/bin/seed-course-content.php
 
+# Classify curated courses into the native menu categories.
+COPY scripts/seed-course-classifications.php /usr/local/bin/seed-course-classifications.php
+RUN chmod +x /usr/local/bin/seed-course-classifications.php
+
 VOLUME ["/var/moodledata"]
 
 EXPOSE 80
